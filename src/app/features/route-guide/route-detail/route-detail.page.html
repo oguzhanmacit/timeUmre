@@ -1,0 +1,247 @@
+<ion-content [fullscreen]="true" *ngIf="route">
+  <!-- Header -->
+  <div class="rd-header">
+    <div class="rd-topbar-row">
+      <button class="rd-back-btn" (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </button>
+      <span class="rd-brand">Umre Yolculuğum</span>
+      <button class="rd-reset-btn" (click)="clearChecklist()" [disabled]="totalCheckedAll === 0">
+        <ion-icon name="refresh-outline"></ion-icon>
+      </button>
+    </div>
+    <h2 class="rd-route-title">{{ route.title }}</h2>
+  </div>
+
+  <!-- Timeline -->
+  <div class="rd-timeline-section">
+    <div class="rd-vline"></div>
+
+    <div
+      class="rd-step"
+      *ngFor="let step of route.steps; let i = index; let last = last"
+      (click)="openPopup(step.id)"
+    >
+      <!-- Sol kolon: ikon dairesi + noktalar -->
+      <div class="rd-step-left">
+        <div class="rd-icon-circle" [ngClass]="cityGlowClass(step.city)">
+          <img *ngIf="step.type === 'worship'" src="assets/ic-kaabe.svg" class="rd-kaabe-icon" alt="Kabe" />
+          <ion-icon *ngIf="step.type !== 'worship'" [name]="typeIcon(step.type)"></ion-icon>
+        </div>
+        <div class="rd-dots" *ngIf="!last">
+          <div class="rd-dot" [ngClass]="cityDotClass(step.city)"></div>
+          <div class="rd-dot" [ngClass]="cityDotClass(step.city)"></div>
+          <div class="rd-dot" [ngClass]="cityDotClass(step.city)"></div>
+          <div class="rd-dot" [ngClass]="cityDotClass(route!.steps[i+1].city)"></div>
+          <div class="rd-dot" [ngClass]="cityDotClass(route!.steps[i+1].city)"></div>
+        </div>
+      </div>
+
+      <!-- Glass kart -->
+      <div class="rd-glass-card" [ngClass]="cityCardClass(step.city)" [class.rd-glass-card--active]="popupStep?.id === step.id">
+        <div class="rd-card-top">
+          <span class="rd-step-badge" [ngClass]="cityBadgeClass(step.city)">{{ i + 1 }}</span>
+          <ion-icon name="chevron-forward-outline" class="rd-card-arrow" [ngClass]="cityBadgeClass(step.city)"></ion-icon>
+        </div>
+        <h3 class="rd-card-title">{{ step.title }}</h3>
+        <p class="rd-card-desc">{{ step.shortDescription }}</p>
+        <div class="rd-card-progress-wrap" *ngIf="checkedCount(step.id) > 0">
+          <div
+            class="rd-card-progress-fill"
+            [ngClass]="cityProgressClass(step.city)"
+            [style.width.%]="totalCount(step.id) > 0 ? (checkedCount(step.id) / totalCount(step.id)) * 100 : 0"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<!-- 404 fallback -->
+<ion-content *ngIf="!route">
+  <div class="rd-not-found">
+    <p>Rota bulunamadı.</p>
+    <button (click)="goBack()">Geri Dön</button>
+  </div>
+</ion-content>
+
+<!-- Full-screen step popup -->
+<div class="rd-fullscreen" [class.open]="popupOpen" *ngIf="popupStep">
+
+  <!-- Nav: tüm adımlar için ortak -->
+  <div class="rd-fs-nav">
+    <button class="rd-fs-back" (click)="closePopup()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+    <span class="rd-fs-counter">Adım {{ popupStepIndex + 1 }} / {{ route?.steps?.length }}</span>
+    <div class="rd-fs-nav-right">
+      <button class="rd-fs-icon-btn" (click)="shareStep()">
+        <ion-icon name="share-outline"></ion-icon>
+      </button>
+      <button class="rd-fs-icon-btn" (click)="bookmarkStep()">
+        <ion-icon name="bookmark-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Scrollable body -->
+  <div class="rd-fs-body">
+
+    <!-- ── Transport tipi: görsel kart listesi ── -->
+    <ng-container *ngIf="popupStep.type === 'transport'; else defaultLayout">
+      <div class="rd-fs-transport-header">
+        <h2 class="rd-fs-transport-title">{{ popupStep.title }}</h2>
+        <p class="rd-fs-transport-sub">Hangi ulaşım size uygun?</p>
+      </div>
+      <div class="rd-fs-transport-list">
+        <ng-container *ngFor="let opt of popupStep.transportOptions">
+          <article
+            class="rd-fs-tc"
+            *ngIf="opt.type !== 'private_transfer'"
+            [class.rd-fs-tc--best]="opt.isBestOption"
+            (click)="selectVideo(opt)"
+          >
+            <!-- Arka plan fotoğrafı — tek -->
+            <img
+              *ngIf="opt.imageUrl && !opt.imageUrl2"
+              [src]="opt.imageUrl"
+              [alt]="opt.title"
+              class="rd-fs-tc-img"
+              [class.rd-fs-tc-img--bright]="opt.isBestOption"
+            />
+            <!-- Arka plan fotoğrafı — ikili (yan yana) -->
+            <ng-container *ngIf="opt.imageUrl && opt.imageUrl2">
+              <img [src]="opt.imageUrl"  [alt]="opt.title" class="rd-fs-tc-img rd-fs-tc-img--half rd-fs-tc-img--left" />
+              <img [src]="opt.imageUrl2" [alt]="opt.title" class="rd-fs-tc-img rd-fs-tc-img--half rd-fs-tc-img--right" />
+            </ng-container>
+
+            <!-- Soldan sağa karartan gradient overlay -->
+            <div class="rd-fs-tc-overlay"></div>
+
+            <!-- Kart içeriği -->
+            <div class="rd-fs-tc-body">
+              <div class="rd-fs-tc-top">
+                <ion-icon
+                  name="arrow-forward-outline"
+                  *ngIf="opt.isBestOption"
+                  class="rd-fs-tc-arrow"
+                ></ion-icon>
+                <h3 class="rd-fs-tc-name">{{ opt.title }}</h3>
+              </div>
+              <div class="rd-fs-tc-bottom">
+                <div class="rd-fs-tc-rating" *ngIf="opt.rating">
+                  <span class="rd-fs-tc-star">★</span>
+                  <span>{{ opt.rating }}</span>
+                </div>
+                <div class="rd-fs-tc-meta">
+                  <p class="rd-fs-tc-time">{{ opt.duration }}</p>
+                  <p class="rd-fs-tc-time-label">{{ opt.durationLabel }}</p>
+                  <p class="rd-fs-tc-price">{{ opt.price }}</p>
+                  <p class="rd-fs-tc-price-label">{{ opt.priceLabel }}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </ng-container>
+      </div>
+      <div class="rd-fs-body-spacer"></div>
+    </ng-container>
+
+    <!-- ── Varsayılan görünüm (diğer adımlar) ── -->
+    <ng-template #defaultLayout>
+      <div class="rd-fs-hero" [ngClass]="cityHeroClass(popupStep.city)" [style.backgroundImage]="getStepImage(popupStep)">
+        <div class="rd-fs-hero-gradient"></div>
+        <div class="rd-fs-hero-content">
+          <div class="rd-fs-hero-chip" [ngClass]="cityBadgeClass(popupStep.city)">
+            <ion-icon [name]="typeIcon(popupStep.type)"></ion-icon>
+            {{ cityLabel(popupStep.city) }}
+          </div>
+          <h1 class="rd-fs-hero-title">{{ popupStep.title }}</h1>
+        </div>
+      </div>
+
+      <p class="rd-fs-desc">{{ popupStep.content }}</p>
+
+      <div class="rd-fs-card" *ngIf="popupStep.checklist.length">
+        <div class="rd-fs-card-header">
+          <div class="rd-fs-card-label">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <span>Yapılacaklar</span>
+          </div>
+          <span class="rd-fs-card-count">
+            {{ checkedCount(popupStep.id) }}/{{ totalCount(popupStep.id) }}
+          </span>
+        </div>
+        <div class="rd-fs-progress">
+          <div
+            class="rd-fs-progress-fill"
+            [style.width.%]="totalCount(popupStep.id) > 0
+              ? (checkedCount(popupStep.id) / totalCount(popupStep.id)) * 100
+              : 0"
+          ></div>
+        </div>
+        <div
+          class="rd-fs-check-item"
+          *ngFor="let item of popupStep.checklist; let i = index"
+          (click)="togglePopupCheck(i)"
+        >
+          <div class="rd-fs-checkbox" [class.checked]="popupCheckStates[i]">
+            <ion-icon *ngIf="popupCheckStates[i]" name="checkmark-outline"></ion-icon>
+          </div>
+          <span [class.done]="popupCheckStates[i]">{{ item }}</span>
+        </div>
+        <div class="rd-fs-action-grid">
+          <button class="rd-fs-action-tile" (click)="showDetailInfo()">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>Detaylı Bilgi</span>
+          </button>
+          <button class="rd-fs-action-tile" (click)="openStepVideo()">
+            <ion-icon name="play-circle-outline"></ion-icon>
+            <span>Video İzle</span>
+          </button>
+          <button class="rd-fs-action-tile" (click)="showNotesToast()">
+            <ion-icon name="create-outline"></ion-icon>
+            <span>Notlarım</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="rd-fs-body-spacer"></div>
+    </ng-template>
+
+  </div>
+
+  <!-- Tamamladım footer — sadece transport dışı adımlarda -->
+  <div class="rd-fs-footer" *ngIf="popupStep.type !== 'transport'">
+    <button class="rd-fs-complete-btn" (click)="markAllComplete()">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      Tamamladım
+    </button>
+  </div>
+</div>
+
+<!-- Bottom navigation -->
+<div class="nf-bottom-nav">
+  <button class="nf-tab" [class.active]="activeTab === 'home'" (click)="setTab('home')">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Ana Sayfa</span>
+  </button>
+  <button class="nf-tab" [class.active]="activeTab === 'notes'" (click)="setTab('notes')">
+    <ion-icon name="document-text-outline"></ion-icon>
+    <span>Notlarım</span>
+  </button>
+  <button class="nf-tab nf-tab--explore" (click)="setTab('explore')">
+    <div class="nf-explore-btn">
+      <ion-icon name="map-outline"></ion-icon>
+    </div>
+    <span>Keşfet</span>
+  </button>
+  <button class="nf-tab" [class.active]="activeTab === 'downloads'" (click)="setTab('downloads')">
+    <ion-icon name="download-outline"></ion-icon>
+    <span>İndirilenler</span>
+  </button>
+  <button class="nf-tab" [class.active]="activeTab === 'profile'" (click)="setTab('profile')">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Profil</span>
+  </button>
+</div>

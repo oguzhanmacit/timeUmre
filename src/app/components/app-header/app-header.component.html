@@ -1,0 +1,26 @@
+<ion-header [translucent]="translucent">
+  <ion-toolbar [class.toolbar-white]="white" [attr.color]="white ? null : 'primary'">
+
+    <!-- Sol butonlar: geri + home -->
+    <ion-buttons slot="start" *ngIf="showBack || showHome">
+      <ion-button *ngIf="showBack" (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <ion-button *ngIf="showHome" (click)="goHome()">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title><strong>{{ title }}</strong></ion-title>
+
+    <!-- Sağ butonlar: kullanan bileşen içerik projeksiyonu ile sağlar -->
+    <ion-buttons slot="end">
+      <ng-content select="[slot='end']"></ng-content>
+    </ion-buttons>
+
+  </ion-toolbar>
+
+  <!-- Alt içerik projeksiyonu: segment, searchbar vb. -->
+  <ng-content></ng-content>
+
+</ion-header>

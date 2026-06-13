@@ -1,0 +1,86 @@
+<app-header title="Notlarım" [showBack]="false" [showHome]="false"></app-header>
+
+<ion-content [fullscreen]="true">
+
+  <!-- Boş durum -->
+  <div *ngIf="groups.length === 0" class="empty-state">
+    <ion-icon name="document-text-outline"></ion-icon>
+    <p>Henüz not eklemediniz</p>
+    <span>Video izlerken kalem ikonuna tıklayarak not ekleyebilirsiniz.</span>
+  </div>
+
+  <!-- Gruplar -->
+  <div class="groups-list" *ngIf="groups.length > 0">
+    <div class="notes-row" *ngFor="let group of groups">
+
+      <div class="note-card"
+           *ngFor="let note of group.notes"
+           [style.border-top-color]="group.color">
+
+        <!-- Thumbnail -->
+        <div class="note-thumb-wrap" (click)="watchVideo(note)">
+          <img *ngIf="group.ytId"
+               [src]="'https://img.youtube.com/vi/' + group.ytId + '/hqdefault.jpg'"
+               class="note-thumb" alt="">
+          <div class="note-thumb-overlay">
+            <ion-icon name="play-circle-outline"></ion-icon>
+          </div>
+        </div>
+
+        <!-- Başlık + sil -->
+        <div class="note-card-title-row">
+          <span class="note-video-title">{{ group.title }}</span>
+          <button class="note-delete-btn" (click)="deleteNote(note)" aria-label="Sil">
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+
+        <!-- Saniye -->
+        <span class="note-time" [style.color]="group.color">
+          <ion-icon name="time-outline"></ion-icon>
+          {{ formatSecond(note.second) }}
+        </span>
+
+        <!-- Not metni -->
+        <p class="note-text">{{ note.note }}</p>
+
+        <!-- Alt: tarih + izle -->
+        <div class="note-card-bottom">
+          <span class="note-date">{{ formatDate(note.savedAt) }}</span>
+          <button class="note-watch-btn" (click)="watchVideo(note)" [style.background]="group.color">
+            İzle
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</ion-content>
+
+<!-- Bottom Nav -->
+<div class="nf-bottom-nav">
+  <button class="nf-tab" [class.active]="activeTab === 'home'" (click)="setTab('home')">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Ana Sayfa</span>
+  </button>
+  <button class="nf-tab" [class.active]="activeTab === 'notes'">
+    <ion-icon name="document-text-outline"></ion-icon>
+    <span>Notlarım</span>
+  </button>
+  <button class="nf-tab nf-tab--explore" (click)="setTab('explore')">
+    <div class="nf-explore-btn">
+      <ion-icon name="map-outline"></ion-icon>
+    </div>
+    <span>Keşfet</span>
+  </button>
+  <button class="nf-tab" (click)="setTab('downloads')">
+    <ion-icon name="download-outline"></ion-icon>
+    <span>İndirilenler</span>
+  </button>
+  <button class="nf-tab" (click)="setTab('profile')">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Profil</span>
+  </button>
+</div>

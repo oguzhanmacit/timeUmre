@@ -1,0 +1,121 @@
+<app-header
+  [title]="video?.title ?? location?.name ?? ''"
+  [showBack]="true"
+  [showHome]="true"
+  [white]="true"
+  [translucent]="false">
+</app-header>
+
+<ion-content [fullscreen]="true">
+  <div *ngIf="isLoading" class="center">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+  </div>
+
+  <div *ngIf="!isLoading && video" class="player-layout">
+
+    <!-- Video + Not Paneli -->
+    <div class="player-main">
+      <div class="video-box">
+        <button class="note-fab" [class.active]="noteOpen" (click)="toggleNote()" aria-label="Not Al">
+          <ion-icon [name]="noteOpen ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+          <span>{{ noteOpen ? 'Tamam' : 'Not Al' }}</span>
+        </button>
+
+        <ng-container *ngIf="videoInfo.type === 'youtube' && isOffline">
+          <div class="offline-msg">
+            <ion-icon name="cloud-offline-outline"></ion-icon>
+            <p>İnternet bağlantısı gerekli</p>
+            <span>YouTube videoları çevrimdışı izlenemez</span>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="videoInfo.type === 'youtube' && !isOffline">
+          <iframe
+            #playerFrame
+            *ngIf="safeEmbedUrl"
+            [src]="safeEmbedUrl"
+            class="player-frame"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            (load)="onIframeLoad()">
+          </iframe>
+        </ng-container>
+
+        <ng-container *ngIf="videoInfo.type === 'local'">
+          <div *ngIf="!mediaLoaded && !mediaError" class="center">
+            <ion-spinner name="crescent" color="primary"></ion-spinner>
+          </div>
+          <div *ngIf="mediaError" class="media-error">
+            <ion-icon name="image-outline"></ion-icon>
+            <p>Video yüklenemedi</p>
+          </div>
+          <video #localVideo *ngIf="!mediaError"
+            [src]="video.url"
+            class="player-frame"
+            [class.loaded]="mediaLoaded"
+            controls autoplay playsinline
+            (loadeddata)="onMediaLoad()"
+            (error)="onMediaError()">
+          </video>
+        </ng-container>
+
+        <ng-container *ngIf="videoInfo.type === 'unknown'">
+          <div *ngIf="!mediaLoaded && !mediaError" class="center">
+            <ion-spinner name="crescent" color="primary"></ion-spinner>
+          </div>
+          <div *ngIf="mediaError" class="media-error">
+            <ion-icon name="image-outline"></ion-icon>
+            <p>Medya yüklenemedi</p>
+          </div>
+          <img *ngIf="!mediaError"
+            [src]="video.url"
+            [alt]="video.title"
+            class="player-frame img"
+            [class.loaded]="mediaLoaded"
+            (load)="onMediaLoad()"
+            (error)="onMediaError()"
+          />
+        </ng-container>
+      </div>
+
+      <!-- Not paneli -->
+      <div class="note-panel" *ngIf="noteOpen">
+        <div class="prev-notes" *ngIf="existingNotes.length > 0">
+          <p class="prev-notes-label">Önceki Notlar</p>
+          <div class="prev-note-item" *ngFor="let n of existingNotes">
+            <span class="prev-note-time">{{ formatSecond(n.second) }}</span>
+            <span class="prev-note-text">{{ n.note }}</span>
+          </div>
+        </div>
+        <textarea
+          class="note-textarea"
+          [(ngModel)]="noteText"
+          placeholder="Yeni not ekle..."
+          rows="4">
+        </textarea>
+        <button class="note-save-btn" (click)="saveNote()">
+          <ion-icon [name]="noteSaved ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+          {{ noteSaved ? 'Kaydedildi' : 'Kaydet' }}
+        </button>
+      </div>
+    </div>
+
+    <!-- Öneri Videoları -->
+    <div class="player-recs" *ngIf="recommendations.length > 0">
+      <p class="recs-label">Önerilen Videolar</p>
+      <div class="rec-item" *ngFor="let v of recommendations" (click)="openRecommended(v.url)">
+        <div class="rec-thumb">
+          <img [src]="v.imageUrl" [alt]="v.title" loading="lazy" />
+          <span class="rec-dur" *ngIf="v.duration">{{ v.duration }}</span>
+        </div>
+        <p class="rec-title">{{ v.title }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="!isLoading && !video" class="center">
+    <ion-icon name="image-outline" style="font-size:48px;color:#555"></ion-icon>
+  </div>
+</ion-content>

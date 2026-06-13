@@ -1,0 +1,291 @@
+[
+  {
+    "id": 1,
+    "name": "Kâbe",
+    "lat": 21.4225,
+    "lng": 39.8262,
+    "description": "İslam'ın en kutsal mekânı. Müslümanların kıble yönü olarak döndüğü, hac ve umre ibadetinin merkezini oluşturan alan üzerine inşa edilmiş yapı.",
+    "historicalPeriod": "M.Ö. 2000 (Hz. İbrahim dönemi)",
+    "type": "mosque",
+    "videos": [
+      {
+        "id": 1,
+        "title": "Kâbe - Tarihi Görüntüler",
+        "year": "1979",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=y_ohCSTTW4g"
+      },
+      {
+        "id": 2,
+        "title": "Kâbe - Hava Çekimi",
+        "year": "2020",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=KfANUcmZbLg"
+      },
+      {
+        "id": 3,
+        "title": "Kâbe - Sokak Turu",
+        "year": "2023",
+        "type": "hyperlapse",
+        "url": "https://www.youtube.com/watch?v=oSonZoDpS00"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Mina",
+    "lat": 21.4133,
+    "lng": 39.8936,
+    "description": "Mekke'nin doğusunda yer alan ve hac ibadetinin önemli bir durağı olan vadi. Kurban Bayramı'nda hacıların konakladığı ve şeytan taşlama ibadetinin gerçekleştirildiği kutsal bölge.",
+    "historicalPeriod": "İslam öncesi dönemden itibaren",
+    "type": "historical",
+    "videos": [
+      {
+        "id": 1,
+        "title": "Mina Vadisi - Hac Dönemi",
+        "year": "2019",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=GTZs2OHLSbA"
+      },
+      {
+        "id": 2,
+        "title": "Mina - Sokak Turu",
+        "year": "2023",
+        "type": "hyperlapse",
+        "url": "https://www.youtube.com/watch?v=oSonZoDpS00"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Arafat Dağı",
+    "lat": 21.3549,
+    "lng": 39.9845,
+    "description": "Hac ibadetinin en önemli rüknü olan 'vakfe' ibadetinin yerine getirildiği dağ. Hz. Âdem ile Hz. Havva'nın cennetten indikten sonra buluştuğu kutsal mekân. Cebelü'r-Rahme (Merhamet Dağı) olarak da bilinir.",
+    "historicalPeriod": "Hz. Âdem döneminden itibaren",
+    "type": "mountain",
+    "videos": [
+      {
+        "id": 1,
+        "title": "Arafat",
+        "year": "2021",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=_8h8GP6yFlg"
+      },
+      {
+        "id": 2,
+        "title": "Arafat Dağı - Sokak Turu",
+        "year": "2023",
+        "type": "hyperlapse",
+        "url": "https://www.youtube.com/watch?v=oSonZoDpS00"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "Müzdelife",
+    "lat": 21.3772,
+    "lng": 39.9282,
+    "description": "Arafat ile Mina arasında yer alan, hacıların Arafat vakfesinin ardından geceledikleri kutsal bölge. Hacıların sabah namazını burada kılıp şeytan taşlamak için çakıl taşları topladığı mekân.",
+    "historicalPeriod": "İslam öncesi dönemden itibaren",
+    "type": "historical",
+    "videos": [
+      {
+        "id": 1,
+        "title": "Müzdelife - Gece Görüntüleri",
+        "year": "2019",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=KfANUcmZbLg"
+      },
+      {
+        "id": 2,
+        "title": "Müzdelife - Sokak Turu",
+        "year": "2023",
+        "type": "hyperlapse",
+        "url": "https://www.youtube.com/watch?v=oSonZoDpS00"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Hira Mağarası",
+    "lat": 21.4579,
+    "lng": 39.8585,
+    "description": "Hz. Muhammed'e ilk vahyin geldiği kutsal mağara. Nur Dağı'nın zirvesinde yer alan bu mağarada Peygamber, vahiyden önce uzun süre ibadet ve tefekkürle geçirirdi. İlk inen ayet 'Alak Suresi'nin ilk beş ayetidir.",
+    "historicalPeriod": "M. 610 (İlk vahiy yılı)",
+    "type": "cave",
+    "videos": [
+      {
+        "id": 1,
+        "title": "Hira Mağarası - Belgesel",
+        "year": "2018",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=4w3cVQECMMA"
+      },
+      {
+        "id": 3,
+        "title": "Hira Mağarası İçi",
+        "year": "2018",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=4aiIXBsIJv8"
+      },
+      {
+        "id": 2,
+        "title": "Hira Mağarası Yolu",
+        "year": "2023",
+        "type": "hyperlapse",
+        "url": "https://www.youtube.com/watch?v=raSxjll9g7Y&t=637s"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Hacer-i Esved",
+    "lat": 21.4222,
+    "lng": 39.8259,
+    "description": "Kâbe'nin güneydoğu köşesine yerleştirilmiş kutsal taş. Hz. İbrahim'in Kâbe'yi inşa ederken tavafa başlangıç noktası olarak belirlediği cennet taşı. Hacılar ve umreciler tavafa bu taşı selamlayarak başlarlar.",
+    "historicalPeriod": "Hz. İbrahim dönemi - M.Ö. 2000",
+    "type": "historical",
+    "videos": []
+  },
+  {
+    "id": 7,
+    "name": "Mültezem",
+    "lat": 21.4224,
+    "lng": 39.8261,
+    "description": "Kâbe'nin kapısı ile Hacer-i Esved arasındaki yaklaşık 2 metrelik kutsal bölüm. 'Sarılınan yer' anlamına geldiği bu mekânda dua edilmesi tavsiye edilmektedir. Burada yapılan duanın kabul olduğuna dair rivayetler mevcuttur.",
+    "historicalPeriod": "İslam öncesi dönemden itibaren",
+    "type": "historical",
+    "videos": []
+  },
+  {
+    "id": 8,
+    "name": "Makam-ı İbrahim",
+    "lat": 21.4227,
+    "lng": 39.8265,
+    "description": "Hz. İbrahim'in Kâbe'yi inşa ederken üzerinde durduğu kutsal taş. Üzerinde Hz. İbrahim'in ayak izleri bulunan bu taş, günümüzde altın bir kafes içinde korunmaktadır. Tavaf sonrası burada iki rekât namaz kılmak sünnettir.",
+    "historicalPeriod": "Hz. İbrahim dönemi - M.Ö. 2000",
+    "type": "historical",
+    "videos": []
+  },
+  {
+    "id": 9,
+    "name": "Zemzem Kuyusu",
+    "lat": 21.4229,
+    "lng": 39.827,
+    "description": "Mekke'nin 1880 yılındaki yapısını canlandıran bu video'da Kâbe çevresindeki önemli mekanlar tanıtılmaktadır.",
+    "historicalPeriod": "Hz. İbrahim dönemi - M.Ö. 2000",
+    "type": "historical",
+    "videos": []
+  },
+  {
+    "id": 10,
+    "name": "Safa ve Merve",
+    "lat": 21.4199,
+    "lng": 39.8273,
+    "description": "Hz. Hacer'in oğlu Hz. İsmail için su ararken koştuğu iki tepe. Umre ve hac ibadetinin farz rüknü olan sa'y ibadeti bu iki tepe arasında yedi kez gidip gelerek yerine getirilir. Günümüzde Mescid-i Haram bünyesinde kapalı bir koridorla birbirine bağlanmıştır.",
+    "historicalPeriod": "Hz. İbrahim dönemi - M.Ö. 2000",
+    "type": "historical",
+    "videos": []
+  },
+  {
+    "id": 11,
+    "name": "Cennetü'l-Mualla",
+    "lat": 21.4327,
+    "lng": 39.8239,
+    "description": "Mekke'nin kuzeyinde yer alan tarihi mezarlık. Hz. Hatice, Hz. Abdülmuttalib ve Hz. Peygamber'in pek çok yakını burada yatmaktadır. Müslümanlar için derin manevi öneme sahip bu mezarlık, ziyaret edilen önemli kutsal mekânlardan biridir.",
+    "historicalPeriod": "İslam'ın ilk dönemlerinden itibaren",
+    "type": "historical",
+    "videos": []
+  },
+  {
+    "id": 12,
+    "name": "Mevlid-i Nebi",
+    "lat": 21.4262,
+    "lng": 39.821,
+    "description": "Hz. Muhammed'in doğduğu yere işaret eden kutsal mekân. Günümüzde Mekke Kütüphanesi olarak kullanılan bu yapı, Hz. Peygamber'in doğum yerine inşa edilmiştir ve pek çok ziyaretçi tarafından ziyaret edilmektedir.",
+    "historicalPeriod": "M. 570 (Hz. Peygamber'in doğum yılı)",
+    "type": "historical",
+    "videos": []
+  },
+  {
+    "id": 13,
+    "name": "Cin Mescidi",
+    "lat": 21.4255,
+    "lng": 39.8294,
+    "description": "Hz. Peygamber'in Kuran okurken bir grup cinin Müslüman olduğuna dair rivayete atfen inşa edilen mescit. Kâbe'nin kuzeyinde yer alan bu mescit, ziyaretçilerin uğradığı önemli bir noktadır.",
+    "historicalPeriod": "Hz. Peygamber dönemi - M. 7. yüzyıl",
+    "type": "mosque",
+    "videos": []
+  },
+  {
+    "id": 14,
+    "name": "Sevr Mağarası",
+    "lat": 21.3873,
+    "lng": 39.8049,
+    "description": "Hz. Peygamber ile Hz. Ebu Bekir'in hicret yolculuğunda Mekkelilerin takibinden saklandıkları kutsal mağara. Üç gün burada kaldıktan sonra Medine'ye hareket etmişlerdir. Mekke'nin güneyindeki Sevr Dağı'nın zirvesinde yer almaktadır.",
+    "historicalPeriod": "M. 622 (Hicret yılı)",
+    "type": "cave",
+    "videos": []
+  },
+  {
+    "id": 15,
+    "name": "Mescid-i Hayf",
+    "lat": 21.4063,
+    "lng": 39.8924,
+    "description": "Mina'da bulunan büyük mescit. Hz. Peygamber başta olmak üzere pek çok peygamberin burada namaz kıldığına inanılmaktadır. Hac döneminde milyonlarca hacının namaz kıldığı ve ibadet ettiği önemli bir mekân.",
+    "historicalPeriod": "İslam'ın ilk dönemlerinden itibaren",
+    "type": "mosque",
+    "videos": []
+  },
+  {
+    "id": 16,
+    "name": "Akabe",
+    "lat": 21.4134,
+    "lng": 39.891,
+    "description": "Hz. Peygamber'in Medineli Müslümanlarla biat ettiği kutsal yer. Birinci ve İkinci Akabe Biatları burada gerçekleşmiş, böylece Medine'ye hicretin temelleri atılmıştır. Mina sınırları içindedir.",
+    "historicalPeriod": "M. 621-622 (Akabe Biatları)",
+    "type": "historical",
+    "videos": []
+  },
+  {
+    "id": 17,
+    "name": "Meş'aru'l-Haram",
+    "lat": 21.3906,
+    "lng": 39.9358,
+    "description": "Müzdelife'de bulunan kutsal mescit ve anıt. Hacıların Arafat'tan döndükten sonra sabaha kadar bekleyip sabah namazını kıldıkları ve dua ettikleri yer. Kur'an-ı Kerim'de 'Meş'aru'l-Haram' adıyla zikredilmektedir.",
+    "historicalPeriod": "İslam öncesi dönemden itibaren",
+    "type": "mosque",
+    "videos": []
+  },
+  {
+    "id": 18,
+    "name": "Nemire Mescidi",
+    "lat": 21.3558,
+    "lng": 39.9812,
+    "description": "Arafat yakınlarında, Hz. Peygamber'in Veda Hutbesi'ni okuduğu yere inşa edilen büyük mescit. Hac döneminde milyonlarca hacının ziyaret ettiği bu mescit, İslam dünyasının en büyük camilerinden biridir.",
+    "historicalPeriod": "M. 632 (Veda Haccı yılı)",
+    "type": "mosque",
+    "videos": []
+  },
+  {
+    "id": 19,
+    "name": "Cirane",
+    "lat": 21.4698,
+    "lng": 39.9037,
+    "description": "Hz. Peygamber'in Taif seferinden dönerken ganimet paylaştıktan sonra ihrama girdiği ve umre yaptığı kutsal yer. Mekke'nin kuzeydoğusunda bir mikat noktası olarak kabul edilmektedir.",
+    "historicalPeriod": "M. 630 (Mekke'nin Fethi sonrası)",
+    "type": "historical",
+    "videos": []
+  },
+  {
+    "id": 20,
+    "name": "Hudeybiye",
+    "lat": 21.4434,
+    "lng": 39.5516,
+    "description": "Hz. Peygamber ile Mekkeliler arasında barış antlaşmasının imzalandığı tarihi yer. Hudeybiye Antlaşması Müslümanların Kâbe'yi ziyaret hakkını güvence altına almış ve İslam'ın yayılmasına zemin hazırlamıştır.",
+    "historicalPeriod": "M. 628 (Hudeybiye Antlaşması)",
+    "type": "historical",
+    "videos": []
+  }
+]

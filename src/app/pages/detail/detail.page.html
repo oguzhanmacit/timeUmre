@@ -1,0 +1,142 @@
+<app-header
+  [title]="location?.name ?? 'Yükleniyor…'"
+  [showBack]="true"
+  [showHome]="true"
+  [white]="true"
+  [translucent]="false"
+>
+</app-header>
+
+<ion-content>
+  <div *ngIf="isLoading" class="loading-state">
+    <ion-spinner name="crescent" color="primary"></ion-spinner>
+  </div>
+
+  <ng-container *ngIf="!isLoading && location">
+    <!-- ── BİLGİ BÖLÜMÜ ── -->
+    <div class="info-body">
+      <div class="chips-row">
+        <ion-chip [color]="chipColor(location.type)" outline>
+          <ion-label>{{ typeLabel(location.type) }}</ion-label>
+        </ion-chip>
+        <ion-chip color="primary" outline>
+          <ion-icon name="time-outline"></ion-icon>
+          <ion-label>{{ location.historicalPeriod }}</ion-label>
+        </ion-chip>
+      </div>
+
+      <h1 class="loc-title">{{ location.name }}</h1>
+
+      <section class="section">
+        <h3 class="section-title">Hakkında</h3>
+        <p class="loc-desc">{{ location.description }}</p>
+      </section>
+
+      <section class="section">
+        <h3 class="section-title">Nasıl Giderim?</h3>
+
+        <!-- Hyperlapse videoları -->
+        <div
+          class="hl-card"
+          *ngFor="let card of hyperlapseCards"
+          (click)="playVideo(card.video)"
+        >
+          <div class="hl-thumb">
+            <img
+              *ngIf="card.thumbnail"
+              [src]="card.thumbnail"
+              [alt]="card.video.title"
+              class="thumb-img"
+            />
+            <div *ngIf="!card.thumbnail" class="thumb-placeholder">
+              <ion-icon name="videocam-outline"></ion-icon>
+            </div>
+            <div class="play-btn-sm">
+              <ion-icon name="play-circle-outline"></ion-icon>
+            </div>
+            <span class="hyperlapse-badge">⚡ Nasıl Giderim ?</span>
+          </div>
+          <div class="hl-info">
+            <p class="hl-title">{{ card.video.title }}</p>
+            <span class="hl-year">
+              <ion-icon name="calendar-outline"></ion-icon>
+              {{ card.video.year }}
+            </span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ── VİDEOLAR ── -->
+    <div class="videos-section" *ngIf="standardCards.length > 0">
+      <h3 class="videos-heading">
+        <ion-icon name="videocam-outline"></ion-icon>
+        Videolar
+        <span class="video-count">{{ standardCards.length }}</span>
+      </h3>
+
+      <!-- Yatay kaydırmalı liste -->
+      <div class="video-list">
+        <div
+          class="video-card"
+          *ngFor="let card of standardCards"
+          (click)="playVideo(card.video)"
+        >
+          <!-- Küçük resim -->
+          <div class="thumb-wrap">
+            <img
+              *ngIf="card.thumbnail"
+              [src]="card.thumbnail"
+              [alt]="card.video.title"
+              class="thumb-img"
+            />
+            <div *ngIf="!card.thumbnail" class="thumb-placeholder">
+              <ion-icon name="videocam-outline"></ion-icon>
+            </div>
+            <div class="play-btn">
+              <ion-icon name="play-circle-outline"></ion-icon>
+            </div>
+          </div>
+
+          <!-- Başlık + Yıl -->
+          <p class="video-title">{{ card.video.title }}</p>
+          <span class="video-year">
+            <ion-icon name="calendar-outline"></ion-icon>
+            {{ card.video.year }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video yok -->
+    <div
+      *ngIf="standardCards.length === 0 && hyperlapseCards.length === 0"
+      class="no-video"
+    >
+      <div class="placeholder-glow"></div>
+      <div class="placeholder-body">
+        <ion-icon name="videocam-outline" class="placeholder-icon"></ion-icon>
+        <p class="placeholder-label">Medya Hazırlanıyor</p>
+        <p class="placeholder-sub">Bu mekâna ait video yakında eklenecek</p>
+      </div>
+      <span class="placeholder-badge">YAKINDA</span>
+    </div>
+  </ng-container>
+
+  <!-- Video player overlay -->
+  <app-video-player
+    *ngIf="activeVideo"
+    [url]="activeVideo.url"
+    [title]="activeVideo.title"
+    (closed)="closePlayer()"
+  >
+  </app-video-player>
+
+  <div *ngIf="!isLoading && !location" class="loading-state">
+    <ion-icon
+      name="location-outline"
+      style="font-size: 48px; color: #ccc"
+    ></ion-icon>
+    <p style="color: #888; margin-top: 8px">Lokasyon bulunamadı.</p>
+  </div>
+</ion-content>

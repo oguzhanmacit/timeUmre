@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+  <!-- Ana gövde -->
+  <rect x="4" y="10" width="40" height="34" rx="1" fill="#111"/>
+  <rect x="4" y="10" width="40" height="34" rx="1" fill="none" stroke="#c9a84c" stroke-width="1.2"/>
+
+  <!-- Altın Kisve bandı -->
+  <rect x="4" y="10" width="40" height="11" rx="1" fill="#c9a84c"/>
+  <rect x="4" y="17" width="40" height="4" fill="#b8960f"/>
+
+  <!-- Kisve üzerinde dekoratif çizgiler -->
+  <line x1="8"  y1="13" x2="40" y2="13" stroke="#7a5c00" stroke-width="0.7" opacity="0.6"/>
+  <line x1="8"  y1="19" x2="40" y2="19" stroke="#7a5c00" stroke-width="0.7" opacity="0.6"/>
+
+  <!-- Kapı çerçevesi (altın) -->
+  <rect x="16" y="26" width="16" height="18" rx="1.5" fill="#c9a84c"/>
+
+  <!-- Kapı kemeri -->
+  <path d="M16 26 Q24 20 32 26 Z" fill="#c9a84c"/>
+
+  <!-- Kapı içi (koyu) -->
+  <rect x="17.5" y="27.5" width="13" height="16" rx="1" fill="#1a1200"/>
+  <path d="M17.5 27.5 Q24 22.5 30.5 27.5" fill="#1a1200"/>
+
+  <!-- Kapı ortasında dikey çubuk -->
+  <line x1="24" y1="28" x2="24" y2="43" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- Hacer-i Esved (sağ köşe taşı) -->
+  <circle cx="44" cy="21" r="2.2" fill="#c9a84c" opacity="0.75"/>
+</svg>

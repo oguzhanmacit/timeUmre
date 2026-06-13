@@ -1,0 +1,58 @@
+<app-header
+  title="Lokasyonlar"
+  [showBack]="true"
+  [showHome]="true"
+  [white]="true"
+  [translucent]="false">
+  <!-- ng-content ile header içine ekleniyor -->
+  <ion-searchbar
+    placeholder="Lokasyon ara…"
+    [value]="searchQuery"
+    (ionInput)="onSearchChange($any($event))"
+    animated>
+  </ion-searchbar>
+</app-header>
+
+<ion-content>
+
+  <div *ngIf="filteredLocations.length === 0" class="empty-state">
+    <ion-icon name="location-outline"></ion-icon>
+    <p>Sonuç bulunamadı</p>
+  </div>
+
+  <ion-list *ngIf="filteredLocations.length > 0">
+    <ion-item-divider sticky>
+      <ion-label>
+        Mekke Kutsal Mekânları
+        <span class="count">({{ filteredLocations.length }})</span>
+      </ion-label>
+    </ion-item-divider>
+
+    <ion-item
+      *ngFor="let loc of filteredLocations"
+      button
+      detail="false"
+      (click)="goToDetail(loc)">
+
+      <div slot="start" class="loc-icon" [ngClass]="'type-' + loc.type">
+        <ion-icon [name]="getIconName(loc.type)"></ion-icon>
+      </div>
+
+      <ion-label>
+        <h2>{{ loc.name }}</h2>
+        <p class="period">{{ loc.historicalPeriod }}</p>
+        <p class="desc">{{ loc.description.substring(0, 80) }}…</p>
+      </ion-label>
+
+      <div slot="end" class="item-end">
+        <span *ngIf="distanceTo(loc) as dist" class="distance-badge">
+          <ion-icon name="walk-outline"></ion-icon>
+          {{ dist }}
+        </span>
+        <ion-icon name="chevron-forward-outline" class="item-chevron"></ion-icon>
+      </div>
+
+    </ion-item>
+  </ion-list>
+
+</ion-content>

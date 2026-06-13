@@ -1,0 +1,51 @@
+// TimeUmre — İslami Yeşil & Altın Renk Paleti
+:root {
+  --ion-color-primary:           #1a7a4a;
+  --ion-color-primary-rgb:       26,122,74;
+  --ion-color-primary-contrast:  #ffffff;
+  --ion-color-primary-shade:     #176641;
+  --ion-color-primary-tint:      #31875c;
+
+  --ion-color-secondary:         #c17f24;
+  --ion-color-secondary-rgb:     193,127,36;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-shade:   #a96f1f;
+  --ion-color-secondary-tint:    #c78c3a;
+
+  --ion-color-tertiary:          #7b5ea7;
+  --ion-color-tertiary-rgb:      123,94,167;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-shade:    #6c5293;
+  --ion-color-tertiary-tint:     #886eb0;
+
+  --ion-color-success:           #2dd36f;
+  --ion-color-warning:           #ffc409;
+  --ion-color-danger:            #eb445a;
+  --ion-color-medium:            #92949c;
+  --ion-color-light:             #f4f5f8;
+
+  --ion-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --ion-background-color: #f9fafb;
+  --ion-item-background: #ffffff;
+
+  --tu-mosque:    #1a7a4a;
+  --tu-historical:#c17f24;
+  --tu-mountain:  #7b5ea7;
+  --tu-cave:      #5a6e8c;
+}
+
+// Dark mode
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #121212;
+    --ion-background-color-rgb: 18,18,18;
+    --ion-text-color: #ffffff;
+    --ion-item-background: #1e1e1e;
+    --ion-toolbar-background: #1a7a4a;
+    --ion-color-light: #222428;
+    --ion-color-light-rgb: 34,36,40;
+    --ion-color-light-contrast: #ffffff;
+    --ion-color-light-shade: #1e2023;
+    --ion-color-light-tint: #383a3e;
+  }
+}

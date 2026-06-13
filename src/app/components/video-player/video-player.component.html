@@ -1,0 +1,68 @@
+<div class="overlay" (click)="close()">
+  <div class="player-sheet" #playerSheet (click)="$event.stopPropagation()">
+
+    <!-- Üst bar: başlık + not + kapat -->
+    <div class="player-bar">
+      <span class="player-title">{{ title }}</span>
+      <button class="note-btn" [class.active]="noteOpen" (click)="toggleNote()" aria-label="Not Al">
+        <ion-icon name="create-outline"></ion-icon>
+        <span>Not Al</span>
+      </button>
+      <button class="close-btn" (click)="close()" aria-label="Kapat">
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Video alanı -->
+    <div class="player-body">
+
+      <div *ngIf="!isReady" class="center">
+        <ion-spinner name="crescent" color="light"></ion-spinner>
+      </div>
+
+      <div *ngIf="isReady && isOffline" class="offline-msg">
+        <ion-icon name="cloud-offline-outline"></ion-icon>
+        <p>İnternet bağlantısı gerekli</p>
+        <span>YouTube videoları çevrimdışı izlenemez</span>
+      </div>
+
+      <iframe
+        #playerIframe
+        *ngIf="isReady && !isOffline && safeUrl"
+        [src]="safeUrl"
+        class="player-iframe"
+        (load)="onIframeLoad()"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        allowfullscreen>
+      </iframe>
+
+    </div>
+
+    <!-- Not alanı -->
+    <div class="note-section" #noteArea *ngIf="noteOpen">
+
+      <!-- Önceki notlar -->
+      <div class="prev-notes" *ngIf="existingNotes.length > 0">
+        <p class="prev-notes-label">Önceki Notlar</p>
+        <div class="prev-note-item" *ngFor="let n of existingNotes">
+          <span class="prev-note-time">{{ formatSecond(n.second) }}</span>
+          <span class="prev-note-text">{{ n.note }}</span>
+        </div>
+      </div>
+
+      <!-- Yeni not -->
+      <textarea
+        class="note-textarea"
+        [(ngModel)]="noteText"
+        placeholder="Yeni not ekle..."
+        rows="3">
+      </textarea>
+      <button class="note-save-btn" (click)="saveNote()">
+        <ion-icon [name]="noteSaved ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+        {{ noteSaved ? 'Kaydedildi' : 'Kaydet' }}
+      </button>
+    </div>
+
+  </div>
+</div>

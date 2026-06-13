@@ -1,0 +1,473 @@
+<ion-content
+  [fullscreen]="true"
+  [scrollEvents]="true"
+  (ionScroll)="onScroll($any($event))"
+>
+  <!-- Sticky şeffaf header -->
+  <div class="nf-header" [class.nf-header--scrolled]="headerScrolled">
+    <div class="nf-header-top">
+      <div class="nf-logo">
+        <ion-icon name="compass-outline"></ion-icon>
+        <span>Umre Rehberi</span>
+      </div>
+      <button class="nf-theme-toggle" (click)="theme.toggle()">
+        <ion-icon [name]="theme.isDark ? 'sunny-outline' : 'moon-outline'"></ion-icon>
+      </button>
+    </div>
+    <div class="nf-nav">
+      <!-- Umre trigger -->
+      <div class="nf-nav-dropdown">
+        <button
+          class="nf-nav-item"
+          [class.active]="activeNav === 'umre'"
+          (click)="toggleUmreDropdown($event)"
+        >
+          Umre
+          <ion-icon
+            name="chevron-down-outline"
+            class="nf-nav-arrow"
+            [class.open]="umreDropdownOpen"
+          ></ion-icon>
+        </button>
+      </div>
+
+      <!-- Nasıl Giderim trigger -->
+      <div class="nf-nav-dropdown">
+        <button
+          class="nf-nav-item"
+          [class.active]="activeNav === 'giderim'"
+          (click)="toggleGiderimDropdown($event)"
+        >
+          Nasıl Giderim?
+          <ion-icon
+            name="chevron-down-outline"
+            class="nf-nav-arrow"
+            [class.open]="giderimDropdownOpen"
+          ></ion-icon>
+        </button>
+      </div>
+
+      <!-- <button class="nf-nav-item" [class.active]="activeNav === 'alisveris'" (click)="goNav('alisveris')">Alışveriş</button> -->
+    </div>
+  </div>
+
+  <!-- Hero banner -->
+  <div
+    class="nf-hero"
+    [style.backgroundImage]="'url(' + featured.imageUrl + ')'"
+  >
+    <div class="nf-hero-gradient"></div>
+    <div class="nf-hero-content">
+      <p class="nf-hero-tag">ÖNE ÇIKAN</p>
+      <h1 class="nf-hero-title">{{ featured.title }}</h1>
+      <h2 class="nf-hero-subtitle">{{ featured.subtitle }}</h2>
+      <p class="nf-hero-desc">{{ featured.description }}</p>
+      <div class="nf-hero-btns">
+        <button class="btn-play" (click)="playFeatured()">
+          &#9654;&nbsp;OYNAT
+        </button>
+        <!-- <button class="btn-list">&#10003;&nbsp;LİSTEME EKLE</button> -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Content rows -->
+  <div class="nf-content">
+    <!-- Hikaye Kartları -->
+    <div class="nf-stories-row">
+      <!-- Umre Adımları -->
+      <div class="nf-story-card" (click)="openUmreChecklist()">
+        <div class="nf-story-ring">
+          <svg class="nf-story-svg" viewBox="0 0 100 100">
+            <circle class="nf-story-track" cx="50" cy="50" r="44" />
+            <circle
+              class="nf-story-progress"
+              cx="50"
+              cy="50"
+              r="44"
+              [style.stroke-dashoffset]="276 - (umreOrani * 276)"
+            />
+          </svg>
+          <div class="nf-story-inner">
+            <img src="assets/ic-kaabe.svg" alt="Kabe" class="nf-story-kaabe" />
+          </div>
+        </div>
+        <p class="nf-story-label">Umre Adımları</p>
+        <p class="nf-story-sub">{{ umreTamamlanan }}/{{ umreItems2.length }}</p>
+      </div>
+
+      <!-- Resmi İşlemler -->
+      <div class="nf-story-card" (click)="openResmiChecklist()">
+        <div class="nf-story-ring nf-story-ring--gold">
+          <svg class="nf-story-svg" viewBox="0 0 100 100">
+            <circle class="nf-story-track" cx="50" cy="50" r="44" />
+            <circle
+              class="nf-story-progress"
+              cx="50"
+              cy="50"
+              r="44"
+              [style.stroke-dashoffset]="276 - (resmiOrani * 276)"
+            />
+          </svg>
+          <div class="nf-story-inner">
+            <ion-icon
+              name="document-text-outline"
+              class="nf-story-doc-icon"
+            ></ion-icon>
+          </div>
+        </div>
+        <p class="nf-story-label">Resmi İşlemler</p>
+        <p class="nf-story-sub">
+          {{ resmiTamamlanan }}/{{ resmiItems.length }}
+        </p>
+      </div>
+
+      <!-- Bavul -->
+      <div class="nf-story-card" (click)="openBavulChecklist()">
+        <div class="nf-story-ring nf-story-ring--blue">
+          <svg class="nf-story-svg" viewBox="0 0 100 100">
+            <circle class="nf-story-track" cx="50" cy="50" r="44" />
+            <circle
+              class="nf-story-progress"
+              cx="50"
+              cy="50"
+              r="44"
+              [style.stroke-dashoffset]="276 - (bavulOrani * 276)"
+            />
+          </svg>
+          <div class="nf-story-inner">
+            <ion-icon name="bag-outline" class="nf-story-bag-icon"></ion-icon>
+          </div>
+        </div>
+        <p class="nf-story-label">Bavul</p>
+        <p class="nf-story-sub">
+          {{ bavulTamamlanan }}/{{ bavulItems.length }}
+        </p>
+      </div>
+    </div>
+
+    <div class="nf-row" *ngIf="continueWatchingItems.length > 0">
+      <h3 class="nf-row-title nf-row-title--continue">İZLEMEYE DEVAM ET</h3>
+      <div class="nf-row-scroll">
+        <div
+          class="nf-card"
+          *ngFor="let item of continueWatchingItems"
+          (click)="continueWatching(item)"
+        >
+          <div class="nf-card-img">
+            <img [src]="item.imageUrl" [alt]="item.title" loading="lazy" />
+            <div class="nf-card-badge nf-card-badge--play">
+              <ion-icon name="play-outline"></ion-icon>
+            </div>
+            <button class="nf-card-dismiss" (click)="removeContinueWatching(item, $event)" aria-label="Listeden kaldır">
+              <ion-icon name="close-outline"></ion-icon>
+            </button>
+            <div class="nf-watch-bar">
+              <div class="nf-watch-fill" [style.width.%]="getWatchFillPct(item.watchUrl)"></div>
+            </div>
+          </div>
+          <p class="nf-card-title">{{ item.title }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="nf-row" *ngFor="let row of rows">
+      <h3 class="nf-row-title">{{ row.title }}</h3>
+      <div class="nf-row-scroll">
+        <div
+          class="nf-card"
+          *ngFor="let item of row.items"
+          (click)="openItem(item)"
+        >
+          <div class="nf-card-img">
+            <img [src]="item.imageUrl" [alt]="item.title" loading="lazy" />
+            <div class="nf-card-badge" *ngIf="!item.label">
+              <ion-icon name="compass-outline"></ion-icon>
+            </div>
+            <span class="nf-card-label" *ngIf="item.label">{{ item.label }}</span>
+            <span class="nf-card-dur" *ngIf="item.duration">{{ item.duration }}</span>
+            <div class="nf-watch-bar" *ngIf="getWatchEntry(item.watchUrl) as we">
+              <div class="nf-watch-fill" [class.nf-watch-fill--done]="we.completed" [style.width.%]="getWatchFillPct(item.watchUrl)"></div>
+            </div>
+          </div>
+          <p class="nf-card-title">{{ item.title }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<!-- Umre tam ekran dropdown -->
+<div
+  class="nf-dropdown-menu"
+  [class.visible]="umreDropdownOpen"
+  (click)="closeDropdown()"
+>
+  <button class="nf-dropdown-close" (click)="closeDropdown()">
+    <ion-icon name="chevron-down-outline"></ion-icon>
+  </button>
+  <button
+    class="nf-dropdown-item"
+    *ngFor="let item of umreItems"
+    (click)="$event.stopPropagation(); selectUmreItem(item)"
+  >
+    {{ item.label }}
+    <ion-icon
+      *ngIf="item.videoUrl"
+      name="play-outline"
+      class="nf-dropdown-item-icon"
+    ></ion-icon>
+  </button>
+</div>
+
+<!-- Nasıl Giderim tam ekran dropdown -->
+<div
+  class="nf-dropdown-menu"
+  [class.visible]="giderimDropdownOpen"
+  (click)="closeDropdown()"
+>
+  <button class="nf-dropdown-close" (click)="closeDropdown()">
+    <ion-icon name="chevron-down-outline"></ion-icon>
+  </button>
+  <button
+    class="nf-dropdown-item"
+    *ngFor="let item of giderimItems"
+    (click)="$event.stopPropagation(); selectGiderimItem(item)"
+  >
+    {{ item.label }}
+    <ion-icon
+      *ngIf="item.route"
+      name="map-outline"
+      class="nf-dropdown-item-icon"
+    ></ion-icon>
+    <ion-icon
+      *ngIf="item.videoUrl || item.videos?.length"
+      name="play-outline"
+      class="nf-dropdown-item-icon"
+    ></ion-icon>
+  </button>
+</div>
+
+<!-- Backdrop -->
+<div
+  class="nf-dropdown-backdrop"
+  *ngIf="umreDropdownOpen || giderimDropdownOpen"
+  (click)="closeDropdown()"
+></div>
+
+<!-- Video Picker backdrop -->
+<div
+  class="nf-picker-backdrop"
+  [class.visible]="videoPickerOpen"
+  (click)="closeVideoPicker()"
+></div>
+
+<!-- Video Picker sheet -->
+<div class="nf-picker-sheet" [class.open]="videoPickerOpen">
+  <div class="nf-picker-handle"></div>
+  <p class="nf-picker-title">Video Seçin</p>
+  <button
+    class="nf-picker-item"
+    *ngFor="let v of videoPickerItems"
+    (click)="selectPickerVideo(v.url)"
+  >
+    <ion-icon name="play-outline"></ion-icon>
+    {{ v.label }}
+  </button>
+</div>
+
+<!-- Detail Bottom Sheet backdrop -->
+<div
+  class="nf-sheet-backdrop"
+  [class.visible]="sheetOpen"
+  (click)="closeSheet()"
+></div>
+
+<!-- Detail Bottom Sheet -->
+<div class="nf-sheet" [class.open]="sheetOpen">
+  <div class="nf-sheet-handle"></div>
+  <div
+    class="nf-sheet-hero"
+    [style.backgroundImage]="sheetItem ? 'url(' + sheetItem.imageUrl + ')' : ''"
+  >
+    <div class="nf-sheet-hero-gradient"></div>
+    <button class="nf-sheet-close" (click)="closeSheet()">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+  </div>
+  <div class="nf-sheet-body" *ngIf="sheetItem">
+    <h2 class="nf-sheet-title">{{ sheetItem.title }}</h2>
+    <div class="nf-sheet-meta">
+      <span class="nf-sheet-match">97% Eşleşme</span>
+      <span class="nf-sheet-year" *ngIf="sheetLocation"
+        >{{ sheetLocation.historicalPeriod }}</span
+      >
+    </div>
+    <p class="nf-sheet-desc" *ngIf="sheetLocation">
+      {{ sheetLocation.description }}
+    </p>
+    <p
+      class="nf-sheet-desc nf-sheet-desc--generic"
+      *ngIf="!sheetLocation && !sheetLoading"
+    >
+      Kutsal topraklardaki bu önemli mekânı keşfetmek için rehber içeriklerimize
+      göz atın.
+    </p>
+    <div class="nf-sheet-loading" *ngIf="sheetLoading">
+      <div class="nf-sheet-spinner"></div>
+    </div>
+    <button
+      class="nf-sheet-play-btn"
+      (click)="playSheet()"
+      *ngIf="!sheetItem.videos?.length"
+    >
+      <ion-icon name="play-outline"></ion-icon>
+      Oynat
+    </button>
+
+    <!-- Netflix-style episode list -->
+    <div class="nf-episodes" *ngIf="sheetItem.videos?.length">
+      <div class="nf-episodes-header">
+        <span class="nf-episodes-title">Videolar</span>
+        <span class="nf-episodes-count"
+          >{{ sheetItem.videos!.length }} İçerik</span
+        >
+      </div>
+      <div
+        class="nf-episode-row"
+        *ngFor="let v of sheetItem.videos; let i = index"
+        (click)="playSheetVideo(v.url)"
+      >
+        <span class="nf-episode-num">{{ i + 1 }}</span>
+        <div class="nf-episode-info">
+          <p class="nf-episode-label">{{ v.label }}</p>
+          <span class="nf-episode-watched" *ngIf="getWatchEntry(v.url) as we">
+            <ng-container *ngIf="we.completed">✓ İzlendi</ng-container>
+            <ng-container *ngIf="!we.completed">● Devam</ng-container>
+          </span>
+        </div>
+        <ion-icon name="play-circle-outline" class="nf-episode-play"></ion-icon>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Checklist backdrop -->
+<div
+  class="nf-checklist-backdrop"
+  [class.visible]="checklistOpen"
+  (click)="closeChecklist()"
+></div>
+
+<!-- Checklist modal -->
+<div class="nf-checklist-modal" [class.open]="checklistOpen">
+  <div class="nf-checklist-handle"></div>
+  <div class="nf-checklist-header">
+    <div>
+      <h3 class="nf-checklist-title">{{ checklistTitle }}</h3>
+      <p class="nf-checklist-sub">
+        {{ checklistTamamlananSayisi }} / {{ checklistItems.length }} tamamlandı
+      </p>
+    </div>
+    <button class="nf-checklist-close" (click)="closeChecklist()">
+      <ion-icon name="close-outline"></ion-icon>
+    </button>
+  </div>
+  <div class="nf-checklist-progress-wrap">
+    <div class="nf-checklist-progress-track">
+      <div
+        class="nf-checklist-progress-fill"
+        [style.width]="(checklistOrani * 100) + '%'"
+      ></div>
+    </div>
+  </div>
+  <div class="nf-checklist-list">
+    <ng-container *ngFor="let item of checklistItems; let i = index">
+      <div
+        class="nf-checklist-section-header nf-checklist-section-header--blue"
+        *ngIf="item.blue && !checklistItems[i-1]?.blue"
+        (click)="blueSectionOpen = !blueSectionOpen"
+      >
+        <ion-icon
+          [name]="blueSectionOpen ? 'chevron-down-outline' : 'chevron-forward-outline'"
+          class="nf-section-chevron"
+        ></ion-icon>
+        <span>Erkeklere Özel</span>
+        <span class="nf-section-line"></span>
+      </div>
+      <div
+        class="nf-checklist-section-header"
+        *ngIf="item.pink && !checklistItems[i-1]?.pink"
+        (click)="pinkSectionOpen = !pinkSectionOpen"
+      >
+        <ion-icon
+          [name]="pinkSectionOpen ? 'chevron-down-outline' : 'chevron-forward-outline'"
+          class="nf-section-chevron"
+        ></ion-icon>
+        <span>Kadınlara Özel</span>
+        <span class="nf-section-line"></span>
+      </div>
+      <div
+        class="nf-checklist-item"
+        *ngIf="(!item.blue || blueSectionOpen) && (!item.pink || pinkSectionOpen)"
+        [class.disabled]="isItemDisabled(i)"
+        [class.pink]="item.pink"
+        [class.blue]="item.blue"
+        (click)="toggleItem(i)"
+      >
+        <div class="nf-checklist-check" [class.checked]="item.checked">
+          <ion-icon *ngIf="item.checked" name="checkmark-outline"></ion-icon>
+        </div>
+        <span class="nf-checklist-item-label" [class.done]="item.checked"
+          >{{ item.label }}</span
+        >
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Bottom navigation -->
+<div class="nf-bottom-nav">
+  <button
+    class="nf-tab"
+    [class.active]="activeTab === 'home'"
+    (click)="setTab('home')"
+  >
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Ana Sayfa</span>
+  </button>
+  <!-- <button class="nf-tab" [class.active]="activeTab === 'search'" (click)="setTab('search')">
+    <ion-icon name="search-outline"></ion-icon>
+    <span>Ara</span>
+  </button> -->
+  <button
+    class="nf-tab"
+    [class.active]="activeTab === 'notes'"
+    (click)="setTab('notes')"
+  >
+    <ion-icon name="document-text-outline"></ion-icon>
+    <span>Notlarım</span>
+  </button>
+  <button class="nf-tab nf-tab--explore" (click)="setTab('explore')">
+    <div class="nf-explore-btn">
+      <ion-icon name="map-outline"></ion-icon>
+    </div>
+    <span>Keşfet</span>
+  </button>
+  <button
+    class="nf-tab"
+    [class.active]="activeTab === 'downloads'"
+    (click)="setTab('downloads')"
+  >
+    <ion-icon name="download-outline"></ion-icon>
+    <span>İndirilenler</span>
+  </button>
+  <button
+    class="nf-tab"
+    [class.active]="activeTab === 'profile'"
+    (click)="setTab('profile')"
+  >
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Profil</span>
+  </button>
+</div>

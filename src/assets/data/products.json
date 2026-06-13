@@ -1,0 +1,154 @@
+[
+  {
+    "id": 1,
+    "name": "İhram Takımı (Pamuklu)",
+    "category": "ihram",
+    "price": 450,
+    "description": "Yüksek kaliteli %100 pamuklu kumaştan üretilmiş, nefes alabilen ihram takımı. Uzun yürüyüşlerde ve sıcak havada bile rahat kullanım sunar.",
+    "features": [
+      "%100 pamuk",
+      "Nefes alabilen kumaş",
+      "Makine yıkamaya uygun",
+      "Dikişsiz tasarım",
+      "Sertifikalı kumaş"
+    ],
+    "sizes": ["S", "M", "L", "XL", "XXL"],
+    "colors": ["Beyaz"],
+    "inStock": true,
+    "shippingFrom": "Türkiye",
+    "imageUrl": null
+  },
+  {
+    "id": 2,
+    "name": "İhram Takımı (Likralı)",
+    "category": "ihram",
+    "price": 550,
+    "description": "Likra katkılı kumaşıyla esneklik ve konfor sunan ihram takımı. Tüm beden hareketlerine uyum sağlar, yırtılma ve yıpranmaya karşı dirençlidir.",
+    "features": [
+      "%90 pamuk %10 likra",
+      "Esnek yapı",
+      "Uzun ömürlü",
+      "Hızlı kuruma",
+      "Antibakteriyel kaplama"
+    ],
+    "sizes": ["S", "M", "L", "XL", "XXL"],
+    "colors": ["Beyaz"],
+    "inStock": true,
+    "shippingFrom": "Türkiye",
+    "imageUrl": "https://cozynest-eg.com/cdn/shop/files/DSC00037-min.webp?v=1742543671&width=720"
+  },
+  {
+    "id": 3,
+    "name": "Seyahat Seccadesi (Katlanabilir)",
+    "category": "seccade",
+    "price": 350,
+    "description": "Kompakt ve hafif yapısıyla seyahate özel tasarlanmış seccade. Kolayca katlanarak küçük bir çantaya sığar.",
+    "features": [
+      "Ultra hafif (220g)",
+      "Su geçirmez taban",
+      "Taşıma çantası dahil",
+      "Silinebilir yüzey",
+      "70x115 cm"
+    ],
+    "sizes": [],
+    "colors": ["Yeşil", "Kırmızı", "Bej"],
+    "inStock": true,
+    "shippingFrom": "Türkiye",
+    "imageUrl": null
+  },
+  {
+    "id": 4,
+    "name": "Kadife Seccade",
+    "category": "seccade",
+    "price": 600,
+    "description": "Yoğun dokulu kadife yüzeyiyle namaz kılmayı konforlu hale getiren kaliteli seccade. Uzun ömürlü ve yıkamaya dayanıklı yapısıyla yıllarca kullanılabilir.",
+    "features": [
+      "Kadife yüzey",
+      "Kaymaz kauçuk taban",
+      "El yıkamasına uygun",
+      "Yoğun dokuma",
+      "70x120 cm"
+    ],
+    "sizes": [],
+    "colors": ["Yeşil", "Kırmızı", "Lacivert"],
+    "inStock": true,
+    "shippingFrom": "Türkiye",
+    "imageUrl": null
+  },
+  {
+    "id": 5,
+    "name": "Umre Bel Çantası (Su Geçirmez)",
+    "category": "canta",
+    "price": 280,
+    "description": "Su geçirmez özelliğiyle pasaport, telefon ve değerli eşyalarınızı güvende tutan bel çantası. Tavaf ve sa'y sırasında rahatça kullanabilirsiniz.",
+    "features": [
+      "Su geçirmez PVC kaplama",
+      "Gizli bölme",
+      "Ayarlanabilir bel askısı",
+      "RFID koruma",
+      "3 ayrı bölme"
+    ],
+    "sizes": ["Standart"],
+    "colors": ["Siyah", "Lacivert"],
+    "inStock": true,
+    "shippingFrom": "Türkiye",
+    "imageUrl": null
+  },
+  {
+    "id": 6,
+    "name": "Pasaport Bel Çantası",
+    "category": "canta",
+    "price": 220,
+    "description": "Pasaport, vize, para ve telefon için özel bölmeleri olan kompakt bel çantası. İnce ve hafif yapısıyla üzerinizde taşıdığınızı hissetmezsiniz.",
+    "features": [
+      "Pasaport bölmesi",
+      "Para cebi",
+      "Fermuarlı kapama",
+      "Hafif neopren kumaş",
+      "Ayarlanabilir bant"
+    ],
+    "sizes": ["Standart"],
+    "colors": ["Siyah", "Kahverengi"],
+    "inStock": true,
+    "shippingFrom": "Türkiye",
+    "imageUrl": null
+  },
+  {
+    "id": 7,
+    "name": "Hac Terliği (Kaymaz Taban)",
+    "category": "terlik",
+    "price": 180,
+    "description": "Mermer ve taş zeminlerde güvenli yürüyüş sağlayan kaymaz tabanlı terlik. Mescid-i Haram ve Mescid-i Nebevi'nin yoğun kalabalıklarında bile rahat kullanım sunar.",
+    "features": [
+      "Kaymaz kauçuk taban",
+      "Yıkanabilir",
+      "Hava sirkülasyonlu üst",
+      "Hafif yapı (180g)",
+      "Uzun ömürlü"
+    ],
+    "sizes": ["38-39", "40-41", "42-43", "44-45"],
+    "colors": ["Siyah", "Kahverengi"],
+    "inStock": true,
+    "shippingFrom": "Türkiye",
+    "imageUrl": null
+  },
+  {
+    "id": 8,
+    "name": "Ortopedik Terlik",
+    "category": "terlik",
+    "price": 250,
+    "description": "Ortopedik taban yapısıyla uzun yürüyüşlerde ayak yorgunluğunu önleyen terlik. Özellikle Mekke ve Medine'deki uzun mesafe yürüyüşleri için tasarlanmıştır.",
+    "features": [
+      "Ortopedik iç taban",
+      "Hafıza köpük",
+      "Antibakteriyel astar",
+      "Kaymaz taban",
+      "Kemer desteği"
+    ],
+    "sizes": ["38-39", "40-41", "42-43", "44-45"],
+    "colors": ["Siyah", "Bej"],
+    "inStock": true,
+    "shippingFrom": "Türkiye",
+    "imageUrl": null
+  }
+]

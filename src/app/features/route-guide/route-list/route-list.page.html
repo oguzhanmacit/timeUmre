@@ -1,0 +1,121 @@
+<ion-content [fullscreen]="true">
+  <!-- Header -->
+  <!-- <div class="rl-header">
+    <div class="rl-brand">
+      <img class="rl-brand-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCHWvVev6JEctcmXvL_Oe3MSqKDqClOfIzvpFEbDg_8r-D1FJzn7IE0Eql7hhKEkPAVcHbHwyTlnv4erUfBnIjqsfPaSXhaRbCNSlEqnm_nmyLmVm1qH3k7QiOVw3hy1_gGKemOtiWIb08D3iuNxBH--AJKCFaPjtv9kGXV67ImsHWE_4i7ipSSYn7rnCAOBRgiOXd6FEluflfrJAPtpcmDX20PgASz7PGts7GEIYNRMza7rNMOhNGK7bnsq3k8A" alt="logo" referrerpolicy="no-referrer" />
+      <div class="rl-brand-texts">
+        <span class="rl-brand-name">Umre Güzergâhları</span>
+
+      </div>
+    </div>
+  </div> -->
+
+  <!-- Hero text -->
+  <div class="rl-intro">
+    <h1 class="rl-intro-title">Umre Güzergâhları</h1>
+    <p class="rl-intro-desc">
+      Adım adım yolculuk rehberleri ile umre hazırlığınızı kolaylaştırın.
+    </p>
+  </div>
+
+  <!-- Route Cards -->
+  <div class="rl-cards">
+    <div
+      class="rl-card"
+      *ngFor="let route of routes; let i = index"
+      [class.rl-card--gold]="i === 0"
+      [class.rl-card--green]="i !== 0"
+      (click)="goToDetail(route.id)"
+    >
+      <!-- Background image + gradient overlay -->
+      <div class="rl-card-bg-wrap">
+        <img
+          class="rl-card-bg-img"
+          [src]="routeImages[route.id]"
+          [alt]="route.title"
+          referrerpolicy="no-referrer"
+        />
+        <div class="rl-card-gradient"></div>
+      </div>
+
+      <!-- Content: all at bottom -->
+      <div class="rl-card-content">
+        <!-- Title (split at comma, second line accent + italic) -->
+        <h3 class="rl-card-title">
+          {{ route.title }}
+        </h3>
+
+        <!-- Description -->
+        <p class="rl-card-desc">{{ route.description }}</p>
+
+        <!-- Step badge -->
+        <span class="rl-badge">{{ route.steps.length }} adım</span>
+
+        <!-- Route bar (2 endpoints + glowing line) -->
+        <div class="rl-route-bar">
+          <div class="rl-route-labels">
+            <span>{{ route.startAirport }}</span>
+            <span>Mekke</span>
+            <span>{{ route.returnAirport }}</span>
+          </div>
+          <div class="rl-track-wrap">
+            <div class="rl-track-bg"></div>
+            <div class="rl-track-fill"></div>
+            <div class="rl-dot rl-dot--left"></div>
+            <div class="rl-dot rl-dot--right"></div>
+          </div>
+        </div>
+
+        <!-- CTA button -->
+        <button
+          class="rl-cta-btn"
+          (click)="$event.stopPropagation(); goToDetail(route.id)"
+        >
+          Rotayı Gör ›
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<!-- Bottom navigation -->
+<div class="nf-bottom-nav">
+  <button
+    class="nf-tab"
+    [class.active]="activeTab === 'home'"
+    (click)="setTab('home')"
+  >
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Ana Sayfa</span>
+  </button>
+  <button
+    class="nf-tab"
+    [class.active]="activeTab === 'notes'"
+    (click)="setTab('notes')"
+  >
+    <ion-icon name="document-text-outline"></ion-icon>
+    <span>Notlarım</span>
+  </button>
+  <button class="nf-tab nf-tab--explore" (click)="setTab('explore')">
+    <div class="nf-explore-btn">
+      <ion-icon name="map-outline"></ion-icon>
+    </div>
+    <span>Keşfet</span>
+  </button>
+  <button
+    class="nf-tab"
+    [class.active]="activeTab === 'downloads'"
+    (click)="setTab('downloads')"
+  >
+    <ion-icon name="download-outline"></ion-icon>
+    <span>İndirilenler</span>
+  </button>
+  <button
+    class="nf-tab"
+    [class.active]="activeTab === 'profile'"
+    (click)="setTab('profile')"
+  >
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Profil</span>
+  </button>
+</div>

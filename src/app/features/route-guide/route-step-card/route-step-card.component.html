@@ -1,0 +1,78 @@
+<div class="rg-card" [class.rg-card--expanded]="isExpanded">
+
+  <!-- Header — click to expand/collapse -->
+  <div class="rg-card-header" (click)="toggle.emit()">
+    <div class="rg-step-number">
+      <img *ngIf="step.type === 'worship'" src="assets/ic-kaabe.svg" class="rg-kaabe-icon" alt="Kabe" />
+      <ion-icon *ngIf="step.type !== 'worship'" [name]="typeIcon(step.type)"></ion-icon>
+    </div>
+    <div class="rg-step-meta">
+      <span class="rg-city-badge" [attr.data-city]="step.city">{{ cityLabel }}</span>
+      <h3 class="rg-step-title">{{ step.title }}</h3>
+      <p class="rg-step-short">{{ step.shortDescription }}</p>
+    </div>
+    <div class="rg-header-right">
+      <span class="rg-order-num">{{ stepIndex + 1 }}</span>
+      <ion-icon
+        class="rg-chevron"
+        [name]="isExpanded ? 'chevron-up-outline' : 'chevron-down-outline'">
+      </ion-icon>
+    </div>
+  </div>
+
+  <!-- Body — shown when expanded -->
+  <div class="rg-card-body" *ngIf="isExpanded" (click)="$event.stopPropagation()">
+
+    <p class="rg-content">{{ step.content }}</p>
+
+    <!-- Checklist -->
+    <div class="rg-checklist" *ngIf="step.checklist.length">
+      <h4 class="rg-section-label">
+        <ion-icon name="checkmark-outline"></ion-icon>
+        Yapılacaklar
+      </h4>
+      <div
+        class="rg-check-item"
+        *ngFor="let item of step.checklist; let i = index"
+        (click)="checkToggle.emit(i)">
+        <div class="rg-checkbox" [class.rg-checkbox--checked]="checkStates[i]">
+          <ion-icon *ngIf="checkStates[i]" name="checkmark-outline"></ion-icon>
+        </div>
+        <span class="rg-check-label" [class.rg-check-label--done]="checkStates[i]">
+          {{ item }}
+        </span>
+      </div>
+    </div>
+
+    <!-- Transport Options -->
+    <div class="rg-transport" *ngIf="step.transportOptions?.length">
+      <h4 class="rg-section-label">
+        <ion-icon name="train-outline"></ion-icon>
+        Ulaşım Seçenekleri
+      </h4>
+      <div class="rg-transport-item" *ngFor="let opt of step.transportOptions">
+        <div class="rg-transport-icon">
+          <ion-icon [name]="transportIcon(opt.type)"></ion-icon>
+        </div>
+        <div class="rg-transport-info">
+          <p class="rg-transport-title">{{ opt.title }}</p>
+          <p class="rg-transport-desc">{{ opt.description }}</p>
+          <p class="rg-transport-rec">Önerilen: {{ opt.recommendedFor }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Video -->
+    <div class="rg-video">
+      <h4 class="rg-section-label">
+        <ion-icon name="play-circle-outline"></ion-icon>
+        Videolu Rehber
+      </h4>
+      <div class="rg-video-placeholder" *ngIf="!step.videoUrl">
+        <ion-icon name="play-circle-outline"></ion-icon>
+        <p>Bu adım için videolu yol tarifi yakında eklenecek.</p>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,31 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Copy-Item -Path \"C:\\\\Users\\\\Administrator\\\\Downloads\\\\mp_.mp4\" -Destination \"C:\\\\Users\\\\Administrator\\\\Desktop\\\\TimeUmre\\\\src\\\\assets\\\\mp_.mp4\" -Force)",
+      "PowerShell(if \\($?\\) { \"Kopyalandi\" } else { \"Hata\" })",
+      "Bash(node -e \"const d=require\\('./src/assets/data/locations.json'\\); d.forEach\\(l=>console.log\\(l.id, l.name\\)\\)\")",
+      "Bash(cat)",
+      "Bash(chmod +x /tmp/search_classes.sh)",
+      "Bash(bash /tmp/search_classes.sh)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(npm start *)",
+      "Read(//c/Users/Administrator/.claude/projects/c--Users-Administrator-Desktop-TimeUmre/memory/**)",
+      "Bash(start http://localhost:4200)",
+      "Read(//c/Users/Administrator/Desktop/**)",
+      "Bash(Copy-Item \"c:\\\\Users\\\\Administrator\\\\Desktop\\\\Cidde-Kral-Abduzaziz-e1606217763804.jpg\" \"c:\\\\Users\\\\Administrator\\\\Desktop\\\\TimeUmre\\\\src\\\\assets\\\\images\\\\cidde-havalimani.jpg\")",
+      "Read(//c/Users/Administrator/Downloads/**)",
+      "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Administrator\\\\Desktop\\\\TimeUmre\" -Recurse -Include *.ts, *.html, *.scss, *.json)",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Sort-Object)",
+      "Bash(npm --version)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(sleep 15 && tail -30 /tmp/ng-serve.log)",
+      "Read(//tmp/**)"
+    ],
+    "additionalDirectories": [
+      "c:\\Users\\Administrator\\.claude\\projects\\c--Users-Administrator-Desktop-TimeUmre\\memory",
+      "c:\\Users\\Administrator\\Desktop",
+      "c:\\Users\\Administrator\\Downloads"
+    ]
+  }
+}
