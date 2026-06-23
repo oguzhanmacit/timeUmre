@@ -1,0 +1,45 @@
+<div class="mdp" (click)="$event.stopPropagation()">
+  <!-- Kapat butonu -->
+  <button class="mdp__close" (click)="close.emit()">
+    <ion-icon name="close-outline"></ion-icon>
+  </button>
+
+  <!-- Hero bölümü -->
+  <div class="mdp__hero" [style.backgroundImage]="'url(' + item.imageUrl + ')'">
+    <div class="mdp__hero-grad"></div>
+    <div class="mdp__hero-body">
+      <h2 class="mdp__title">{{ item.title }}</h2>
+
+      <div class="mdp__meta">
+        <span class="mdp__duration" *ngIf="item.duration">{{ item.duration }}</span>
+        <span class="mdp__label" *ngIf="item.label">{{ item.label }}</span>
+      </div>
+
+      <div class="mdp__actions">
+        <button class="mdp__btn-play" (click)="onPlay()" *ngIf="item.watchUrl">
+          <ion-icon name="play-outline"></ion-icon>
+          İzle
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Çoklu video listesi -->
+  <div class="mdp__episodes" *ngIf="item.videos?.length">
+    <div class="mdp__episodes-header">
+      <span class="mdp__episodes-title">Videolar</span>
+      <span class="mdp__episodes-count">{{ item.videos.length }} İçerik</span>
+    </div>
+    <div
+      class="mdp__episode-row"
+      *ngFor="let v of item.videos; let i = index"
+      (click)="onPlayVideo(v.url)"
+    >
+      <span class="mdp__ep-num">{{ i + 1 }}</span>
+      <div class="mdp__ep-info">
+        <p class="mdp__ep-label">{{ v.label }}</p>
+      </div>
+      <ion-icon name="play-circle-outline" class="mdp__ep-play"></ion-icon>
+    </div>
+  </div>
+</div>

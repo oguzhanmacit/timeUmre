@@ -357,6 +357,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
           'Dönüş için buluşma noktası belirle',
           'Namaz vakitlerini kontrol et',
         ],
+        videoUrl: 'https://www.youtube.com/watch?v=nb3d8jJy-YA',
       },
       {
         id: 'mmj-step-3',
@@ -378,6 +379,14 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
           'Kıbleteyn Mescidi bilgisini incele',
           "Cennetü'l-Baki ziyaret adabını öğren",
           'Hurma pazarı için zaman ayır',
+        ],
+        videos: [
+          { label: "Mescid-i Nebevî", url: 'https://www.youtube.com/watch?v=v7WFFtQ2Bh8' },
+          { label: 'Ravza Ziyareti', url: 'https://www.youtube.com/watch?v=mxWQG5j-Up8' },
+          { label: 'Kuba Mescidi', url: 'https://www.youtube.com/watch?v=04SFVpWEMak' },
+          { label: 'Uhud', url: 'https://www.youtube.com/watch?v=tFewPu71Z6U' },
+          { label: 'Kıbleteyn Mescidi', url: 'https://www.youtube.com/watch?v=H9ILS0ocIJk' },
+          { label: "Cennetü'l-Baki", url: 'https://www.youtube.com/watch?v=nxcVSrqjkAk' },
         ],
         transportOptions: [
           {
@@ -412,9 +421,9 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         shortDescription:
           "Mekke'ye umre için geçmeden önce ihram, niyet ve ulaşım hazırlığı.",
         content:
-          "Medine'den Mekke'ye geçerken en önemli hazırlık ihram ve umre niyetidir. " +
-          'Yola çıkmadan önce ihram kıyafetinizi, otel çıkış saatinizi, bilet veya transfer bilginizi ve Mekke otel adresinizi kontrol edin. ' +
-          "Bu aşamada özellikle Mekke'ye umre niyetiyle gidileceği hatırlatılmalıdır.",
+          "Medine'den Mekke'ye hareket etmeden önce ihramınızı giyin, gusül alın ve niyet edin. " +
+          "Otel çıkış saatinizi ve bilet ya da transfer bilginizi önceden teyit edin; Mekke otel adresinizi telefonunuza kaydedin. " +
+          'Yolculuk boyunca telbiye getirmeye devam edin ve ihram yasaklarına dikkat edin.',
         checklist: [
           'İhram kıyafetini hazırla',
           'Gerekirse gusül ve abdest hazırlığı yap',
@@ -424,42 +433,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
           'Bagajını kontrol et',
           'Yolculuk için su ve temel ihtiyaçlarını al',
         ],
-        transportOptions: [
-          {
-            type: 'train',
-            title: 'Haramain Yüksek Hızlı Treni',
-            description:
-              "Medine istasyonundan Mekke'ye yaklaşık 2 saatte ulaşır. Biletleri önceden almanız önerilir.",
-            recommendedFor: 'Hızlı ve konforlu seyahat isteyenler',
-            videos: [
-              {
-                label: 'Haramain Hızlı Tren Rehberi',
-                url: 'https://www.youtube.com/watch?v=BOoFWqMtv4A',
-              },
-            ],
-          },
-          {
-            type: 'bus',
-            title: 'Otobüs / SAPTCO',
-            description:
-              'Medine otogarından düzenli Mekke seferleri mevcuttur. Uygun fiyatlı seçenek.',
-            recommendedFor: 'Ekonomik seyahat tercih edenler',
-          },
-          {
-            type: 'private_transfer',
-            title: 'Özel Transfer',
-            description:
-              'Otelden otele kapıdan kapıya hizmet. Yolculuk süresi yaklaşık 5-6 saat.',
-            recommendedFor: 'Yaşlı yolcular ve büyük gruplar',
-          },
-          {
-            type: 'taxi',
-            title: 'Taksi',
-            description:
-              "Medine'den Mekke'ye sabit tarifeli uzun yol taksileri mevcuttur.",
-            recommendedFor: 'Küçük gruplar ve esnek saatler isteyenler',
-          },
-        ],
+        videoUrl: 'https://www.youtube.com/watch?v=e73AJkWoRQ8',
       },
       {
         id: 'mmj-step-5',
@@ -473,51 +447,20 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
           "Medine'den Mekke'ye geçiş için Haramain treni, otobüs, taksi veya özel transfer seçenekleri kullanılabilir. " +
           'Tren kullanılıyorsa istasyona zamanında gitmek, bilet ve bagaj kurallarını kontrol etmek önemlidir. ' +
           'Özel transfer veya otobüs kullanılıyorsa yolculuk süresi ve mola düzeni önceden öğrenilmelidir.',
-        checklist: [
-          'Otelden çıkış saatini kontrol et',
-          'İstasyona veya transfer noktasına zamanında git',
-          'Biletini hazır bulundur',
-          'Bagajını kontrol et',
-          'Mekke oteline varış planını gözden geçir',
-          'Yol boyunca ihram ve niyet bilincini koru',
-        ],
+        checklist: [],
         transportOptions: [
           {
             type: 'train',
             title: 'Haramain Yüksek Hızlı Treni',
             description:
-              "Medine istasyonundan Mekke'ye yaklaşık 2 saatte ulaşır.",
+              "Medine istasyonundan Mekke'ye yaklaşık 2 saatte ulaşır. Konforlu ve ekonomik seçenek.",
             recommendedFor: 'Hızlı ve konforlu seyahat isteyenler',
+            imageUrl: 'assets/images/train.png',
+            isBestOption: true,
             videos: [
               {
                 label: 'Haramain Hızlı Tren Rehberi',
-                url: 'https://www.youtube.com/watch?v=BOoFWqMtv4A',
-              },
-            ],
-          },
-          {
-            type: 'bus',
-            title: 'Otobüs',
-            description:
-              'Uygun fiyatlı seçenek; yolculuk süresi yaklaşık 5-6 saat.',
-            recommendedFor: 'Ekonomik seyahat tercih edenler',
-            videos: [
-              {
-                label: "Medine'den Mekke'ye Otobüs ve Taksi Rehberi",
-                url: 'https://www.youtube.com/watch?v=VYPslj7-1TY',
-              },
-            ],
-          },
-          {
-            type: 'taxi',
-            title: 'Taksi',
-            description:
-              'Uzun yol taksileri Medine-Mekke güzergâhında sabit tarifeli çalışmaktadır.',
-            recommendedFor: 'Küçük gruplar',
-            videos: [
-              {
-                label: "Medine'den Mekke'ye Otobüs ve Taksi Rehberi",
-                url: 'https://www.youtube.com/watch?v=VYPslj7-1TY',
+                url: 'https://www.youtube.com/watch?v=WnKsmjFNxF4&t=40s',
               },
             ],
           },
@@ -526,6 +469,21 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
             title: 'Özel Transfer',
             description: 'Kapıdan kapıya hizmet, mola seçeneği mevcut.',
             recommendedFor: 'Aileler ve yaşlı yolcular',
+          },
+          {
+            type: 'bus',
+            title: 'Otobüs / Taksi',
+            description:
+              "Uygun fiyatlı seçenek; yolculuk süresi yaklaşık 5-6 saat. Uzun yol taksileri Medine-Mekke güzergâhında sabit tarifeli çalışmaktadır.",
+            recommendedFor: 'Ekonomik seyahat tercih edenler',
+            imageUrl: 'assets/images/saptco.png',
+            imageUrl2: 'assets/images/taxi.png',
+            videos: [
+              {
+                label: "Medine'den Mekke'ye Otobüs ve Taksi Rehberi",
+                url: 'https://www.youtube.com/watch?v=VYPslj7-1TY',
+              },
+            ],
           },
         ],
       },

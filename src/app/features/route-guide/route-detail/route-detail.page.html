@@ -88,7 +88,7 @@
   <div class="rd-fs-body">
 
     <!-- ── Transport tipi: görsel kart listesi ── -->
-    <ng-container *ngIf="popupStep.type === 'transport'; else defaultLayout">
+    <ng-container *ngIf="popupStep.type === 'transport' && popupStep.transportOptions?.length; else defaultLayout">
       <div class="rd-fs-transport-header">
         <h2 class="rd-fs-transport-title">{{ popupStep.title }}</h2>
         <p class="rd-fs-transport-sub">Hangi ulaşım size uygun?</p>
@@ -144,6 +144,51 @@
           </article>
         </ng-container>
       </div>
+      <!-- Yapılacaklar listesi (transport adımları için) -->
+      <div class="rd-fs-card" *ngIf="popupStep.checklist.length">
+        <div class="rd-fs-card-header">
+          <div class="rd-fs-card-label">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+            <span>Yapılacaklar</span>
+          </div>
+          <span class="rd-fs-card-count">
+            {{ checkedCount(popupStep.id) }}/{{ totalCount(popupStep.id) }}
+          </span>
+        </div>
+        <div class="rd-fs-progress">
+          <div
+            class="rd-fs-progress-fill"
+            [style.width.%]="totalCount(popupStep.id) > 0
+              ? (checkedCount(popupStep.id) / totalCount(popupStep.id)) * 100
+              : 0"
+          ></div>
+        </div>
+        <div
+          class="rd-fs-check-item"
+          *ngFor="let item of popupStep.checklist; let i = index"
+          (click)="togglePopupCheck(i)"
+        >
+          <div class="rd-fs-checkbox" [class.checked]="popupCheckStates[i]">
+            <ion-icon *ngIf="popupCheckStates[i]" name="checkmark-outline"></ion-icon>
+          </div>
+          <span [class.done]="popupCheckStates[i]">{{ item }}</span>
+        </div>
+        <div class="rd-fs-action-grid">
+          <button class="rd-fs-action-tile" (click)="showDetailInfo()">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>Detaylı Bilgi</span>
+          </button>
+          <button class="rd-fs-action-tile" (click)="openStepVideo()">
+            <ion-icon name="play-circle-outline"></ion-icon>
+            <span>Video İzle</span>
+          </button>
+          <button class="rd-fs-action-tile" (click)="showNotesToast()">
+            <ion-icon name="create-outline"></ion-icon>
+            <span>Notlarım</span>
+          </button>
+        </div>
+      </div>
+
       <div class="rd-fs-body-spacer"></div>
     </ng-container>
 
@@ -211,8 +256,8 @@
 
   </div>
 
-  <!-- Tamamladım footer — sadece transport dışı adımlarda -->
-  <div class="rd-fs-footer" *ngIf="popupStep.type !== 'transport'">
+  <!-- Tamamladım footer — checklist olan tüm adımlar -->
+  <div class="rd-fs-footer" *ngIf="popupStep.checklist.length">
     <button class="rd-fs-complete-btn" (click)="markAllComplete()">
       <ion-icon name="checkmark-circle-outline"></ion-icon>
       Tamamladım

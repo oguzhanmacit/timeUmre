@@ -1,0 +1,207 @@
+:host {
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(900px, calc(100vw - 32px));
+  z-index: 60;
+}
+
+.mdp {
+  background: #141414;
+  color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.85);
+  position: relative;
+}
+
+.mdp__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(20, 20, 20, 0.75);
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+/* Hero */
+.mdp__hero {
+  position: relative;
+  min-height: 320px;
+  background-size: cover;
+  background-position: center;
+}
+
+.mdp__hero-grad {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, #141414 0%, rgba(20, 20, 20, 0.65) 50%, rgba(20, 20, 20, 0) 100%),
+    linear-gradient(to top, #141414 0%, rgba(20, 20, 20, 0) 50%);
+}
+
+.mdp__hero-body {
+  position: relative;
+  z-index: 2;
+  max-width: 480px;
+  padding: 64px 32px 32px;
+}
+
+.mdp__title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  line-height: 1.25;
+}
+
+.mdp__meta {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.mdp__duration {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.mdp__label {
+  font-size: 12px;
+  color: #c9a84c;
+  background: rgba(201, 168, 76, 0.15);
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+
+.mdp__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.mdp__btn-play {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 6px;
+  background: #fff;
+  color: #000;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  ion-icon {
+    font-size: 18px;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.85);
+  }
+}
+
+/* Video listesi */
+.mdp__episodes {
+  padding: 20px 24px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.mdp__episodes-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.mdp__episodes-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.mdp__episodes-count {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.mdp__episode-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: background 0.15s;
+  border-radius: 6px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    padding-left: 8px;
+    padding-right: 8px;
+    margin: 0 -8px;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.mdp__ep-num {
+  font-size: 18px;
+  color: #666;
+  min-width: 24px;
+  text-align: center;
+}
+
+.mdp__ep-info {
+  flex: 1;
+}
+
+.mdp__ep-label {
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.mdp__ep-play {
+  font-size: 28px;
+  color: #aaa;
+  flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .mdp__hero {
+    min-height: 260px;
+  }
+
+  .mdp__hero-body {
+    padding: 48px 20px 24px;
+  }
+
+  .mdp__title {
+    font-size: 22px;
+  }
+
+  .mdp__episodes {
+    padding: 16px 16px 20px;
+  }
+}

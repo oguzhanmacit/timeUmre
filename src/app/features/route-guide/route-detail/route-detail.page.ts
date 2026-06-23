@@ -314,7 +314,14 @@ export class RouteDetailPage implements OnInit {
 
   openStepVideo() {
     if (!this.popupStep) return;
-    const url = this.popupStep.videos?.[0]?.url ?? this.popupStep.videoUrl;
+    const step = this.popupStep;
+
+    if (step.videos && step.videos.length > 1) {
+      this.router.navigate(['/umrah-routes', this.routeId, 'step-videos', step.id]);
+      return;
+    }
+
+    const url = step.videos?.[0]?.url ?? step.videoUrl;
     if (url) {
       this.playVideo(url);
     } else {
