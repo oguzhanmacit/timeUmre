@@ -31,23 +31,14 @@
         </button>
       </div>
 
-      <!-- Nasıl Giderim trigger -->
-      <div class="nf-nav-dropdown">
-        <button
-          class="nf-nav-item"
-          [class.active]="activeNav === 'giderim'"
-          (click)="toggleGiderimDropdown($event)"
-        >
-          Nasıl Giderim?
-          <ion-icon
-            name="chevron-down-outline"
-            class="nf-nav-arrow"
-            [class.open]="giderimDropdownOpen"
-          ></ion-icon>
-        </button>
-      </div>
-
-      <!-- <button class="nf-nav-item" [class.active]="activeNav === 'alisveris'" (click)="goNav('alisveris')">Alışveriş</button> -->
+      <!-- Nasıl Giderim seçenekleri direkt header'da -->
+      <button
+        class="nf-nav-item"
+        *ngFor="let item of giderimItems"
+        (click)="selectGiderimItem(item)"
+      >
+        {{ item.label }}
+      </button>
     </div>
   </div>
 
@@ -220,38 +211,10 @@
   </button>
 </div>
 
-<!-- Nasıl Giderim tam ekran dropdown -->
-<div
-  class="nf-dropdown-menu"
-  [class.visible]="giderimDropdownOpen"
-  (click)="closeDropdown()"
->
-  <button class="nf-dropdown-close" (click)="closeDropdown()">
-    <ion-icon name="chevron-down-outline"></ion-icon>
-  </button>
-  <button
-    class="nf-dropdown-item"
-    *ngFor="let item of giderimItems"
-    (click)="$event.stopPropagation(); selectGiderimItem(item)"
-  >
-    {{ item.label }}
-    <ion-icon
-      *ngIf="item.route"
-      name="map-outline"
-      class="nf-dropdown-item-icon"
-    ></ion-icon>
-    <ion-icon
-      *ngIf="item.videoUrl || item.videos?.length"
-      name="play-outline"
-      class="nf-dropdown-item-icon"
-    ></ion-icon>
-  </button>
-</div>
-
 <!-- Backdrop -->
 <div
   class="nf-dropdown-backdrop"
-  *ngIf="umreDropdownOpen || giderimDropdownOpen"
+  *ngIf="umreDropdownOpen"
   (click)="closeDropdown()"
 ></div>
 
@@ -276,80 +239,146 @@
   </button>
 </div>
 
-<!-- Detail Bottom Sheet backdrop -->
+<!-- Detail Modal backdrop -->
 <div
   class="nf-sheet-backdrop"
   [class.visible]="sheetOpen"
   (click)="closeSheet()"
 ></div>
 
-<!-- Detail Bottom Sheet -->
+<!-- Tabii-style full-screen Detail Modal -->
 <div class="nf-sheet" [class.open]="sheetOpen">
-  <div class="nf-sheet-handle"></div>
+
+  <!-- Hero: tam genişlik görsel + gradient + başlık altta -->
   <div
     class="nf-sheet-hero"
     [style.backgroundImage]="sheetItem ? 'url(' + sheetItem.imageUrl + ')' : ''"
   >
     <div class="nf-sheet-hero-gradient"></div>
+
+    <!-- Tabii SVG X kapat butonu -->
     <button class="nf-sheet-close" (click)="closeSheet()">
-      <ion-icon name="close-outline"></ion-icon>
-    </button>
-  </div>
-  <div class="nf-sheet-body" *ngIf="sheetItem">
-    <h2 class="nf-sheet-title">{{ sheetItem.title }}</h2>
-    <div class="nf-sheet-meta">
-      <span class="nf-sheet-match">97% Eşleşme</span>
-      <span class="nf-sheet-year" *ngIf="sheetLocation"
-        >{{ sheetLocation.historicalPeriod }}</span
-      >
-    </div>
-    <p class="nf-sheet-desc" *ngIf="sheetLocation">
-      {{ sheetLocation.description }}
-    </p>
-    <p
-      class="nf-sheet-desc nf-sheet-desc--generic"
-      *ngIf="!sheetLocation && !sheetLoading"
-    >
-      Kutsal topraklardaki bu önemli mekânı keşfetmek için rehber içeriklerimize
-      göz atın.
-    </p>
-    <div class="nf-sheet-loading" *ngIf="sheetLoading">
-      <div class="nf-sheet-spinner"></div>
-    </div>
-    <button
-      class="nf-sheet-play-btn"
-      (click)="playSheet()"
-      *ngIf="!sheetItem.videos?.length"
-    >
-      <ion-icon name="play-outline"></ion-icon>
-      Oynat
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38" width="18" height="18" fill="#FAFAFA">
+        <path d="M20.8 19L37.6 2.2c.3-.3.4-.6.4-.9s-.1-.7-.4-.9c-.5-.5-1.3-.5-1.8 0L19 17.2 2.2.4C1.7-.1.9-.1.4.4c-.3.2-.4.5-.4.9s.1.7.4.9L17.2 19 .4 35.8c-.3.3-.4.6-.4.9s.1.7.4.9c.5.5 1.3.5 1.8 0L19 20.8l16.8 16.8c.2.2.6.4.9.4.3 0 .7-.1.9-.4.2-.2.4-.6.4-.9s-.1-.7-.4-.9L20.8 19z"/>
+      </svg>
     </button>
 
-    <!-- Netflix-style episode list -->
-    <div class="nf-episodes" *ngIf="sheetItem.videos?.length">
-      <div class="nf-episodes-header">
-        <span class="nf-episodes-title">Videolar</span>
-        <span class="nf-episodes-count"
-          >{{ sheetItem.videos!.length }} İçerik</span
-        >
-      </div>
-      <div
-        class="nf-episode-row"
-        *ngFor="let v of sheetItem.videos; let i = index"
-        (click)="playSheetVideo(v.url)"
-      >
-        <span class="nf-episode-num">{{ i + 1 }}</span>
-        <div class="nf-episode-info">
-          <p class="nf-episode-label">{{ v.label }}</p>
-          <span class="nf-episode-watched" *ngIf="getWatchEntry(v.url) as we">
-            <ng-container *ngIf="we.completed">✓ İzlendi</ng-container>
-            <ng-container *ngIf="!we.completed">● Devam</ng-container>
-          </span>
-        </div>
-        <ion-icon name="play-circle-outline" class="nf-episode-play"></ion-icon>
+    <!-- Başlık + meta: hero'nun alt kısmında, Tabii gibi -->
+    <div class="nf-sheet-hero-content" *ngIf="sheetItem">
+      <h2 class="nf-sheet-title">{{ sheetItem.title }}</h2>
+      <div class="nf-sheet-meta">
+        <span class="nf-sheet-match">97% Eşleşme</span>
+        <ng-container *ngIf="sheetLocation">
+          <span class="nf-meta-sep">·</span>
+          <span class="nf-sheet-year">{{ sheetLocation.historicalPeriod }}</span>
+        </ng-container>
       </div>
     </div>
   </div>
+
+  <!-- Tabii-style tab bar -->
+  <div class="nf-sheet-tabs" *ngIf="sheetItem">
+    <button
+      class="nf-sheet-tab"
+      [class.active]="activeSheetTab === 'main'"
+      (click)="setSheetTab('main')"
+    >{{ sheetItem.videos?.length ? 'Videolar' : 'İzle' }}</button>
+    <button
+      class="nf-sheet-tab"
+      [class.active]="activeSheetTab === 'detaylar'"
+      (click)="setSheetTab('detaylar')"
+    >Detaylar</button>
+  </div>
+
+  <!-- İçerik alanı -->
+  <div class="nf-sheet-body" *ngIf="sheetItem">
+
+    <!-- ── İzle / Videolar sekmesi ── -->
+    <ng-container *ngIf="activeSheetTab === 'main'">
+
+      <!-- Tek video: büyük daire play butonu -->
+      <div class="nf-sheet-actions" *ngIf="!sheetItem.videos?.length">
+        <button class="nf-sheet-play-circle" (click)="playSheet()">
+          <svg width="56" height="56" viewBox="0 0 78 79" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M78 39.996c0 21.54-17.46 39-39 39s-39-17.46-39-39c0-21.539 17.46-39 39-39s39 17.461 39 39zM30.82 48.74V31.032c0-1.196.523-2.073 1.569-2.634 1.046-.56 2.054-.504 3.026.168l14.232 8.854c.822.672 1.233 1.531 1.233 2.577s-.41 1.83-1.233 2.354l-14.232 9.077c-.972.673-1.98.729-3.026.168-1.046-.56-1.57-1.512-1.57-2.857z"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Çoklu video: play + bölüm listesi -->
+      <div class="nf-episodes" *ngIf="sheetItem.videos?.length">
+        <div class="nf-sheet-actions">
+          <button class="nf-sheet-play-circle" (click)="playSheetVideo(sheetItem.videos![0].url)">
+            <svg width="56" height="56" viewBox="0 0 78 79" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" clip-rule="evenodd" d="M78 39.996c0 21.54-17.46 39-39 39s-39-17.46-39-39c0-21.539 17.46-39 39-39s39 17.461 39 39zM30.82 48.74V31.032c0-1.196.523-2.073 1.569-2.634 1.046-.56 2.054-.504 3.026.168l14.232 8.854c.822.672 1.233 1.531 1.233 2.577s-.41 1.83-1.233 2.354l-14.232 9.077c-.972.673-1.98.729-3.026.168-1.046-.56-1.57-1.512-1.57-2.857z"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="nf-episodes-header">
+          <span class="nf-episodes-title">Videolar</span>
+          <span class="nf-episodes-count">{{ sheetItem.videos!.length }} İçerik</span>
+        </div>
+
+        <div
+          class="nf-episode-row"
+          *ngFor="let v of sheetItem.videos; let i = index"
+          (click)="playSheetVideo(v.url)"
+        >
+          <div class="nf-episode-thumb">
+            <img [src]="ytThumb(v.url)" [alt]="v.label" loading="lazy" />
+            <div class="nf-episode-thumb-play">
+              <svg width="36" height="36" viewBox="0 0 76 76" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+                <path d="M76 38c0 20.987-17.013 38-38 38S0 58.987 0 38 17.013 0 38 0s38 17.013 38 38z" fill="#202024" fill-opacity="0.5"/>
+                <path d="M30.029 29.264v17.253c0 1.31.51 2.239 1.529 2.785 1.019.546 2.001.491 2.948-.164l13.868-8.845c.8-.51 1.2-1.274 1.2-2.293 0-1.02-.4-1.856-1.2-2.511l-13.868-8.627c-.947-.655-1.93-.71-2.948-.164-1.02.546-1.53 1.402-1.53 2.566z" fill="#fff"/>
+              </svg>
+            </div>
+            <span class="nf-episode-watched-dot" *ngIf="getWatchEntry(v.url) as we">
+              <ng-container *ngIf="we.completed">✓</ng-container>
+            </span>
+          </div>
+          <div class="nf-episode-info">
+            <p class="nf-episode-label">{{ v.label }}</p>
+            <span class="nf-episode-watched" *ngIf="getWatchEntry(v.url) as we">
+              <ng-container *ngIf="we.completed">✓ İzlendi</ng-container>
+              <ng-container *ngIf="!we.completed">● Devam</ng-container>
+            </span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ── Detaylar sekmesi ── -->
+    <div class="nf-sheet-details" *ngIf="activeSheetTab === 'detaylar'">
+      <h3 class="nf-detail-heading">Detaylar</h3>
+
+      <div class="nf-sheet-loading" *ngIf="sheetLoading">
+        <div class="nf-sheet-spinner"></div>
+      </div>
+      <ng-container *ngIf="!sheetLoading">
+        <div class="nf-detail-row" *ngIf="sheetItem?.title">
+          <span class="nf-detail-label">Orijinal Adı</span>
+          <span class="nf-detail-value">{{ sheetItem!.title }}</span>
+        </div>
+        <div class="nf-detail-row" *ngIf="sheetItem?.type || sheetLocation?.type">
+          <span class="nf-detail-label">Tür</span>
+          <span class="nf-type-chip">{{ sheetItem!.type || sheetLocation!.type }}</span>
+        </div>
+        <div class="nf-detail-row" *ngIf="sheetLocation?.historicalPeriod">
+          <span class="nf-detail-label">Dönem</span>
+          <span class="nf-detail-value">{{ sheetLocation!.historicalPeriod }}</span>
+        </div>
+        <p class="nf-detail-desc" *ngIf="sheetItem?.description || sheetLocation?.description">
+          {{ sheetItem?.description || sheetLocation!.description }}
+        </p>
+        <p class="nf-detail-desc nf-detail-desc--generic" *ngIf="!sheetLocation && !sheetItem?.description && !sheetItem?.type">
+          Bu içerik hakkında ek detay bilgisi bulunmamaktadır.
+        </p>
+      </ng-container>
+    </div>
+
+  </div>
+
 </div>
 
 <!-- Checklist backdrop -->

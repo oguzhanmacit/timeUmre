@@ -45,13 +45,14 @@ interface ContentItem {
   videos?: { label: string; url: string }[];
   duration?: string;
   label?: string;
+  type?: string;
+  description?: string;
 }
 interface ContentRow {
   title: string;
   items: ContentItem[];
 }
 
-const YT = (id: string) => `https://img.youtube.com/vi/${id}/maxresdefault.jpg`;
 
 @Component({
   selector: 'app-landing',
@@ -259,6 +260,7 @@ export class LandingPage {
   sheetItem: ContentItem | null = null;
   sheetLocation: UmreLocation | null = null;
   sheetLoading = false;
+  activeSheetTab: 'main' | 'detaylar' = 'main';
   umreDropdownOpen = false;
   giderimDropdownOpen = false;
   continueWatchingItems: ContentItem[] = [];
@@ -466,7 +468,7 @@ export class LandingPage {
     this.continueWatchingItems = sorted.slice(0, MAX);
   }
 
-  private ytThumb(url: string): string {
+  ytThumb(url: string): string {
     const m = url.match(
       /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([^&?/\s]{11})/,
     );
@@ -522,69 +524,69 @@ export class LandingPage {
       items: [
         {
           title: 'Kâbe',
-          imageUrl: YT('y_ohCSTTW4g'),
+          imageUrl: 'assets/images/video-card/kabe.jpeg',
           route: ['/location', '1'],
           duration: '28:26',
         },
         {
           title: 'Kâbenin Çevresi',
-          imageUrl: 'https://img.youtube.com/vi/xictyBC0ZFw/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/kabe-cevre.png',
           route: ['/location', '1'],
           watchUrl: 'https://youtu.be/xictyBC0ZFw?si=_ayhHWPoIOoIfIp6',
           duration: '20:37',
         },
         {
           title: 'Mekke',
-          imageUrl: YT('W-z3ilgAV8k'),
+          imageUrl: 'assets/images/video-card/mekke.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=W-z3ilgAV8k',
           duration: '18:43',
         },
         {
           title: 'Hacerü`l Esved',
-          imageUrl: YT('ul4obOv3l8c'),
+          imageUrl: 'assets/images/video-card/hacerul-esved.png',
           route: ['/location', '6'],
           watchUrl: 'https://www.youtube.com/watch?v=ul4obOv3l8c',
           duration: '5:43',
         },
         {
           title: 'Mültezem',
-          imageUrl: 'https://img.youtube.com/vi/xGQ5sBYCVsQ/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/multezem.png',
           route: ['/location', '7'],
           watchUrl: 'https://www.youtube.com/shorts/xGQ5sBYCVsQ',
           duration: '0:16',
         },
         {
           title: 'Makam-ı İbrahim',
-          imageUrl: 'https://img.youtube.com/vi/CxbHO8rzpiM/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/makam-i-ibrahim.png',
           route: ['/location', '8'],
           watchUrl: 'https://www.youtube.com/watch?v=CxbHO8rzpiM',
           duration: '2:37',
         },
         {
           title: 'Mekke (1880)',
-          imageUrl: YT('jkPtKNpXXM8'),
+          imageUrl: 'assets/images/video-card/mekke-1880.png',
           route: ['/location', '9'],
           watchUrl: 'https://youtu.be/Ltgy9cKBCtI?si=uFCEVyUhK6b_opMS',
           duration: '8:37',
         },
         {
           title: 'Zemzem',
-          imageUrl: 'https://img.youtube.com/vi/csmllN8NZwY/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/zemzem.png',
           route: ['/location', '9'],
           watchUrl: 'https://www.youtube.com/watch?v=csmllN8NZwY',
           duration: '7:36',
         },
         {
           title: 'Umre',
-          imageUrl: 'https://img.youtube.com/vi/U1JhfjEm-xY/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/umre.png',
           route: ['/location', '9'],
           watchUrl: 'https://www.youtube.com/watch?v=U1JhfjEm-xY',
           duration: '41:05',
         },
         {
           title: 'Kadınlar İçin Uygun Saat',
-          imageUrl: 'https://img.youtube.com/vi/ttOsPtQMH3A/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/kadinlar-uygun-saat.png',
           route: ['/location', '1'],
           watchUrl: 'https://www.youtube.com/shorts/ttOsPtQMH3A',
           duration: '0:19',
@@ -597,78 +599,78 @@ export class LandingPage {
       items: [
         {
           title: 'Hira Mağarası',
-          imageUrl: YT('4w3cVQECMMA'),
+          imageUrl: 'assets/images/video-card/hira-magarasi.png',
           route: ['/location', '5'],
         },
 
         {
           title: "Müzdelife ve Meş'arı Haram",
-          imageUrl: 'https://img.youtube.com/vi/fWu6lsNMu5U/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/muzdelife-mesari-haram.png',
           route: ['/location', '4'],
           watchUrl: 'https://www.youtube.com/watch?v=fWu6lsNMu5U',
         },
         {
           title: "Cennetü'l-Mualla",
-          imageUrl: 'https://img.youtube.com/vi/pLXOHMvXgdQ/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/cennetul-mualla.png',
           route: ['/location', '11'],
           watchUrl: 'https://www.youtube.com/watch?v=pLXOHMvXgdQ',
         },
         {
           title: 'Mescid-i Hayf',
-          imageUrl: 'https://img.youtube.com/vi/QEZzmllEgDs/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/mescid-i-hayf.png',
           route: ['/location', '15'],
           watchUrl: 'https://www.youtube.com/watch?v=QEZzmllEgDs',
         },
         {
           title: 'Akabe',
-          imageUrl: 'https://img.youtube.com/vi/xuq21doNkJg/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/akabe.png',
           route: ['/location', '16'],
           watchUrl: 'https://www.youtube.com/watch?v=xuq21doNkJg',
         },
         {
           title: 'Efendimizin Doğduğu Ev',
-          imageUrl: 'https://img.youtube.com/vi/nbgWkKzg0sM/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/efendimizin-dogdugu-ev.png',
           route: ['/location', '12'],
           watchUrl: 'https://www.youtube.com/watch?v=nbgWkKzg0sM',
         },
         {
           title: 'Cirane Mescidi',
-          imageUrl: 'https://img.youtube.com/vi/crPiNyNTBgU/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/cirane-mescidi.png',
           route: ['/location', '19'],
           watchUrl: 'https://www.youtube.com/watch?v=crPiNyNTBgU&t=154s',
         },
         {
           title: 'Mina',
-          imageUrl: 'https://img.youtube.com/vi/1BtvcvwDSnY/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/mina.png',
           route: ['/location', '2'],
           watchUrl: 'https://www.youtube.com/watch?v=1BtvcvwDSnY',
         },
         {
           title: 'Sevr Mağarası',
-          imageUrl: 'https://img.youtube.com/vi/XWg8NCwg-dE/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/sevr-magarasi.png',
           route: ['/location', '14'],
           watchUrl: 'https://www.youtube.com/watch?v=XWg8NCwg-dE&t=666s',
         },
         {
           title: 'Arafat Yapay Zeka',
-          imageUrl: YT('_8h8GP6yFlg'),
+          imageUrl: 'assets/images/video-card/arafat-yapay-zeka.png',
           route: ['/location', '3'],
         },
         {
           title: 'Arafat',
-          imageUrl: 'https://img.youtube.com/vi/UotSoX79jCs/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/arafat.png',
           route: ['/location', '3'],
           watchUrl: 'https://www.youtube.com/watch?v=UotSoX79jCs',
         },
         {
           title: 'Cin Mescidi',
-          imageUrl: 'https://img.youtube.com/vi/0Q2w6Ytj-ZA/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/cin-mescidi.png',
           route: ['/location', '13'],
           watchUrl: 'https://www.youtube.com/watch?v=0Q2w6Ytj-ZA',
         },
         {
           title: 'Hudeybiye',
-          imageUrl: 'https://img.youtube.com/vi/L1gvKf9obK8/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/hudeybiye.png',
           route: ['/location', '20'],
           watchUrl: 'https://www.youtube.com/watch?v=L1gvKf9obK8',
         },
@@ -679,13 +681,13 @@ export class LandingPage {
         // },
         {
           title: 'Safa ve Merve',
-          imageUrl: 'https://img.youtube.com/vi/e65PFGJEZac/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/safa-ve-merve.png',
           route: ['/location', '10'],
           watchUrl: 'https://www.youtube.com/watch?v=e65PFGJEZac',
         },
         {
           title: "Meş'aru'l-Haram",
-          imageUrl: 'https://img.youtube.com/vi/ySRDnHzfv0w/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/mesarul-haram.png',
           route: ['/location', '17'],
           watchUrl: 'https://www.youtube.com/watch?v=ySRDnHzfv0w',
         },
@@ -722,31 +724,31 @@ export class LandingPage {
       items: [
         {
           title: 'Mescid-i Nebevi ve Hücre-i Saadet',
-          imageUrl: 'https://img.youtube.com/vi/3POpzHkrRW8/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/mescidi-nebevi-hucrei-saadet.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=3POpzHkrRW8',
         },
         {
           title: 'Hücre-i Saadet',
-          imageUrl: YT('b6g4z4Ra-Zs'),
+          imageUrl: 'assets/images/video-card/hucrei-saadet.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=b6g4z4Ra-Zs',
         },
         {
           title: 'Mescid-i Nebevi Çevresi',
-          imageUrl: 'https://img.youtube.com/vi/FoP_klbWDxk/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/mescidi-nebevi-cevresi.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=FoP_klbWDxk',
         },
         {
           title: "Cennetü'l-Baki",
-          imageUrl: 'https://img.youtube.com/vi/Mp364suPaMQ/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/cennetul-baki.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=Mp364suPaMQ',
         },
         {
           title: 'Kuba Mescidi',
-          imageUrl: 'https://img.youtube.com/vi/amZrr8aC938/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/kuba-mescidi.png',
           route: ['/harita'],
           videos: [
             {
@@ -762,55 +764,55 @@ export class LandingPage {
 
         {
           title: 'Uhud',
-          imageUrl: 'https://img.youtube.com/vi/SsmjpWYuTZA/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/uhud.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=SsmjpWYuTZA',
         },
         {
           title: 'Hendek Savaşı',
-          imageUrl: 'https://img.youtube.com/vi/FiXUZmp50ag/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/hendek.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=FiXUZmp50ag',
         },
         {
           title: 'Cuma Mescidi',
-          imageUrl: 'https://img.youtube.com/vi/lNWISF-hQ5g/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/cuma-mescidi.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=lNWISF-hQ5g',
         },
         {
           title: 'Mikat Mescidi',
-          imageUrl: 'https://img.youtube.com/vi/e73AJkWoRQ8/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/mikat-mescidi.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=e73AJkWoRQ8',
         },
         {
           title: 'İslamın İlk Yıllarında Medine (3 Boyutlu)',
-          imageUrl: 'https://img.youtube.com/vi/To3P-utMW_I/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/medine-3d.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=To3P-utMW_I',
         },
         {
           title: 'Mescid-i Fadıh (İçkinin Yasak Edildiği Yer)',
-          imageUrl: 'https://img.youtube.com/vi/MBl5murv3cc/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/mescidi-fadih.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=MBl5murv3cc',
         },
         {
           title: 'Selamlama Kapısı',
-          imageUrl: YT('BXEvIqzk6MA'),
+          imageUrl: 'assets/images/video-card/selamlama-kapisi.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=BXEvIqzk6MA',
         },
         {
           title: 'Medine Hakkında Önemli Bilgiler',
-          imageUrl: YT('Pw6MT-ou9cQ'),
+          imageUrl: 'assets/images/video-card/medine-onemli-bilgiler.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=Pw6MT-ou9cQ&t=1110s',
         },
         {
           title: "190 No'lu Otobüs",
-          imageUrl: 'https://img.youtube.com/vi/nkl8BWyokDw/hqdefault.jpg',
+          imageUrl: 'assets/images/video-card/190-no-otobus.png',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/nkl8BWyokDw',
           label: 'Nasıl Giderim?',
@@ -868,6 +870,12 @@ export class LandingPage {
           imageUrl: 'https://img.youtube.com/vi/oXKAF5zOefE/hqdefault.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=oXKAF5zOefE&t=91s',
+        },
+        {
+          title: 'Cidde Havalimanında yerel sim kart ve e-sim nerden alınır',
+          imageUrl: 'https://img.youtube.com/vi/MgE6LL8ICDg/hqdefault.jpg',
+          route: ['/harita'],
+          watchUrl: 'https://www.youtube.com/shorts/MgE6LL8ICDg',
         },
       ],
     },
@@ -935,6 +943,12 @@ export class LandingPage {
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/GG9w4EVGqlA',
         },
+        {
+          title: "Medine'de Süper Market",
+          imageUrl: 'https://img.youtube.com/vi/CqP8d8eh2_I/hqdefault.jpg',
+          route: ['/harita'],
+          watchUrl: 'https://www.youtube.com/shorts/CqP8d8eh2_I',
+        },
       ],
     },
     {
@@ -942,29 +956,31 @@ export class LandingPage {
 
       items: [
         {
-          title: 'Mekke - Medine Hatıraları 1',
+          title: 'Mahmut Sami Kirazoğlu Hatıraları',
           imageUrl: 'https://img.youtube.com/vi/OjPuBpnOCcU/hqdefault.jpg',
           route: ['/harita'],
-          watchUrl: 'https://www.youtube.com/watch?v=OjPuBpnOCcU',
+          type: 'Hatıra Serisi',
+          description: 'Mahmut Sami Kirazoğlu\'nun Mekke ve Medine hatıralarından oluşan bu video listesi, kutsal topraklarda yaşanan manevi atmosferi, ziyaret edilen mübarek mekânları ve umre yolculuğunun kalpte bıraktığı izleri samimi bir anlatımla sunar. Mekke ve Medine\'ye dair hatıralar, ziyaret noktaları, ibadet bilinci ve yolculuk tecrübeleri üzerinden izleyiciye hem bilgilendirici hem de duygusal bir rehberlik sağlar.',
+          videos: [
+            {
+              label: 'Mekke - Medine Hatıraları 1',
+              url: 'https://www.youtube.com/watch?v=OjPuBpnOCcU',
+            },
+            {
+              label: 'Mekke - Medine Hatıraları 2',
+              url: 'https://www.youtube.com/watch?v=CwHHFVy_vrM',
+            },
+            {
+              label: 'Mekke - Medine Hatıraları 3',
+              url: 'https://www.youtube.com/watch?v=I5Vsz5gPzYQ',
+            },
+            {
+              label: 'Mekke - Medine Hatıraları 4',
+              url: 'https://www.youtube.com/watch?v=NumM7hzU5dA',
+            },
+          ],
         },
-        {
-          title: 'Mekke - Medine Hatıraları 2',
-          imageUrl: 'https://img.youtube.com/vi/CwHHFVy_vrM/hqdefault.jpg',
-          route: ['/harita'],
-          watchUrl: 'https://www.youtube.com/watch?v=CwHHFVy_vrM',
-        },
-        {
-          title: 'Mekke - Medine Hatıraları 3',
-          imageUrl: 'https://img.youtube.com/vi/I5Vsz5gPzYQ/hqdefault.jpg',
-          route: ['/harita'],
-          watchUrl: 'https://www.youtube.com/watch?v=I5Vsz5gPzYQ',
-        },
-        {
-          title: 'Mekke - Medine Hatıraları 4',
-          imageUrl: 'https://img.youtube.com/vi/NumM7hzU5dA/hqdefault.jpg',
-          route: ['/harita'],
-          watchUrl: 'https://www.youtube.com/watch?v=NumM7hzU5dA',
-        },
+
         {
           title: 'Umre Hatıraları',
           imageUrl: 'https://img.youtube.com/vi/hPNx7bKbOBs/hqdefault.jpg',
@@ -1011,9 +1027,14 @@ export class LandingPage {
     });
     this.loadAllChecklists();
     this.feed.videos = this.rows
-      .flatMap(r => r.items)
-      .filter(i => !!i.watchUrl)
-      .map(i => ({ title: i.title, imageUrl: i.imageUrl, url: i.watchUrl!, duration: i.duration }));
+      .flatMap((r) => r.items)
+      .filter((i) => !!i.watchUrl)
+      .map((i) => ({
+        title: i.title,
+        imageUrl: i.imageUrl,
+        url: i.watchUrl!,
+        duration: i.duration,
+      }));
   }
 
   getWatchEntry(url?: string): WatchEntry | null {
@@ -1038,8 +1059,13 @@ export class LandingPage {
     this.sheetItem = item;
     this.sheetOpen = true;
     this.sheetLocation = null;
+    this.activeSheetTab = 'main';
     const locId = this.extractLocationId(item.route);
     if (locId !== null) this.fetchDetails(locId);
+  }
+
+  setSheetTab(tab: 'main' | 'detaylar') {
+    this.activeSheetTab = tab;
   }
 
   private extractLocationId(route: string[]): number | null {
@@ -1058,6 +1084,7 @@ export class LandingPage {
     this.sheetOpen = false;
     this.sheetItem = null;
     this.sheetLocation = null;
+    this.activeSheetTab = 'main';
   }
 
   playSheetVideo(url: string) {
