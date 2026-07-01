@@ -34,8 +34,4 @@ export class MovieDetailPopupComponent {
   onPlayVideo(url: string): void {
     this.play.emit(url);
   }
-
-  heroBg(url: string): string {
-    return `url("${url}")`;
-  }
 }

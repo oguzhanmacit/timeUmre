@@ -3,7 +3,6 @@
   [scrollEvents]="true"
   (ionScroll)="onScroll($any($event))"
 >
-  <div class="nf-page">
   <!-- Sticky şeffaf header -->
   <div class="nf-header" [class.nf-header--scrolled]="headerScrolled">
     <div class="nf-header-top">
@@ -169,7 +168,7 @@
         <div
           class="nf-card"
           *ngFor="let item of row.items"
-          (click)="openPopup(item, $event)"
+          (click)="openItem(item)"
         >
           <div class="nf-card-img">
             <img [src]="item.imageUrl" [alt]="item.title" loading="lazy" />
@@ -187,25 +186,6 @@
       </div>
     </div>
   </div>
-
-  <!-- Popup backdrop -->
-  <div
-    class="popup-backdrop"
-    *ngIf="selectedItem"
-    (click)="closePopup()"
-  ></div>
-
-  <!-- Netflix-style detail popup -->
-  <app-movie-detail-popup
-    *ngIf="selectedItem"
-    class="detail-popup-host"
-    [style.top.px]="popupTop"
-    [item]="selectedItem"
-    (close)="closePopup()"
-    (play)="onPopupPlay($event)"
-  ></app-movie-detail-popup>
-
-  </div><!-- /nf-page -->
 </ion-content>
 
 <!-- Umre tam ekran dropdown -->
