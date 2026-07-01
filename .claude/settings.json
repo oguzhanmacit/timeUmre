@@ -20,7 +20,20 @@
       "Bash(npm --version)",
       "Bash(echo \"PID: $!\")",
       "Bash(sleep 15 && tail -30 /tmp/ng-serve.log)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(Get-Content \"C:\\\\Users\\\\ADMINI~1\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--Users-Administrator-Desktop-TimeUmre\\\\e70e7100-a5fb-43fb-ba31-cd7eb19014ca\\\\tasks\\\\bydnz7sze.output\" -Wait)",
+      "Bash(Select-String -Pattern \"Local:|compiled|error|failed|Error\")",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:api.github.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8100)",
+      "Bash(curl -s \"http://localhost:8100/umrah-routes/madinah-makkah-jeddah/step-videos/mmj-step-3\" -o /dev/null -w \"%{http_code}\")",
+      "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('@angular/core:', p.dependencies['@angular/core'], '@ionic/angular:', p.dependencies['@ionic/angular']\\)\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Administrator\\.claude\\projects\\c--Users-Administrator-Desktop-TimeUmre\\memory",
