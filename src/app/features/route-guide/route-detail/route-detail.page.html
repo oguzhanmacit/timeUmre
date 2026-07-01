@@ -176,12 +176,18 @@
           </div>
         </ng-container>
         <div class="rd-fs-action-grid">
-
+          <button class="rd-fs-action-tile" (click)="showDetailInfo()">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>Detaylı Bilgi</span>
+          </button>
           <button class="rd-fs-action-tile" *ngIf="!popupStep.hideVideoButton" (click)="openStepVideo()">
             <ion-icon name="play-circle-outline"></ion-icon>
             <span>Video İzle</span>
           </button>
-
+          <button class="rd-fs-action-tile" (click)="showNotesToast()">
+            <ion-icon name="create-outline"></ion-icon>
+            <span>Notlarım</span>
+          </button>
         </div>
       </div>
 

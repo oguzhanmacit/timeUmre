@@ -35,6 +35,11 @@ export const routes: Routes = [
       import('./features/route-guide/route-list/route-list.page').then(m => m.RouteListPage),
   },
   {
+    path: 'umrah-routes/:routeId/step-videos/:stepId',
+    loadComponent: () =>
+      import('./features/route-guide/step-videos/step-videos.page').then(m => m.StepVideosPage),
+  },
+  {
     path: 'umrah-routes/:routeId',
     loadComponent: () =>
       import('./features/route-guide/route-detail/route-detail.page').then(m => m.RouteDetailPage),

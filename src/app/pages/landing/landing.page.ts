@@ -46,6 +46,8 @@ interface ContentItem {
   videos?: { label: string; url: string }[];
   duration?: string;
   label?: string;
+  type?: string;
+  description?: string;
 }
 interface ContentRow {
   title: string;
@@ -264,6 +266,7 @@ export class LandingPage {
   sheetItem: ContentItem | null = null;
   sheetLocation: UmreLocation | null = null;
   sheetLoading = false;
+  activeSheetTab: 'main' | 'detaylar' = 'main';
   umreDropdownOpen = false;
   giderimDropdownOpen = false;
   continueWatchingItems: ContentItem[] = [];
@@ -492,7 +495,7 @@ export class LandingPage {
     this.continueWatchingItems = sorted.slice(0, MAX);
   }
 
-  private ytThumb(url: string): string {
+  ytThumb(url: string): string {
     const m = url.match(
       /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([^&?/\s]{11})/,
     );
@@ -936,6 +939,12 @@ export class LandingPage {
           watchUrl: 'https://www.youtube.com/watch?v=oXKAF5zOefE&t=91s',
           duration: '16:04',
         },
+        {
+          title: 'Cidde Havalimanında yerel sim kart ve e-sim nerden alınır',
+          imageUrl: 'https://img.youtube.com/vi/MgE6LL8ICDg/hqdefault.jpg',
+          route: ['/harita'],
+          watchUrl: 'https://www.youtube.com/shorts/MgE6LL8ICDg',
+        },
       ],
     },
     {
@@ -1012,6 +1021,12 @@ export class LandingPage {
           watchUrl: 'https://www.youtube.com/shorts/GG9w4EVGqlA',
           duration: '0:35',
         },
+        {
+          title: "Medine'de Süper Market",
+          imageUrl: 'https://img.youtube.com/vi/CqP8d8eh2_I/hqdefault.jpg',
+          route: ['/harita'],
+          watchUrl: 'https://www.youtube.com/shorts/CqP8d8eh2_I',
+        },
       ],
     },
     {
@@ -1019,33 +1034,31 @@ export class LandingPage {
 
       items: [
         {
-          title: 'Mekke - Medine Hatıraları 1',
-          imageUrl: 'assets/data/video-cart/mekke-medine 1.jpg',
+          title: 'Mahmut Sami Kirazoğlu Hatıraları',
+          imageUrl: 'https://img.youtube.com/vi/OjPuBpnOCcU/hqdefault.jpg',
           route: ['/harita'],
-          watchUrl: 'https://www.youtube.com/watch?v=OjPuBpnOCcU',
-          duration: '32:00',
+          type: 'Hatıra Serisi',
+          description: 'Mahmut Sami Kirazoğlu\'nun Mekke ve Medine hatıralarından oluşan bu video listesi, kutsal topraklarda yaşanan manevi atmosferi, ziyaret edilen mübarek mekânları ve umre yolculuğunun kalpte bıraktığı izleri samimi bir anlatımla sunar. Mekke ve Medine\'ye dair hatıralar, ziyaret noktaları, ibadet bilinci ve yolculuk tecrübeleri üzerinden izleyiciye hem bilgilendirici hem de duygusal bir rehberlik sağlar.',
+          videos: [
+            {
+              label: 'Mekke - Medine Hatıraları 1',
+              url: 'https://www.youtube.com/watch?v=OjPuBpnOCcU',
+            },
+            {
+              label: 'Mekke - Medine Hatıraları 2',
+              url: 'https://www.youtube.com/watch?v=CwHHFVy_vrM',
+            },
+            {
+              label: 'Mekke - Medine Hatıraları 3',
+              url: 'https://www.youtube.com/watch?v=I5Vsz5gPzYQ',
+            },
+            {
+              label: 'Mekke - Medine Hatıraları 4',
+              url: 'https://www.youtube.com/watch?v=NumM7hzU5dA',
+            },
+          ],
         },
-        {
-          title: 'Mekke - Medine Hatıraları 2',
-          imageUrl: 'assets/data/video-cart/mekke-medine hatıraları 2.png',
-          route: ['/harita'],
-          watchUrl: 'https://www.youtube.com/watch?v=CwHHFVy_vrM',
-          duration: '27:23',
-        },
-        {
-          title: 'Mekke - Medine Hatıraları 3',
-          imageUrl: 'assets/data/video-cart/mekke-medine 3.webp',
-          route: ['/harita'],
-          watchUrl: 'https://www.youtube.com/watch?v=I5Vsz5gPzYQ',
-          duration: '25:58',
-        },
-        {
-          title: 'Mekke - Medine Hatıraları 4',
-          imageUrl: 'assets/data/video-cart/mekke-medine 4.jpg',
-          route: ['/harita'],
-          watchUrl: 'https://www.youtube.com/watch?v=NumM7hzU5dA',
-          duration: '30:01',
-        },
+
         {
           title: 'Umre Hatıraları',
           imageUrl: 'assets/data/video-cart/umre hatıraları.jpg',
@@ -1094,9 +1107,14 @@ export class LandingPage {
     });
     this.loadAllChecklists();
     this.feed.videos = this.rows
-      .flatMap(r => r.items)
-      .filter(i => !!i.watchUrl)
-      .map(i => ({ title: i.title, imageUrl: i.imageUrl, url: i.watchUrl!, duration: i.duration }));
+      .flatMap((r) => r.items)
+      .filter((i) => !!i.watchUrl)
+      .map((i) => ({
+        title: i.title,
+        imageUrl: i.imageUrl,
+        url: i.watchUrl!,
+        duration: i.duration,
+      }));
   }
 
   getWatchEntry(url?: string): WatchEntry | null {
@@ -1121,8 +1139,13 @@ export class LandingPage {
     this.sheetItem = item;
     this.sheetOpen = true;
     this.sheetLocation = null;
+    this.activeSheetTab = 'main';
     const locId = this.extractLocationId(item.route);
     if (locId !== null) this.fetchDetails(locId);
+  }
+
+  setSheetTab(tab: 'main' | 'detaylar') {
+    this.activeSheetTab = tab;
   }
 
   private extractLocationId(route: string[]): number | null {
@@ -1141,6 +1164,7 @@ export class LandingPage {
     this.sheetOpen = false;
     this.sheetItem = null;
     this.sheetLocation = null;
+    this.activeSheetTab = 'main';
   }
 
   playSheetVideo(url: string) {
