@@ -354,6 +354,10 @@ export class LandingPage {
   videoPickerOpen = false;
   videoPickerItems: { label: string; url: string }[] = [];
 
+  bgUrl(url: string): string {
+    return `url("${url}")`;
+  }
+
   onScroll(event: CustomEvent) {
     this.headerScrolled = event.detail.scrollTop > 60;
     this.closeDropdown();

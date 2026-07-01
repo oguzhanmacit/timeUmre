@@ -252,7 +252,7 @@
   <!-- Hero: tam genişlik görsel + gradient + başlık altta -->
   <div
     class="nf-sheet-hero"
-    [style.backgroundImage]="sheetItem ? 'url(' + sheetItem.imageUrl + ')' : ''"
+    [style.backgroundImage]="sheetItem ? bgUrl(sheetItem.imageUrl) : ''"
   >
     <div class="nf-sheet-hero-gradient"></div>
 
