@@ -742,7 +742,7 @@ export class LandingPage {
         },
         {
           title: "Cennetü'l-Baki",
-          imageUrl: 'assets/images/video-card/Cennetü'l-Baki.jpg',
+          imageUrl: "assets/images/video-card/Cennetü'l-Baki.jpg",
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=Mp364suPaMQ',
         },
