@@ -527,7 +527,7 @@ ion-content {
 /* 3-column action buttons */
 .rd-fs-action-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   gap: 10px;
   margin-top: 18px;
 }
@@ -544,10 +544,58 @@ ion-content {
   cursor: pointer;
   transition: background 0.15s;
 
-  ion-icon { font-size: 22px; color: #eab308; }
-  span { font-size: 11px; font-weight: 600; color: rgba(255, 255, 255, 0.6); }
+  ion-icon { font-size: 24px; color: #eab308; }
+  span { font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, 0.6); }
 
   &:active { background: rgba(234, 179, 8, 0.08); }
+}
+
+/* Checklist 2/3 + Video 1/3 split layout */
+.rd-fs-checklist-video-split {
+  margin: 0 16px 20px;
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.rd-fs-card--split {
+  flex: 2;
+  margin: 0;
+}
+
+.rd-fs-video-split {
+  flex: 0 0 34%;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 2px solid rgba(234, 179, 8, 0.45);
+  background: #0a0a0a;
+  transition: opacity 0.15s;
+
+  &:active { opacity: 0.82; }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.rd-fs-video-play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.38);
+
+  ion-icon {
+    font-size: 30px;
+    color: #fff;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.7));
+  }
 }
 
 /* Transport section inside fullscreen */
@@ -1132,6 +1180,10 @@ ion-content {
   span { color: rgba(61,40,0,0.65); }
 }
 
+:host-context([data-theme="light"]) .rd-fs-video-split {
+  border-color: rgba(184, 134, 11, 0.55);
+}
+
 :host-context([data-theme="light"]) .rd-fs-section-label {
   color: rgba(61,40,0,0.42);
 }
@@ -1169,4 +1221,133 @@ ion-content {
 
 :host-context([data-theme="light"]) .rd-not-found {
   color: rgba(61,40,0,0.45);
+}
+
+/* ── Sıradaki adım dialog ── */
+.rd-next-dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 9000;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.rd-next-dialog {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9001;
+  width: calc(100% - 48px);
+  max-width: 340px;
+  background: #111;
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  border-radius: 20px;
+  padding: 28px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(234,179,8,0.08);
+}
+
+.rd-next-dialog-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b8860b, #f5c842);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 18px rgba(234, 179, 8, 0.4);
+
+  ion-icon {
+    font-size: 28px;
+    color: #000;
+  }
+}
+
+.rd-next-dialog-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px;
+}
+
+.rd-next-dialog-msg {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 8px;
+}
+
+.rd-next-dialog-step {
+  font-size: 13px;
+  font-weight: 600;
+  color: #eab308;
+  margin: 0 0 22px;
+  padding: 6px 14px;
+  background: rgba(234, 179, 8, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(234, 179, 8, 0.2);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rd-next-dialog-actions {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.rd-next-dialog-btn {
+  flex: 1;
+  padding: 14px 0;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+
+  &:active { opacity: 0.78; }
+
+  &--no {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  &--yes {
+    background: linear-gradient(135deg, #b8860b, #f5c842);
+    color: #000;
+    box-shadow: 0 3px 14px rgba(234, 179, 8, 0.35);
+  }
+}
+
+/* Light mode overrides */
+:host-context([data-theme="light"]) .rd-next-dialog {
+  background: #fffbf0;
+  border-color: rgba(184, 134, 11, 0.25);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
+}
+
+:host-context([data-theme="light"]) .rd-next-dialog-title {
+  color: #3d2800;
+}
+
+:host-context([data-theme="light"]) .rd-next-dialog-msg {
+  color: rgba(61, 40, 0, 0.55);
+}
+
+:host-context([data-theme="light"]) .rd-next-dialog-step {
+  background: rgba(184, 134, 11, 0.08);
+  border-color: rgba(184, 134, 11, 0.2);
+}
+
+:host-context([data-theme="light"]) .rd-next-dialog-btn--no {
+  background: rgba(0, 0, 0, 0.05);
+  color: rgba(61, 40, 0, 0.55);
+  border-color: rgba(0, 0, 0, 0.1);
 }

@@ -31,6 +31,8 @@ export interface UmrahRouteStep {
   videoUrl?: string;
   videos?: { label: string; url: string }[];
   mapUrl?: string;
+  showCompleteButton?: boolean;
+  hideVideoButton?: boolean;
 }
 
 export interface UmrahRoute {

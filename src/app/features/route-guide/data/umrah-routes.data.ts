@@ -47,12 +47,9 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
           'En hızlı seçenek olan Haramain Yüksek Hızlı Treni Abdülaziz istasyonundan kalkar; bilet satın almak için uygulamayı önceden indirmeniz önerilir. ' +
           'Taksi veya özel transferler havalimanı çıkışında hazır beklemektedir. ' +
           'Mekke, gayrimüslimlere kapalı kutsal bir şehirdir; giriş noktalarında kontrol yapılabilir.',
-        checklist: [
-          'Ulaşım yöntemi seçildi (tren / taksi / özel transfer)',
-          'Tren bileti önceden alındı veya gişeden temin edildi',
-          'Otel adresi ve navigasyon hazır',
-          'İhramlı ise ihram yasaklarına dikkat ediliyor',
-        ],
+        checklist: [],
+        showCompleteButton: true,
+        hideVideoButton: true,
         transportOptions: [
           {
             type: 'train',
@@ -201,12 +198,10 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
           "Haramain Yüksek Hızlı Treni bu güzergâhı yaklaşık 2 saatte kat eder; bilet temini için Mekke Merkez İstasyonu'na gelin. " +
           'Özel transfer veya otobüs alternatifleri 5-6 saat sürebilir ancak daha esnek saatler sunar. ' +
           "Medine'de otele yerleşmeden önce Mescid-i Nebevî'nin konumunu haritada işaretleyin.",
-        checklist: [
-          'Medine ulaşım yöntemi ve bilet/rezervasyon hazır',
-          'Medine otel adresi ve iletişim bilgisi var',
-          'Mekke oteli check-out tamamlandı',
-          'Bagajlar kontrol edildi, kayıp eşya yok',
-        ],
+        checklist: [],
+        showCompleteButton: true,
+        hideVideoButton: true,
+        videoUrl: 'https://www.youtube.com/watch?v=3L-ocdHKA_U',
         transportOptions: [
           {
             type: 'train',
@@ -448,6 +443,9 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
           'Tren kullanılıyorsa istasyona zamanında gitmek, bilet ve bagaj kurallarını kontrol etmek önemlidir. ' +
           'Özel transfer veya otobüs kullanılıyorsa yolculuk süresi ve mola düzeni önceden öğrenilmelidir.',
         checklist: [],
+        showCompleteButton: true,
+        hideVideoButton: true,
+        videoUrl: 'https://www.youtube.com/watch?v=WnKsmjFNxF4&t=40s',
         transportOptions: [
           {
             type: 'train',

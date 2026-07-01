@@ -32,6 +32,9 @@ export class RouteDetailPage implements OnInit {
   popupStep: UmrahRouteStep | null = null;
   expandedTransportKey: string | null = null;
 
+  nextStepDialogOpen = false;
+  pendingNextStep: UmrahRouteStep | null = null;
+
   private routeId = '';
 
   constructor(
@@ -312,6 +315,21 @@ export class RouteDetailPage implements OnInit {
     return map[city];
   }
 
+  getYoutubeThumbnail(url: string): string {
+    const match = url.match(/(?:v=|\/shorts\/|youtu\.be\/)([^&?/]+)/);
+    const id = match?.[1];
+    return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : '';
+  }
+
+  getVideoCardThumbnail(step: UmrahRouteStep): string {
+    const url = step.videoUrl ?? step.videos?.[0]?.url ?? '';
+    return url ? this.getYoutubeThumbnail(url) : '';
+  }
+
+  hasVideoCard(step: UmrahRouteStep): boolean {
+    return !step.hideVideoButton && !!(step.videoUrl || step.videos?.length);
+  }
+
   openStepVideo() {
     if (!this.popupStep) return;
     const step = this.popupStep;
@@ -340,30 +358,44 @@ export class RouteDetailPage implements OnInit {
     const stepId = this.popupStep.id;
     const len = this.checkStates[stepId]?.length ?? 0;
     const allDone = this.checkStates[stepId]?.every(Boolean);
-    if (allDone) {
+
+    if (!allDone) {
+      const updated = Array(len).fill(true);
+      this.checkStates[stepId] = updated;
+      updated.forEach((_, i) => {
+        this.checklistService.updateChecklistItem(this.routeId, stepId, i, true);
+      });
+    }
+
+    const nextIndex = this.popupStepIndex + 1;
+    if (this.route && nextIndex < this.route.steps.length) {
+      this.pendingNextStep = this.route.steps[nextIndex];
+      this.nextStepDialogOpen = true;
+    } else {
       const toast = await this.toastCtrl.create({
-        message: 'Bu adımın tüm maddeleri zaten tamamlandı.',
+        message: allDone ? 'Bu adımın tüm maddeleri zaten tamamlandı.' : 'Tüm maddeler tamamlandı!',
         duration: 1600,
         position: 'bottom',
         cssClass: 'nf-toast',
         color: 'dark',
       });
       await toast.present();
-      return;
     }
-    const updated = Array(len).fill(true);
-    this.checkStates[stepId] = updated;
-    updated.forEach((_, i) => {
-      this.checklistService.updateChecklistItem(this.routeId, stepId, i, true);
-    });
-    const toast = await this.toastCtrl.create({
-      message: 'Tüm maddeler tamamlandı!',
-      duration: 1600,
-      position: 'bottom',
-      cssClass: 'nf-toast',
-      color: 'dark',
-    });
-    await toast.present();
+  }
+
+  confirmNextStep() {
+    const next = this.pendingNextStep;
+    this.nextStepDialogOpen = false;
+    this.pendingNextStep = null;
+    if (next) {
+      this.closePopup();
+      setTimeout(() => this.openPopup(next.id), 50);
+    }
+  }
+
+  dismissNextStep() {
+    this.nextStepDialogOpen = false;
+    this.pendingNextStep = null;
   }
 
   async showDetailInfo() {
