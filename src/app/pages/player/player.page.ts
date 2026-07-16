@@ -15,13 +15,12 @@ import { PlaybackProgressService } from '../../services/playback-progress.servic
 import { WatchHistoryService } from '../../services/watch-history.service';
 import { VideoNotesService, VideoNote } from '../../services/video-notes.service';
 import { VideoFeedService, FeedVideo } from '../../services/video-feed.service';
-import { AppHeaderComponent } from '../../components/app-header/app-header.component';
 import { UmreLocation, LocationVideo } from '../../models/location.model';
 
 @Component({
   selector: 'app-player',
   standalone: true,
-  imports: [CommonModule, FormsModule, AppHeaderComponent, IonContent, IonSpinner, IonIcon],
+  imports: [CommonModule, FormsModule, IonContent, IonSpinner, IonIcon],
   templateUrl: './player.page.html',
   styleUrls: ['./player.page.scss'],
 })

@@ -1,11 +1,3 @@
-<app-header
-  [title]="location?.name ?? 'Yükleniyor…'"
-  [showBack]="true"
-  [showHome]="true"
-  [translucent]="false"
->
-</app-header>
-
 <!-- ── SAYFA GENELİ ARKA PLAN FOTOĞRAFI ── -->
 <div
   class="page-bg"
@@ -14,7 +6,7 @@
 ></div>
 <div class="page-bg-overlay"></div>
 
-<ion-content>
+<ion-content [scrollEvents]="true">
   <div *ngIf="isLoading" class="loading-state">
     <ion-spinner name="crescent" color="primary"></ion-spinner>
   </div>

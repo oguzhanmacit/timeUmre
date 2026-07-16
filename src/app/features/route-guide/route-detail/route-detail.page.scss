@@ -6,36 +6,13 @@ ion-content {
 /* ── Header ── */
 .rd-header {
   background: #000;
-  padding: env(safe-area-inset-top, 52px) 24px 20px;
-  padding-top: max(env(safe-area-inset-top, 0px), 48px);
+  padding: 20px 24px;
 }
 
 .rd-topbar-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 28px;
-}
-
-.rd-back-btn {
-  background: none;
-  border: none;
-  color: #eab308;
-  font-size: 22px;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.rd-brand {
-  flex: 1;
-  text-align: center;
-  font-size: 17px;
-  font-weight: 600;
-  color: #eab308;
-  letter-spacing: 0.3px;
 }
 
 .rd-reset-btn {
@@ -67,6 +44,7 @@ ion-content {
 }
 
 .rd-route-title {
+  flex: 1;
   font-size: 18px;
   font-weight: 700;
   color: #fff;
@@ -1075,154 +1053,6 @@ ion-content {
   ion-icon { font-size: 26px; color: #fff !important; }
 }
 
-/* ═══════════════════════════════
-   LIGHT MODE — GOLD THEME
-   ═══════════════════════════════ */
-:host-context([data-theme="light"]) ion-content {
-  --background: #fdf6e3;
-}
-
-:host-context([data-theme="light"]) .rd-header {
-  background: #fdf6e3;
-}
-
-:host-context([data-theme="light"]) .rd-route-title { color: #3d2800; }
-
-:host-context([data-theme="light"]) .rd-glass-card {
-  background: rgba(255, 251, 240, 0.88);
-  border-color: rgba(184, 134, 11, 0.18);
-}
-
-:host-context([data-theme="light"]) .rd-card-title { color: #3d2800; }
-:host-context([data-theme="light"]) .rd-card-desc  { color: rgba(61,40,0,0.52); }
-
-:host-context([data-theme="light"]) .rd-icon-circle {
-  background: #fffbf0;
-}
-
-:host-context([data-theme="light"]) .rd-card-progress-wrap {
-  background: rgba(184, 134, 11, 0.12);
-}
-
-:host-context([data-theme="light"]) .nf-bottom-nav {
-  background: rgba(253, 246, 227, 0.97);
-  border-top-color: rgba(184, 134, 11, 0.18);
-}
-
-:host-context([data-theme="light"]) .nf-tab {
-  ion-icon { color: rgba(61,40,0,0.38); }
-  span     { color: rgba(61,40,0,0.38); }
-
-  &.active {
-    ion-icon { color: #3d2800; }
-    span     { color: #3d2800; }
-  }
-
-  &--explore span { color: #b8860b; }
-}
-
-/* Fullscreen popup */
-:host-context([data-theme="light"]) .rd-fullscreen {
-  background: #fef3c7;
-}
-
-:host-context([data-theme="light"]) .rd-fs-nav {
-  background: rgba(254, 243, 199, 0.96);
-  border-bottom-color: rgba(184,134,11,0.18);
-}
-
-:host-context([data-theme="light"]) .rd-fs-back {
-  background: rgba(184, 134, 11, 0.1);
-  ion-icon { color: #7a5200; }
-}
-
-:host-context([data-theme="light"]) .rd-fs-counter {
-  color: rgba(61,40,0,0.45);
-}
-
-:host-context([data-theme="light"]) .rd-fs-icon-btn {
-  background: rgba(184, 134, 11, 0.1);
-}
-
-:host-context([data-theme="light"]) .rd-fs-hero-gradient {
-  background: linear-gradient(to bottom, rgba(254,243,199,0.05) 0%, rgba(254,243,199,0.9) 100%);
-}
-
-:host-context([data-theme="light"]) .rd-fs-hero-title { color: #fff; }
-
-:host-context([data-theme="light"]) .rd-fs-desc {
-  color: rgba(61,40,0,0.68);
-}
-
-:host-context([data-theme="light"]) .rd-fs-card {
-  background: #fffbf0;
-  border-color: rgba(201, 168, 76, 0.3);
-}
-
-:host-context([data-theme="light"]) .rd-fs-progress {
-  background: rgba(184,134,11,0.12);
-}
-
-:host-context([data-theme="light"]) .rd-fs-check-item {
-  border-bottom-color: rgba(184,134,11,0.12);
-
-  span { color: rgba(61,40,0,0.75); }
-  span.done { color: rgba(61,40,0,0.32); }
-}
-
-:host-context([data-theme="light"]) .rd-fs-checkbox {
-  border-color: rgba(184,134,11,0.35);
-}
-
-:host-context([data-theme="light"]) .rd-fs-action-tile {
-  background: rgba(184,134,11,0.07);
-  border-color: rgba(184,134,11,0.18);
-  span { color: rgba(61,40,0,0.65); }
-}
-
-:host-context([data-theme="light"]) .rd-fs-video-split {
-  border-color: rgba(184, 134, 11, 0.55);
-}
-
-:host-context([data-theme="light"]) .rd-fs-section-label {
-  color: rgba(61,40,0,0.42);
-}
-
-:host-context([data-theme="light"]) .rd-fs-footer {
-  background: linear-gradient(to top, #fef3c7 80%, transparent);
-  border-top-color: rgba(184,134,11,0.15);
-}
-
-/* Transport header + cards in light mode */
-:host-context([data-theme="light"]) .rd-fs-transport-title { color: #3d2800; }
-:host-context([data-theme="light"]) .rd-fs-transport-sub   { color: rgba(61,40,0,0.48); }
-
-:host-context([data-theme="light"]) .rd-fs-tnav-title { color: #3d2800; }
-:host-context([data-theme="light"]) .rd-fs-tnav-sub   { color: rgba(61,40,0,0.48); }
-
-:host-context([data-theme="light"]) .rd-fs-tc {
-  background: #fffbf0;
-  border-color: rgba(184,134,11,0.18);
-
-  &--best { border-color: rgba(16,185,129,0.35); }
-}
-
-:host-context([data-theme="light"]) .rd-fs-tc-img {
-  opacity: 0.72;
-}
-
-:host-context([data-theme="light"]) .rd-fs-tc-overlay {
-  background: linear-gradient(to right, rgba(255,251,240,0.65) 0%, transparent 100%);
-}
-
-:host-context([data-theme="light"]) .rd-fs-tc-name { color: #3d2800; }
-:host-context([data-theme="light"]) .rd-fs-tc-time-label  { color: rgba(61,40,0,0.42); }
-:host-context([data-theme="light"]) .rd-fs-tc-price-label { color: rgba(61,40,0,0.38); }
-
-:host-context([data-theme="light"]) .rd-not-found {
-  color: rgba(61,40,0,0.45);
-}
-
 /* ── Sıradaki adım dialog ── */
 .rd-next-dialog-backdrop {
   position: fixed;
@@ -1326,28 +1156,3 @@ ion-content {
   }
 }
 
-/* Light mode overrides */
-:host-context([data-theme="light"]) .rd-next-dialog {
-  background: #fffbf0;
-  border-color: rgba(184, 134, 11, 0.25);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.15);
-}
-
-:host-context([data-theme="light"]) .rd-next-dialog-title {
-  color: #3d2800;
-}
-
-:host-context([data-theme="light"]) .rd-next-dialog-msg {
-  color: rgba(61, 40, 0, 0.55);
-}
-
-:host-context([data-theme="light"]) .rd-next-dialog-step {
-  background: rgba(184, 134, 11, 0.08);
-  border-color: rgba(184, 134, 11, 0.2);
-}
-
-:host-context([data-theme="light"]) .rd-next-dialog-btn--no {
-  background: rgba(0, 0, 0, 0.05);
-  color: rgba(61, 40, 0, 0.55);
-  border-color: rgba(0, 0, 0, 0.1);
-}

@@ -22,30 +22,30 @@
   --ion-color-warning:           #ffc409;
   --ion-color-danger:            #eb445a;
   --ion-color-medium:            #92949c;
-  --ion-color-light:             #f4f5f8;
+  --ion-color-light:             #222428;
+  --ion-color-light-rgb:         34,36,40;
+  --ion-color-light-contrast:    #ffffff;
+  --ion-color-light-shade:       #1e2023;
+  --ion-color-light-tint:        #383a3e;
 
   --ion-font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --ion-background-color: #f9fafb;
-  --ion-item-background: #ffffff;
+  --ion-background-color: #121212;
+  --ion-background-color-rgb: 18,18,18;
+  --ion-text-color: #ffffff;
+  --ion-item-background: #1e1e1e;
+  --ion-toolbar-background: #1a7a4a;
 
   --tu-mosque:    #1a7a4a;
   --tu-historical:#c17f24;
   --tu-mountain:  #7b5ea7;
   --tu-cave:      #5a6e8c;
+
+  // Global premium header yüksekliği — ion-router-outlet'i buna göre aşağı iter
+  --app-header-height: 80px;
 }
 
-// Dark mode
-@media (prefers-color-scheme: dark) {
+@media (max-width: 640px) {
   :root {
-    --ion-background-color: #121212;
-    --ion-background-color-rgb: 18,18,18;
-    --ion-text-color: #ffffff;
-    --ion-item-background: #1e1e1e;
-    --ion-toolbar-background: #1a7a4a;
-    --ion-color-light: #222428;
-    --ion-color-light-rgb: 34,36,40;
-    --ion-color-light-contrast: #ffffff;
-    --ion-color-light-shade: #1e2023;
-    --ion-color-light-tint: #383a3e;
+    --app-header-height: 64px;
   }
 }

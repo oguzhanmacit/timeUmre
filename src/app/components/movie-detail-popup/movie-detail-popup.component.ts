@@ -35,7 +35,7 @@ export class MovieDetailPopupComponent {
     this.play.emit(url);
   }
 
-  heroBg(url: string): string {
+  bgUrl(url: string): string {
     return `url("${url}")`;
   }
 }

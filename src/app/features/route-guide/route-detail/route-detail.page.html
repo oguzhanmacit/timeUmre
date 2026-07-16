@@ -1,16 +1,12 @@
-<ion-content [fullscreen]="true" *ngIf="route">
+<ion-content [fullscreen]="true" [scrollEvents]="true" *ngIf="route">
   <!-- Header -->
   <div class="rd-header">
     <div class="rd-topbar-row">
-      <button class="rd-back-btn" (click)="goBack()">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-      </button>
-      <span class="rd-brand">Umre Yolculuğum</span>
+      <h2 class="rd-route-title">{{ route.title }}</h2>
       <button class="rd-reset-btn" (click)="clearChecklist()" [disabled]="totalCheckedAll === 0">
         <ion-icon name="refresh-outline"></ion-icon>
       </button>
     </div>
-    <h2 class="rd-route-title">{{ route.title }}</h2>
   </div>
 
   <!-- Timeline -->
