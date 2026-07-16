@@ -30,6 +30,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/notlarim/notlarim.page').then(m => m.NotlarimPage),
   },
   {
+    path: 'video-list',
+    loadComponent: () => import('./pages/video-list/video-list.page').then(m => m.VideoListPage),
+  },
+  {
     path: 'umrah-routes',
     loadComponent: () =>
       import('./features/route-guide/route-list/route-list.page').then(m => m.RouteListPage),

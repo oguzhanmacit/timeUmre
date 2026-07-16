@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonContent, IonIcon, IonList, IonItem, IonItemDivider,
   IonLabel, IonSearchbar,
@@ -11,14 +11,13 @@ import {
   businessOutline, flagOutline, triangleOutline, apertureOutline,
 } from 'ionicons/icons';
 import { LocationService } from '../../services/location.service';
-import { AppHeaderComponent } from '../../components/app-header/app-header.component';
 import { UmreLocation, UserPosition } from '../../models/location.model';
 
 @Component({
   selector: 'app-lokasyonlar',
   standalone: true,
   imports: [
-    CommonModule, AppHeaderComponent,
+    CommonModule,
     IonContent, IonIcon, IonList, IonItem, IonItemDivider, IonLabel, IonSearchbar,
   ],
   templateUrl: './lokasyonlar.page.html',
@@ -32,6 +31,7 @@ export class LokasyonlarPage implements OnInit {
   constructor(
     private locationService: LocationService,
     private router: Router,
+    private route: ActivatedRoute,
   ) {
     addIcons({
       locationOutline, walkOutline, chevronForwardOutline,
@@ -40,6 +40,7 @@ export class LokasyonlarPage implements OnInit {
   }
 
   ngOnInit() {
+    this.searchQuery = this.route.snapshot.queryParamMap.get('q') ?? '';
     this.locationService.getLocations().subscribe(data => this.locations = data);
     this.locationService.getUserPosition()
       .then(pos => this.userPosition = pos)

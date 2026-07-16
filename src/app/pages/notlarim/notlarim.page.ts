@@ -9,7 +9,6 @@ import {
   downloadOutline, personOutline,
 } from 'ionicons/icons';
 import { VideoNotesService, VideoNote } from '../../services/video-notes.service';
-import { AppHeaderComponent } from '../../components/app-header/app-header.component';
 
 export interface NoteGroup {
   url: string;
@@ -23,7 +22,7 @@ export interface NoteGroup {
 @Component({
   selector: 'app-notlarim',
   standalone: true,
-  imports: [CommonModule, IonContent, IonIcon, AppHeaderComponent],
+  imports: [CommonModule, IonContent, IonIcon],
   templateUrl: './notlarim.page.html',
   styleUrls: ['./notlarim.page.scss'],
 })

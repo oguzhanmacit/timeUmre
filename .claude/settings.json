@@ -33,7 +33,9 @@
       "Bash(node -e \"const p=require\\('./package.json'\\); console.log\\('@angular/core:', p.dependencies['@angular/core'], '@ionic/angular:', p.dependencies['@ionic/angular']\\)\")",
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(find src/app/components -maxdepth 2)",
+      "Bash(find src/app/shared -maxdepth 3)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Administrator\\.claude\\projects\\c--Users-Administrator-Desktop-TimeUmre\\memory",

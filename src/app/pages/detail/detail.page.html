@@ -1,13 +1,4 @@
-<app-header
-  [title]="location?.name ?? 'Yükleniyor…'"
-  [showBack]="true"
-  [showHome]="true"
-  [white]="true"
-  [translucent]="false"
->
-</app-header>
-
-<ion-content>
+<ion-content [scrollEvents]="true">
   <div *ngIf="isLoading" class="loading-state">
     <ion-spinner name="crescent" color="primary"></ion-spinner>
   </div>

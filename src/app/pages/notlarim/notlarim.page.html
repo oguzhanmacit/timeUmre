@@ -1,6 +1,4 @@
-<app-header title="Notlarım" [showBack]="false" [showHome]="false"></app-header>
-
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollEvents]="true">
 
   <!-- Boş durum -->
   <div *ngIf="groups.length === 0" class="empty-state">

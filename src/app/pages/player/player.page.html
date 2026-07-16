@@ -1,12 +1,4 @@
-<app-header
-  [title]="video?.title ?? location?.name ?? ''"
-  [showBack]="true"
-  [showHome]="true"
-  [white]="true"
-  [translucent]="false">
-</app-header>
-
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollEvents]="true">
   <div *ngIf="isLoading" class="center">
     <ion-spinner name="crescent" color="primary"></ion-spinner>
   </div>

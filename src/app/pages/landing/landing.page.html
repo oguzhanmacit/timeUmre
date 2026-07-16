@@ -1,47 +1,4 @@
-<ion-content
-  [fullscreen]="true"
-  [scrollEvents]="true"
-  (ionScroll)="onScroll($any($event))"
->
-  <!-- Sticky şeffaf header -->
-  <div class="nf-header" [class.nf-header--scrolled]="headerScrolled">
-    <div class="nf-header-top">
-      <div class="nf-logo">
-        <ion-icon name="compass-outline"></ion-icon>
-        <span>Umre Rehberi</span>
-      </div>
-      <button class="nf-theme-toggle" (click)="theme.toggle()">
-        <ion-icon [name]="theme.isDark ? 'sunny-outline' : 'moon-outline'"></ion-icon>
-      </button>
-    </div>
-    <div class="nf-nav">
-      <!-- Umre trigger -->
-      <div class="nf-nav-dropdown">
-        <button
-          class="nf-nav-item"
-          [class.active]="activeNav === 'umre'"
-          (click)="toggleUmreDropdown($event)"
-        >
-          Umre
-          <ion-icon
-            name="chevron-down-outline"
-            class="nf-nav-arrow"
-            [class.open]="umreDropdownOpen"
-          ></ion-icon>
-        </button>
-      </div>
-
-      <!-- Nasıl Giderim seçenekleri direkt header'da -->
-      <button
-        class="nf-nav-item"
-        *ngFor="let item of giderimItems"
-        (click)="selectGiderimItem(item)"
-      >
-        {{ item.label }}
-      </button>
-    </div>
-  </div>
-
+<ion-content [fullscreen]="true" [scrollEvents]="true">
   <!-- Hero banner -->
   <div
     class="nf-hero"
@@ -187,57 +144,6 @@
     </div>
   </div>
 </ion-content>
-
-<!-- Umre tam ekran dropdown -->
-<div
-  class="nf-dropdown-menu"
-  [class.visible]="umreDropdownOpen"
-  (click)="closeDropdown()"
->
-  <button class="nf-dropdown-close" (click)="closeDropdown()">
-    <ion-icon name="chevron-down-outline"></ion-icon>
-  </button>
-  <button
-    class="nf-dropdown-item"
-    *ngFor="let item of umreItems"
-    (click)="$event.stopPropagation(); selectUmreItem(item)"
-  >
-    {{ item.label }}
-    <ion-icon
-      *ngIf="item.videoUrl"
-      name="play-outline"
-      class="nf-dropdown-item-icon"
-    ></ion-icon>
-  </button>
-</div>
-
-<!-- Backdrop -->
-<div
-  class="nf-dropdown-backdrop"
-  *ngIf="umreDropdownOpen"
-  (click)="closeDropdown()"
-></div>
-
-<!-- Video Picker backdrop -->
-<div
-  class="nf-picker-backdrop"
-  [class.visible]="videoPickerOpen"
-  (click)="closeVideoPicker()"
-></div>
-
-<!-- Video Picker sheet -->
-<div class="nf-picker-sheet" [class.open]="videoPickerOpen">
-  <div class="nf-picker-handle"></div>
-  <p class="nf-picker-title">Video Seçin</p>
-  <button
-    class="nf-picker-item"
-    *ngFor="let v of videoPickerItems"
-    (click)="selectPickerVideo(v.url)"
-  >
-    <ion-icon name="play-outline"></ion-icon>
-    {{ v.label }}
-  </button>
-</div>
 
 <!-- Detail Modal backdrop -->
 <div

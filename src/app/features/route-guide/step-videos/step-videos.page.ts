@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { arrowBackOutline, playCircleOutline } from 'ionicons/icons';
+import { playCircleOutline } from 'ionicons/icons';
 import { UMRAH_ROUTES } from '../data/umrah-routes.data';
 import { UmrahRouteStep } from '../../../models/route.model';
 
@@ -20,9 +20,8 @@ export class StepVideosPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private location: Location,
   ) {
-    addIcons({ arrowBackOutline, playCircleOutline });
+    addIcons({ playCircleOutline });
   }
 
   ngOnInit() {
@@ -34,9 +33,5 @@ export class StepVideosPage implements OnInit {
 
   playVideo(url: string) {
     this.router.navigate(['/watch'], { queryParams: { url } });
-  }
-
-  goBack() {
-    this.location.back();
   }
 }

@@ -24,18 +24,16 @@ import {
   bagOutline,
   femaleOutline,
   maleOutline,
-  sunnyOutline,
-  moonOutline,
   chevronForwardOutline,
 } from 'ionicons/icons';
 import { LocationService } from '../../services/location.service';
-import { ThemeService } from '../../services/theme.service';
 import {
   WatchHistoryService,
   WatchEntry,
 } from '../../services/watch-history.service';
 import { UmreLocation } from '../../models/location.model';
 import { VideoFeedService } from '../../services/video-feed.service';
+import { UmreContentService } from '../../services/umre-content.service';
 
 interface ContentItem {
   title: string;
@@ -63,8 +61,6 @@ interface ContentRow {
 })
 export class LandingPage {
   activeTab = 'home';
-  headerScrolled = false;
-  activeNav = 'umre';
 
   // ── Umre adımları ──────────────────────────────
   umreItems2 = [
@@ -261,154 +257,10 @@ export class LandingPage {
   sheetLocation: UmreLocation | null = null;
   sheetLoading = false;
   activeSheetTab: 'main' | 'detaylar' = 'main';
-  umreDropdownOpen = false;
-  giderimDropdownOpen = false;
   continueWatchingItems: ContentItem[] = [];
-
-  readonly umreItems: { label: string; videoUrl?: string }[] = [
-    { label: 'İhram', videoUrl: 'https://www.youtube.com/shorts/-zzyB2FZKpA' },
-    {
-      label: 'İhram Namazı-Niyet-Telbiye',
-      videoUrl: 'https://www.youtube.com/shorts/GHaB3maYk_A',
-    },
-    // { label: 'Telbiye' },
-    {
-      label: 'İhram Yasakları',
-      videoUrl: 'https://www.youtube.com/watch?v=1M4EOX-uPns',
-    },
-    // { label: 'İhramlı İken Yasak Olmayan Bazı Fiil ve Davranışlar' },
-    {
-      label: 'Harem Bölgesine Giriş',
-      videoUrl: 'https://www.youtube.com/watch?v=GhpPyRqoysI',
-    },
-    {
-      label: 'Tavaf-Tavaf Namazı',
-      videoUrl: 'https://www.youtube.com/watch?v=9cuzcnhh86k',
-    },
-    { label: 'Say', videoUrl: 'https://www.youtube.com/shorts/GMJoRtuNzGo' },
-    {
-      label: 'Tıraş Olup İhramdan Çıkış',
-      videoUrl: 'https://www.youtube.com/shorts/-QOOrPt7bxo',
-    },
-  ];
-
-  readonly giderimItems: {
-    label: string;
-    videoUrl?: string;
-    videos?: { label: string; url: string }[];
-    route?: string[];
-  }[] = [
-    {
-      label: 'Adım Adım Rota Rehberi',
-      route: ['/umrah-routes'],
-    },
-    {
-      label: 'Vize İşlemleri',
-      videos: [
-        {
-          label: 'Vize İşlemleri',
-          url: 'https://www.youtube.com/watch?v=s9dvUYCZhFo&t=3s',
-        },
-        {
-          label: 'Kapıda Vize (Alternatif)',
-          url: 'https://www.youtube.com/watch?v=QVr2nPEq0V4',
-        },
-      ],
-    },
-    // {
-    //   label: 'İstanbul-Cidde-Mekke-Medine-İstanbul Rotası',
-    //   videos: [
-    //     {
-    //       label: "Cidde Havalimanından Mekke'ye Nasıl Gidilir?",
-    //       url: 'https://www.youtube.com/watch?v=Os5rO3TngqU&t=81s',
-    //     },
-    //     {
-    //       label: "Mekke'den Medine'ye Nasıl Gidilir?",
-    //       url: 'https://www.youtube.com/watch?v=3L-ocdHKA_U',
-    //     },
-    //   ],
-    // },
-    // {
-    //   label: 'İstanbul-Medine-Mekke-Cidde-İstanbul Rotası',
-    //   videos: [
-    //     {
-    //       label: 'Cidde Havalimanından İstanbula Nasıl Gidilir ?',
-    //       url: 'https://www.youtube.com/watch?v=oXKAF5zOefE',
-    //     },
-    //     {
-    //       label: 'Mekkeden Ciddeye Nasıl Gidilir ?',
-    //       url: 'https://www.youtube.com/watch?v=x-uMYfpvcRk',
-    //     },
-    //   ],
-    // },
-    {
-      label: 'Hızlı Tren İşlemleri',
-      videoUrl: 'https://www.youtube.com/watch?v=kKVuT_joVLI',
-    },
-    {
-      label: 'Nusuk Uygulaması (Ravza Randevusu)',
-      videoUrl: 'https://www.youtube.com/watch?v=3WdFmS_vmP0',
-    },
-  ];
-
-  videoPickerOpen = false;
-  videoPickerItems: { label: string; url: string }[] = [];
 
   bgUrl(url: string): string {
     return `url("${url}")`;
-  }
-
-  onScroll(event: CustomEvent) {
-    this.headerScrolled = event.detail.scrollTop > 60;
-    this.closeDropdown();
-  }
-
-  toggleUmreDropdown(event: Event) {
-    event.stopPropagation();
-    this.umreDropdownOpen = !this.umreDropdownOpen;
-    this.giderimDropdownOpen = false;
-    this.activeNav = 'umre';
-  }
-
-  toggleGiderimDropdown(event: Event) {
-    event.stopPropagation();
-    this.giderimDropdownOpen = !this.giderimDropdownOpen;
-    this.umreDropdownOpen = false;
-    this.activeNav = 'giderim';
-  }
-
-  closeDropdown() {
-    this.umreDropdownOpen = false;
-    this.giderimDropdownOpen = false;
-  }
-
-  selectUmreItem(item: { label: string; videoUrl?: string }) {
-    this.closeDropdown();
-    if (item.videoUrl) {
-      this.router.navigate(['/watch'], { queryParams: { url: item.videoUrl } });
-    }
-  }
-
-  selectGiderimItem(item: {
-    label: string;
-    videoUrl?: string;
-    videos?: { label: string; url: string }[];
-    route?: string[];
-  }) {
-    if (item.videos?.length) {
-      this.closeDropdown();
-      this.videoPickerItems = item.videos;
-      this.videoPickerOpen = true;
-      return;
-    }
-    this.closeDropdown();
-    if (item.route) {
-      this.router.navigate(item.route);
-      return;
-    }
-    if (item.videoUrl) {
-      this.router.navigate(['/watch'], { queryParams: { url: item.videoUrl } });
-    }
   }
 
   ionViewWillEnter() {
@@ -424,7 +276,7 @@ export class LandingPage {
       }
     }
 
-    for (const item of this.umreItems) {
+    for (const item of this.content.umreItems) {
       if (item.videoUrl) {
         all.push({
           title: item.label,
@@ -435,7 +287,7 @@ export class LandingPage {
       }
     }
 
-    for (const item of this.giderimItems) {
+    for (const item of this.content.giderimItems) {
       if (item.videoUrl) {
         all.push({
           title: item.label,
@@ -502,15 +354,6 @@ export class LandingPage {
     if (e.duration && e.duration > 0)
       return Math.min(Math.round((e.seconds / e.duration) * 100), 99);
     return 40;
-  }
-
-  selectPickerVideo(url: string) {
-    this.videoPickerOpen = false;
-    this.router.navigate(['/watch'], { queryParams: { url } });
-  }
-
-  closeVideoPicker() {
-    this.videoPickerOpen = false;
   }
 
   featured = {
@@ -1006,8 +849,8 @@ export class LandingPage {
     private toastCtrl: ToastController,
     private locationService: LocationService,
     private watchHistory: WatchHistoryService,
-    public theme: ThemeService,
     private feed: VideoFeedService,
+    private content: UmreContentService,
   ) {
     addIcons({
       compassOutline,
@@ -1025,8 +868,6 @@ export class LandingPage {
       bagOutline,
       femaleOutline,
       maleOutline,
-      sunnyOutline,
-      moonOutline,
       chevronForwardOutline,
     });
     this.loadAllChecklists();
@@ -1044,13 +885,6 @@ export class LandingPage {
   getWatchEntry(url?: string): WatchEntry | null {
     if (!url) return null;
     return this.watchHistory.getEntry(url);
-  }
-
-  goNav(item: string) {
-    this.activeNav = item;
-    if (item === 'giderim') {
-      this.router.navigate(['/harita']);
-    }
   }
 
   playFeatured() {

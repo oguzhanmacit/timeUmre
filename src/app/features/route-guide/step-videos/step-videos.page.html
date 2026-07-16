@@ -1,12 +1,5 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" [scrollEvents]="true">
   <div class="sv-header">
-    <div class="sv-topbar">
-      <button class="sv-back-btn" (click)="goBack()">
-        <ion-icon name="arrow-back-outline"></ion-icon>
-      </button>
-      <span class="sv-brand">Umre Yolculuğum</span>
-      <div style="width:32px"></div>
-    </div>
     <h2 class="sv-title" *ngIf="step">{{ step.title }}</h2>
     <p class="sv-subtitle">Ziyaret Videoları</p>
   </div>

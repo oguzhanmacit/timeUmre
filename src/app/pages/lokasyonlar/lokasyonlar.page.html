@@ -1,19 +1,11 @@
-<app-header
-  title="Lokasyonlar"
-  [showBack]="true"
-  [showHome]="true"
-  [white]="true"
-  [translucent]="false">
-  <!-- ng-content ile header içine ekleniyor -->
+<ion-content [scrollEvents]="true">
+
   <ion-searchbar
     placeholder="Lokasyon ara…"
     [value]="searchQuery"
     (ionInput)="onSearchChange($any($event))"
     animated>
   </ion-searchbar>
-</app-header>
-
-<ion-content>
 
   <div *ngIf="filteredLocations.length === 0" class="empty-state">
     <ion-icon name="location-outline"></ion-icon>

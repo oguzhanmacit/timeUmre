@@ -1,0 +1,22 @@
+<ion-content [fullscreen]="true" [scrollEvents]="true">
+  <div class="vl-header">
+    <h2 class="vl-title">{{ title }}</h2>
+    <p class="vl-subtitle">Videolar</p>
+  </div>
+
+  <div class="vl-grid" *ngIf="videos.length > 0">
+    <div class="vl-card" *ngFor="let video of videos" (click)="playVideo(video.url)">
+      <div class="vl-card-thumb">
+        <img [src]="ytThumb(video.url)" [alt]="video.label" />
+        <div class="vl-card-play-overlay">
+          <ion-icon name="play-circle-outline"></ion-icon>
+        </div>
+      </div>
+      <p class="vl-card-label">{{ video.label }}</p>
+    </div>
+  </div>
+
+  <div class="vl-empty" *ngIf="videos.length === 0">
+    <p>İçerik bulunamadı.</p>
+  </div>
+</ion-content>

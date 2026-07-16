@@ -1,0 +1,112 @@
+<header
+  class="ph-header"
+  [class.ph-header--scrolled]="isScrolled"
+  [class.ph-header--hidden]="hidden"
+  role="banner"
+>
+  <div class="ph-bg" aria-hidden="true"></div>
+
+  <div class="ph-inner">
+    <!-- Logo -->
+    <a class="ph-logo" [routerLink]="homeRoute" aria-label="Umre Rehberi - Ana Sayfa">
+      <ion-icon name="compass-outline" class="ph-logo-icon" aria-hidden="true"></ion-icon>
+      <span class="ph-logo-text">{{ logoText }}</span>
+    </a>
+
+    <!-- Masaüstü menü -->
+    <nav class="ph-nav" aria-label="Ana menü">
+      <div class="ph-nav-item" *ngFor="let item of navItems; trackBy: trackById">
+        <ng-container *ngIf="item.children?.length; else plainLink">
+          <button
+            type="button"
+            class="ph-nav-link"
+            [class.ph-nav-link--active]="openDropdownId === item.id"
+            [attr.aria-expanded]="openDropdownId === item.id"
+            [attr.aria-controls]="'ph-panel-' + item.id"
+            aria-haspopup="true"
+            (click)="toggleDropdown(item.id, $event)"
+          >
+            {{ item.label }}
+            <ion-icon
+              name="chevron-down-outline"
+              class="ph-nav-caret"
+              [class.ph-nav-caret--open]="openDropdownId === item.id"
+              aria-hidden="true"
+            ></ion-icon>
+          </button>
+
+          <div
+            class="ph-dropdown-panel"
+            [id]="'ph-panel-' + item.id"
+            role="menu"
+            *ngIf="openDropdownId === item.id"
+          >
+            <button
+              type="button"
+              class="ph-dropdown-item"
+              role="menuitem"
+              *ngFor="let child of item.children; trackBy: trackById"
+              (click)="selectItem(child)"
+            >
+              {{ child.label }}
+            </button>
+          </div>
+        </ng-container>
+
+        <ng-template #plainLink>
+          <button type="button" class="ph-nav-link" (click)="selectItem(item)">
+            {{ item.label }}
+          </button>
+        </ng-template>
+      </div>
+    </nav>
+
+    <!-- Sağ aksiyonlar -->
+    <div class="ph-actions">
+      <div class="ph-search" [class.ph-search--open]="searchOpen">
+        <input
+          #searchInput
+          type="search"
+          class="ph-search-input"
+          [class.ph-search-input--visible]="searchOpen"
+          placeholder="Rota, video, konum ara..."
+          aria-label="Arama"
+          (keydown.enter)="submitSearch(searchInput.value)"
+        />
+        <button
+          type="button"
+          class="ph-icon-btn"
+          [attr.aria-expanded]="searchOpen"
+          aria-label="Arama kutusunu aç/kapat"
+          (click)="toggleSearch($event, searchInput)"
+        >
+          <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="ph-menu-trigger"
+        [attr.aria-expanded]="mobileMenuOpen"
+        aria-label="Menüyü aç/kapat"
+        aria-controls="ph-mobile-panel"
+        (click)="toggleMobileMenu($event)"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tablet/mobil menü paneli -->
+  <div class="ph-mobile-panel" id="ph-mobile-panel" role="menu" *ngIf="mobileMenuOpen">
+    <button
+      type="button"
+      class="ph-mobile-item"
+      role="menuitem"
+      *ngFor="let item of flatMobileItems; trackBy: trackById"
+      (click)="selectItem(item)"
+    >
+      {{ item.label }}
+    </button>
+  </div>
+</header>

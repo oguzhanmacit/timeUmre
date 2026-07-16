@@ -11,7 +11,6 @@ import {
 import { firstValueFrom } from 'rxjs';
 import { LocationService } from '../../services/location.service';
 import { VideoService } from '../../services/video.service';
-import { AppHeaderComponent } from '../../components/app-header/app-header.component';
 import { VideoPlayerComponent } from '../../components/video-player/video-player.component';
 import { UmreLocation, LocationVideo } from '../../models/location.model';
 
@@ -26,7 +25,6 @@ interface VideoCard {
   standalone: true,
   imports: [
     CommonModule,
-    AppHeaderComponent,
     VideoPlayerComponent,
     IonContent, IonIcon, IonSpinner, IonChip, IonLabel,
   ],
