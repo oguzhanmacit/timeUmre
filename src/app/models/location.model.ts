@@ -15,6 +15,26 @@ export interface UmreLocation {
   historicalPeriod: string;
   type:             'mosque' | 'historical' | 'mountain' | 'cave';
   videos:           LocationVideo[];
+  image?:           string;
+  howToGetThere?:      string;
+  howToGetThereImage?: string;
+  directionsVideo?:    LocationVideo;
+  importantInfo?: {
+    quote?:        string;
+    reference?:    string;
+    description?:  string;
+    arabicText?:   string;
+    translation?:  string;
+    hadith?:       boolean;
+    descriptionInline?: boolean;
+    narrowSideItems?:   boolean;
+    sideItemsBoxed?:    boolean;
+    items?: {
+      icon?: string;
+      title: string;
+      text:  string;
+    }[];
+  };
 }
 
 export interface UserPosition {

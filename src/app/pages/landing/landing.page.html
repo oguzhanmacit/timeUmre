@@ -3,15 +3,18 @@
   [scrollEvents]="true"
   (ionScroll)="onScroll($any($event))"
 >
-  <div class="nf-page">
-  <!-- Sticky şeffaf header -->
-  <div class="nf-header" [class.nf-header--scrolled]="headerScrolled">
+  <!-- Sabit şeffaf header — slot="fixed" ile scroll konteynerinin dışında durur -->
+  <div slot="fixed" class="nf-header" [class.nf-header--scrolled]="headerScrolled">
     <div class="nf-header-top">
       <div class="nf-logo">
         <ion-icon name="compass-outline"></ion-icon>
         <span>Umre Rehberi</span>
       </div>
-      <button class="nf-theme-toggle" (click)="theme.toggle()">
+      <button
+        class="nf-theme-toggle"
+        (click)="theme.toggle()"
+        [attr.aria-label]="theme.isDark ? 'Açık temaya geç' : 'Koyu temaya geç'"
+      >
         <ion-icon [name]="theme.isDark ? 'sunny-outline' : 'moon-outline'"></ion-icon>
       </button>
     </div>
@@ -22,6 +25,7 @@
           class="nf-nav-item"
           [class.active]="activeNav === 'umre'"
           (click)="toggleUmreDropdown($event)"
+          [attr.aria-expanded]="umreDropdownOpen"
         >
           Umre
           <ion-icon
@@ -43,6 +47,7 @@
     </div>
   </div>
 
+  <div class="nf-page">
   <!-- Hero banner -->
   <div
     class="nf-hero"

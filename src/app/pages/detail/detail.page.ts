@@ -1,12 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  IonContent, IonIcon, IonSpinner, IonChip, IonLabel,
+  IonContent, IonIcon, IonSpinner,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
-  imageOutline, timeOutline, locationOutline,
-  playCircleOutline, videocamOutline, calendarOutline,
+  imageOutline, locationOutline, locationSharp,
+  playCircleOutline, videocamOutline,
 } from 'ionicons/icons';
 import { firstValueFrom } from 'rxjs';
 import { LocationService } from '../../services/location.service';
@@ -21,6 +21,12 @@ interface VideoCard {
   type:       'youtube' | 'local' | 'unknown';
 }
 
+interface InfoItem {
+  icon?: string;
+  title: string;
+  text:  string;
+}
+
 @Component({
   selector: 'app-detail',
   standalone: true,
@@ -28,7 +34,7 @@ interface VideoCard {
     CommonModule,
     AppHeaderComponent,
     VideoPlayerComponent,
-    IonContent, IonIcon, IonSpinner, IonChip, IonLabel,
+    IonContent, IonIcon, IonSpinner,
   ],
   templateUrl: './detail.page.html',
   styleUrls: ['./detail.page.scss'],
@@ -36,18 +42,24 @@ interface VideoCard {
 export class DetailPage implements OnInit {
   @Input() id!: string;
 
-  location:      UmreLocation | null = null;
-  videoCards:    VideoCard[] = [];
-  isLoading      = true;
-  activeVideo:   LocationVideo | null = null;
+  @ViewChild('infoAnchor') infoAnchor?: ElementRef<HTMLElement>;
+
+  location:            UmreLocation | null = null;
+  videoCards:          VideoCard[] = [];
+  heroImage:           string | null = null;
+  directionsVideoCard: VideoCard | null = null;
+  isLoading            = true;
+  activeVideo:         LocationVideo | null = null;
+  sideInfoItems:       InfoItem[] = [];
+  rowInfoItems:        InfoItem[] = [];
 
   constructor(
     private locationService: LocationService,
     private videoService:    VideoService,
   ) {
     addIcons({
-      imageOutline, timeOutline, locationOutline,
-      playCircleOutline, videocamOutline, calendarOutline,
+      imageOutline, locationOutline, locationSharp,
+      playCircleOutline, videocamOutline,
     });
   }
 
@@ -56,12 +68,7 @@ export class DetailPage implements OnInit {
     this.location = all.find(l => l.id === +this.id) ?? null;
 
     if (this.location) {
-      this.videoCards = [...this.location.videos]
-        .sort((a, b) => {
-          const aH = a.type === 'hyperlapse' ? 0 : 1;
-          const bH = b.type === 'hyperlapse' ? 0 : 1;
-          return aH - bH;
-        })
+      this.videoCards = this.location.videos
         .map(v => {
           const info = this.videoService.resolve(v.url);
           return {
@@ -72,17 +79,37 @@ export class DetailPage implements OnInit {
             type: info.type,
           };
         });
+
+      this.heroImage = this.location.image
+        ?? this.videoCards.find(c => c.thumbnail)?.thumbnail
+        ?? null;
+
+      if (this.location.directionsVideo) {
+        const v = this.location.directionsVideo;
+        const info = this.videoService.resolve(v.url);
+        this.directionsVideoCard = {
+          video:     v,
+          thumbnail: info.type === 'youtube'
+            ? this.videoService.getYoutubeThumbnail(v.url)
+            : null,
+          type: info.type,
+        };
+      }
+
+      const info = this.location.importantInfo;
+      const hasVerse = !!(info?.arabicText || info?.translation);
+      const items = info?.items ?? [];
+      this.sideInfoItems = hasVerse ? items : [];
+      this.rowInfoItems = hasVerse ? [] : items;
     }
 
     this.isLoading = false;
   }
 
-  get hyperlapseCards(): VideoCard[] {
-    return this.videoCards.filter(c => c.video.type === 'hyperlapse');
-  }
-
-  get standardCards(): VideoCard[] {
-    return this.videoCards.filter(c => c.video.type !== 'hyperlapse');
+  openMap() {
+    if (!this.location) return;
+    const url = `https://www.google.com/maps/search/?api=1&query=${this.location.lat},${this.location.lng}`;
+    window.open(url, '_blank');
   }
 
   playVideo(video: LocationVideo) {
@@ -93,19 +120,15 @@ export class DetailPage implements OnInit {
     this.activeVideo = null;
   }
 
+  scrollToInfo() {
+    this.infoAnchor?.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
   typeLabel(type: string): string {
     const labels: Record<string, string> = {
       mosque: 'Cami / Mescit', historical: 'Tarihi Mekân',
       mountain: 'Dağ / Tepe',  cave: 'Mağara',
     };
     return labels[type] ?? type;
-  }
-
-  chipColor(type: string): string {
-    const colors: Record<string, string> = {
-      mosque: 'success', historical: 'warning',
-      mountain: 'tertiary', cave: 'medium',
-    };
-    return colors[type] ?? 'primary';
   }
 }

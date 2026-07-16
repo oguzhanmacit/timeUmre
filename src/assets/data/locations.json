@@ -7,6 +7,19 @@
     "description": "İslam'ın en kutsal mekânı. Müslümanların kıble yönü olarak döndüğü, hac ve umre ibadetinin merkezini oluşturan alan üzerine inşa edilmiş yapı.",
     "historicalPeriod": "M.Ö. 2000 (Hz. İbrahim dönemi)",
     "type": "mosque",
+    "image": "assets/images/video-card/kabe-2.jpg",
+    "howToGetThere": "Kâbe, Mekke şehir merkezinde, Mescid-i Haram'ın tam ortasında yer alır. Şehre gelen herkes Mescid-i Haram'ın kapılarından içeri girerek doğrudan Kâbe'ye ulaşabilir.",
+    "directionsVideo": {
+      "id": 3,
+      "title": "Kâbe Yolu",
+      "year": "2024",
+      "url": "https://www.youtube.com/watch?v=khstmfLf7xM"
+    },
+    "importantInfo": {
+      "reference": "Bakara Suresi, 149. Ayet",
+      "arabicText": "وَمِنْ حَيْثُ خَرَجْتَ فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِؕ وَاِنَّهُ لَلْحَقُّ مِنْ رَبِّكَؕ وَمَا اللّٰهُ بِغَافِلٍ عَمَّا تَعْمَلُونَ\n﴿١٤٩﴾",
+      "translation": "﴾149﴿\nHer nereden (yola) çıkarsan yüzünü Mescid-i Harâm tarafına çevir. Bu, elbette rabbinden gelen bir gerçektir. Allah yaptıklarınızdan habersiz değildir."
+    },
     "videos": [
       {
         "id": 1,
@@ -21,13 +34,6 @@
         "year": "2020",
         "type": "standard",
         "url": "https://www.youtube.com/watch?v=KfANUcmZbLg"
-      },
-      {
-        "id": 3,
-        "title": "Kâbe - Sokak Turu",
-        "year": "2023",
-        "type": "hyperlapse",
-        "url": "https://www.youtube.com/watch?v=oSonZoDpS00"
       }
     ]
   },
@@ -39,20 +45,37 @@
     "description": "Mekke'nin doğusunda yer alan ve hac ibadetinin önemli bir durağı olan vadi. Kurban Bayramı'nda hacıların konakladığı ve şeytan taşlama ibadetinin gerçekleştirildiği kutsal bölge.",
     "historicalPeriod": "İslam öncesi dönemden itibaren",
     "type": "historical",
+    "image": "assets/images/video-card/mina-cadirlari.jpg",
+    "howToGetThere": "Mina, Mekke'nin doğusunda yer alır. Mekke'den araçla yaklaşık 15-20 dakikada ulaşılabilir; hac döneminde bölgeye toplu ulaşım ile gidilir.",
+    "directionsVideo": {
+      "id": 2,
+      "title": "Mina Yolu",
+      "year": "2024",
+      "url": "https://www.youtube.com/watch?v=k6Qwf2tdZ9Y"
+    },
+    "importantInfo": {
+      "reference": "Bakara Suresi, 203. Ayet",
+      "arabicText": "وَاذْكُرُوا اللّٰهَ فٖٓي اَيَّامٍ مَعْدُودَاتٍؕ فَمَنْ تَعَجَّلَ فٖي يَوْمَيْنِ فَلَٓا اِثْمَ عَلَيْهِۚ وَمَنْ تَاَخَّرَ فَلَٓا اِثْمَ عَلَيْهِۙ لِمَنِ اتَّقٰىؕ وَاتَّقُوا اللّٰهَ وَاعْلَمُٓوا اَنَّكُمْ اِلَيْهِ تُحْشَرُونَ\n﴿٢٠٣﴾",
+      "translation": "﴾203﴿\nSayılı günlerde Allah'ı anın. Kim iki gün içinde dönmek isterse ona bir günah yoktur; kim de daha fazla kalırsa, takvâ sahibi olmak şartıyla ona da günah yoktur. Allah'tan sakının ve bilin ki hepiniz sonunda O'nun huzurunda toplanacaksınız.",
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Hacılar, Terviye Günü (8 Zilhicce) Mina'ya giderek burada konaklar ve hac ibadetine hazırlanırlar.\nŞeytan taşlama (remy-i cimâr), kurban kesme ve bayram günlerinde geceleme ibadetleri burada yerine getirilir."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Rivayete göre Hz. İbrahim (a.s.), Allah'ın emriyle oğlu İsmail'i kurban etmek üzere Mina'ya gelmiştir.\nŞeytan, Hz. İbrahim'i bu emirden vazgeçirmek istemiş; Hz. İbrahim ise onu üç ayrı noktada taşlamıştır. Günümüzdeki şeytan taşlama ibadeti bu olayın hatırasını yaşatmaktadır.\nAllah, Hz. İbrahim'in teslimiyetini kabul ederek Hz. İsmail'in yerine bir koç göndermiştir. Kurban ibadetinin temeli bu olaya dayanmaktadır.\nHz. Muhammed (s.a.v.) Veda Haccı sırasında Mina'da kurban kesmiş, şeytan taşlamış ve burada önemli hutbeler irad etmiştir."
+        }
+      ],
+      "sideItemsBoxed": true
+    },
     "videos": [
       {
         "id": 1,
-        "title": "Mina Vadisi - Hac Dönemi",
-        "year": "2019",
+        "title": "Mina",
+        "year": "2024",
         "type": "standard",
-        "url": "https://www.youtube.com/watch?v=GTZs2OHLSbA"
-      },
-      {
-        "id": 2,
-        "title": "Mina - Sokak Turu",
-        "year": "2023",
-        "type": "hyperlapse",
-        "url": "https://www.youtube.com/watch?v=oSonZoDpS00"
+        "url": "https://www.youtube.com/watch?v=1BtvcvwDSnY&t=12s"
       }
     ]
   },
@@ -64,6 +87,30 @@
     "description": "Hac ibadetinin en önemli rüknü olan 'vakfe' ibadetinin yerine getirildiği dağ. Hz. Âdem ile Hz. Havva'nın cennetten indikten sonra buluştuğu kutsal mekân. Cebelü'r-Rahme (Merhamet Dağı) olarak da bilinir.",
     "historicalPeriod": "Hz. Âdem döneminden itibaren",
     "type": "mountain",
+    "image": "assets/images/video-card/arafat-dagi-2.jpg",
+    "howToGetThere": "Arafat, Mekke'nin yaklaşık 20 km doğusunda yer alır. Mekke'den araçla yaklaşık 30-45 dakikada ulaşılabilir; hac döneminde bölgeye toplu ulaşım ile gidilir.",
+    "directionsVideo": {
+      "id": 2,
+      "title": "Arafat Yolu",
+      "year": "2024",
+      "url": "https://www.youtube.com/watch?v=imgCYq4IY3g"
+    },
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Hac ibadetinin en önemli rüknü olan Arafat vakfesi burada yapılır.\nHz. Muhammed (s.a.v.), Veda Haccı sırasında meşhur Veda Hutbesi'ni Arafat'ta irad etmiştir.\nHacılar, Zilhicce ayının 9. günü öğle ile akşam arasında burada dua ve ibadetle vakit geçirir."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Rivayete göre Hz. Âdem ile Hz. Havva'nın yeryüzünde yeniden buluştukları yer olarak kabul edilir.\nRahmet ve mağfiret gününün en önemli mekânıdır.\nPeygamber Efendimiz (s.a.v.) Veda Haccı'nda burada ümmetine son tavsiyelerini içeren hutbesini okumuştur."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Mekke'nin yaklaşık 20 km doğusunda yer alır.\nHac mevsimi dışında da ziyaret edilebilir.\nBölgede Nemire Mescidi, Rahmet Tepesi (Cebel-i Rahme) ve geniş vakfe alanları bulunmaktadır."
+        }
+      ]
+    },
     "videos": [
       {
         "id": 1,
@@ -74,10 +121,10 @@
       },
       {
         "id": 2,
-        "title": "Arafat Dağı - Sokak Turu",
-        "year": "2023",
-        "type": "hyperlapse",
-        "url": "https://www.youtube.com/watch?v=oSonZoDpS00"
+        "title": "Arafat Dağı",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=UotSoX79jCs&t=204s"
       }
     ]
   },
@@ -89,20 +136,37 @@
     "description": "Arafat ile Mina arasında yer alan, hacıların Arafat vakfesinin ardından geceledikleri kutsal bölge. Hacıların sabah namazını burada kılıp şeytan taşlamak için çakıl taşları topladığı mekân.",
     "historicalPeriod": "İslam öncesi dönemden itibaren",
     "type": "historical",
+    "image": "assets/images/video-card/muzdelife.webp",
+    "howToGetThere": "Müzdelife, Arafat ile Mina arasında yer alır. Mekke'den araçla yaklaşık 20-30 dakikada ulaşılabilir; hac döneminde bölgeye toplu ulaşım ile gidilir.",
+    "directionsVideo": {
+      "id": 2,
+      "title": "Müzdelife Yolu",
+      "year": "2024",
+      "url": "https://www.youtube.com/watch?v=zZ-jF8_ZysU"
+    },
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Müzdelife, Arafat ile Mina arasında bulunan ve hac ibadetinin önemli duraklarından biridir.\nHacılar, Arafat vakfesinden sonra güneş battıktan sonra Müzdelife'ye gelir ve geceyi burada ibadet ederek geçirir.\nAkşam ve yatsı namazları burada birleştirilerek (cem-i tehir) kılınır.\nErtesi gün Mina'da şeytan taşlamada kullanılacak taşlar genellikle Müzdelife'den toplanır."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Peygamber Efendimiz (s.a.v.), sabah namazını burada kıldıktan sonra Meş'ar-i Haram'da uzun süre dua etmiş, güneş doğmadan Mina'ya hareket etmiştir.\nBu uygulama, günümüzde hac ibadetini yerine getiren milyonlarca Müslüman tarafından sünnet olarak devam ettirilmektedir."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Müzdelife, yaklaşık 12 kilometrekarelik geniş bir ovadan oluşur.\nHac mevsiminde milyonlarca hacı aynı gece burada konaklar."
+        }
+      ]
+    },
     "videos": [
       {
         "id": 1,
-        "title": "Müzdelife - Gece Görüntüleri",
-        "year": "2019",
+        "title": "Müzdelife",
+        "year": "2024",
         "type": "standard",
-        "url": "https://www.youtube.com/watch?v=KfANUcmZbLg"
-      },
-      {
-        "id": 2,
-        "title": "Müzdelife - Sokak Turu",
-        "year": "2023",
-        "type": "hyperlapse",
-        "url": "https://www.youtube.com/watch?v=oSonZoDpS00"
+        "url": "https://www.youtube.com/watch?v=fWu6lsNMu5U&t=1s"
       }
     ]
   },
@@ -114,6 +178,22 @@
     "description": "Hz. Muhammed'e ilk vahyin geldiği kutsal mağara. Nur Dağı'nın zirvesinde yer alan bu mağarada Peygamber, vahiyden önce uzun süre ibadet ve tefekkürle geçirirdi. İlk inen ayet 'Alak Suresi'nin ilk beş ayetidir.",
     "historicalPeriod": "M. 610 (İlk vahiy yılı)",
     "type": "cave",
+    "image": "assets/images/video-card/hira-magarasi.png",
+    "howToGetThere": "Hira Mağarası, Suudi Arabistan'ın Mekke şehrinde, Nur Dağı üzerinde yer almaktadır. Mağaraya ulaşmak için yaklaşık 1-2 saatlik bir yürüyüş gerekmektedir.",
+    "directionsVideo": {
+      "id": 3,
+      "title": "Hira Mağarası Yolu",
+      "year": "2023",
+      "url": "https://www.youtube.com/watch?v=raSxjll9g7Y&t=637s"
+    },
+    "importantInfo": {
+      "quote": "\"Oku! Yaratan Rabbinin adıyla oku.\"",
+      "reference": "Alak Suresi, 1-5. Ayetler",
+      "description": "Hira Mağarası, İslam tarihinin en önemli olaylarından birine bizzat şahitlik eden mübarek bir yerdir. Peygamber Efendimiz (s.a.v) burada inzivaya çekildiği sırada Cebrail (a.s) aracılığıyla ilk vahyi almıştır.",
+      "arabicText": "اِقْرَاْ بِاسْمِ رَبِّكَ الَّذٖى خَلَقَۚ\n﴿١﴾\nخَلَقَ الْاِنْسَانَ مِنْ عَلَقٍۚ\n﴿٢﴾\nاِقْرَاْ وَرَبُّكَ الْاَكْرَمُۙ\n﴿٣﴾\nاَلَّذٖي عَلَّمَ بِالْقَلَمِۙ\n﴿٤﴾\nعَلَّمَ الْاِنْسَانَ مَا لَمْ يَعْلَمْؕ\n﴿٥﴾",
+      "translation": "﴾1﴿\nYaratan rabbinin adıyla oku!\n﴾2﴿\nO, insanı alaktan (asılıp tutunan zigottan) yaratmıştır.\n﴾3-5﴿\nOku! Kalemle (yazmayı) öğreten, (böylece) insana bilmediğini bildiren rabbin sonsuz kerem sahibidir.",
+      "descriptionInline": true
+    },
     "videos": [
       {
         "id": 1,
@@ -123,18 +203,11 @@
         "url": "https://www.youtube.com/watch?v=4w3cVQECMMA"
       },
       {
-        "id": 3,
+        "id": 2,
         "title": "Hira Mağarası İçi",
         "year": "2018",
         "type": "standard",
         "url": "https://www.youtube.com/watch?v=4aiIXBsIJv8"
-      },
-      {
-        "id": 2,
-        "title": "Hira Mağarası Yolu",
-        "year": "2023",
-        "type": "hyperlapse",
-        "url": "https://www.youtube.com/watch?v=raSxjll9g7Y&t=637s"
       }
     ]
   },
@@ -146,7 +219,36 @@
     "description": "Kâbe'nin güneydoğu köşesine yerleştirilmiş kutsal taş. Hz. İbrahim'in Kâbe'yi inşa ederken tavafa başlangıç noktası olarak belirlediği cennet taşı. Hacılar ve umreciler tavafa bu taşı selamlayarak başlarlar.",
     "historicalPeriod": "Hz. İbrahim dönemi - M.Ö. 2000",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/hacer-i-esved-2.jpg",
+    "howToGetThere": "Hacer-i Esved, Kâbe'nin güneydoğu köşesinde, tavafın başlangıç noktasında yer alır. Mescid-i Haram'a giren herkes tavaf sırasında bu köşeye yürüyerek ulaşabilir.",
+    "importantInfo": {
+      "hadith": true,
+      "reference": "Tirmizî, Hac, 113",
+      "translation": "\"Hacerülesved kıyamet günü, gören iki gözü ve konuşan dili olduğu hâlde getirilecek; onu samimiyetle selamlayanlara şahitlik edecektir.\"",
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Rivayetlere göre cennetten indirilen bir taş olup, başlangıçta beyazken insanların günahları sebebiyle zamanla siyahlaştığı bildirilmiştir.\nHz. İbrahim ve Hz. İsmail, Kâbe'yi inşa ederken bu taşı yerine yerleştirmiştir.\nTavaf, Hacerülesved hizasından başlar ve yine aynı noktada tamamlanır.\nHacı ve umreciler, imkân bulduklarında taşı öper veya elleriyle işaret ederek (istilâm) selamlarlar."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Hacerülesved'in tarihi Hz. Âdem'e kadar uzandığına dair rivayetler bulunmaktadır.\nHz. İbrahim tarafından Kâbe'nin inşası sırasında bugünkü köşesine yerleştirilmiştir.\nKâbe yeniden inşa edilirken kabileler taşı yerine koyma konusunda anlaşmazlığa düşmüş, Muhammed henüz peygamber olmadan bu anlaşmazlığı hikmetli bir yöntemle çözmüştür.\nHicrî 317 yılında Karmatîler tarafından kaçırılmış, yaklaşık 22 yıl sonra tekrar Mekke'ye getirilmiştir.\nTarih boyunca çeşitli doğal olaylar ve saldırılar nedeniyle kırılmış, günümüzde gümüş bir çerçeve içerisinde muhafaza edilmektedir."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Hacerülesved, Kâbe'nin doğu köşesinde yaklaşık 1,5 metre yükseklikte bulunmaktadır.\nBirkaç parçadan oluşmakta olup, bu parçalar gümüş bir muhafaza içerisinde bir arada tutulmaktadır."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Hacer-i Esved",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=ul4obOv3l8c&t=149s"
+      }
+    ]
   },
   {
     "id": 7,
@@ -156,7 +258,33 @@
     "description": "Kâbe'nin kapısı ile Hacer-i Esved arasındaki yaklaşık 2 metrelik kutsal bölüm. 'Sarılınan yer' anlamına geldiği bu mekânda dua edilmesi tavsiye edilmektedir. Burada yapılan duanın kabul olduğuna dair rivayetler mevcuttur.",
     "historicalPeriod": "İslam öncesi dönemden itibaren",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/multezem-2.jpg",
+    "howToGetThere": "Mültezem, Kâbe'nin kapısı ile Hacer-i Esved arasında, Kâbe duvarına bitişik konumda yer alır. Mescid-i Haram'a giren herkes tavaf sonrası buraya yürüyerek ulaşabilir.",
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "\"Mültezem\" kelimesi, \"sarılınan, yapışılan yer\" anlamına gelir.\nPeygamber Efendimiz'in (s.a.v.) burada dua ettiği ve göğsünü, yüzünü ve kollarını Kâbe duvarına yasladığı rivayet edilmiştir.\nTavaf sırasında yoğunluk yoksa burada kısa süre durup dua etmek sünnet kabul edilir."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Mültezem, Hz. İbrahim ve Hz. İsmail tarafından inşa edilen Kâbe'nin kutsal duvarının bir parçasıdır.\nAsr-ı Saadet döneminden itibaren Müslümanların dua ettiği özel bir mekân olmuştur."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Mescid-i Haram içinde, Kâbe'nin kapısı ile Hacerülesved arasında bulunmaktadır.\nHac ve umre mevsimlerinde oldukça yoğun olduğundan, güvenlik görevlileri zaman zaman bu bölgeye erişimi sınırlandırmaktadır.\nYoğunluk nedeniyle çoğu zaman uzaktan dua etmek tavsiye edilir."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Mültezem",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=rflialhr-FI&t=26s"
+      }
+    ]
   },
   {
     "id": 8,
@@ -166,7 +294,32 @@
     "description": "Hz. İbrahim'in Kâbe'yi inşa ederken üzerinde durduğu kutsal taş. Üzerinde Hz. İbrahim'in ayak izleri bulunan bu taş, günümüzde altın bir kafes içinde korunmaktadır. Tavaf sonrası burada iki rekât namaz kılmak sünnettir.",
     "historicalPeriod": "Hz. İbrahim dönemi - M.Ö. 2000",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/makam-i-ibrahim.jpg",
+    "howToGetThere": "Makam-ı İbrahim, Mescid-i Haram içinde, Kâbe'nin kapısına yakın konumda, tavaf alanının hemen kenarında yer alır. Mescid-i Haram'a giren herkes tavaf sonrası yürüyerek doğrudan ulaşabilir.",
+    "importantInfo": {
+      "reference": "Bakara Suresi, 125. Ayet",
+      "arabicText": "وَاِذْ جَعَلْنَا الْبَيْتَ مَثَابَةً لِلنَّاسِ وَاَمْنًاۜ وَاتَّخِذُوا مِنْ مَقَامِ اِبْرٰهٖيمَ مُصَلًّىۜ وَعَهِدْنَٓا اِلٰٓى اِبْرٰهٖيمَ وَاِسْمٰعٖيلَ اَنْ طَهِّرَا بَيْتِىَ لِلطَّٓائِفٖينَ وَالْعَاكِفٖينَ وَالرُّكَّعِ السُّجُودِ\n﴿١٢٥﴾",
+      "translation": "﴾125﴿\nO zaman biz o evi insanların gidip gelip ziyaret edecekleri bir makam ve bir güvenlik yeri yaptık. Siz de İbrâhim'in makamından kendinize namaz kılacak bir yer edinin. İbrâhim ve İsmâil'e de, \"Tavaf edecekler için, kendini ibadete verecekler, rükû ve secde edecekler için evimi temiz tutun\" diye talimat verdik.",
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Kâbe'nin hemen yakınında bulunan ve Hz. İbrahim'in ayak izlerini taşıdığı kabul edilen mübarek taştır.\nİslam'a göre Hz. İbrahim, Kâbe'yi inşa ederken duvarlar yükseldikçe bu taşın üzerine çıkarak çalışmıştır.\nTavafın ardından iki rekât tavaf namazının Makam-ı İbrahim'in arkasında kılınması tavsiye edilmiştir."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Hz. İbrahim ve oğlu Hz. İsmail'in Kâbe'yi inşa etmeleriyle doğrudan bağlantılıdır.\nTaşın üzerinde Hz. İbrahim'e ait olduğuna inanılan iki ayak izi bulunmaktadır.\nTarih boyunca seller nedeniyle birkaç kez yer değiştirmiştir.\nRivayetlere göre Hz. Ömer döneminde bugünkü yerine yakın konumuna alınmıştır.\nAbbasî, Memlük ve Osmanlı dönemlerinde korunması için çeşitli muhafaza yapıları inşa edilmiştir."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Makam-ı İbrahim",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=CxbHO8rzpiM&t=85s"
+      }
+    ]
   },
   {
     "id": 9,
@@ -176,7 +329,33 @@
     "description": "Mekke'nin 1880 yılındaki yapısını canlandıran bu video'da Kâbe çevresindeki önemli mekanlar tanıtılmaktadır.",
     "historicalPeriod": "Hz. İbrahim dönemi - M.Ö. 2000",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/zemzem-suyu-2.webp",
+    "howToGetThere": "Zemzem Kuyusu, Mescid-i Haram içinde, Kâbe'nin yaklaşık 20 metre doğusunda yer alır. Mescid-i Haram'a giren herkes özel dağıtım ünitelerinden Zemzem suyuna ulaşabilir.",
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Zemzem Kuyusu, Mescid-i Haram içerisinde, Kâbe'nin yaklaşık 20 metre doğusunda bulunan mübarek su kaynağıdır.\nRivayete göre Allah'ın izniyle, Hz. İsmail (a.s.) susuz kaldığında Cebrâil (a.s.) tarafından ortaya çıkarılmıştır.\nYaklaşık dört bin yıldır kesintisiz olarak su vermeye devam eden Zemzem, Müslümanlar için bereket, rahmet ve şifa sembolüdür."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Hz. İbrahim (a.s.), Allah'ın emriyle eşi Hz. Hacer ve oğlu Hz. İsmail'i bugünkü Mekke'nin bulunduğu ıssız vadiye bırakmıştır.\nSu tükenince Hz. Hacer, çocuğuna su bulabilmek için Safa ve Merve tepeleri arasında yedi kez gidip gelmiştir.\nBunun ardından Allah'ın izniyle Cebrâil (a.s.) yeri vurmuş ve Zemzem suyu yeryüzüne çıkmıştır."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Zemzem Kuyusu, Mescid-i Haram'ın altında koruma altındadır ve doğrudan ziyaret edilememektedir.\nModern pompalama ve arıtma sistemleri sayesinde Zemzem suyu, Mescid-i Haram'ın birçok noktasındaki özel dağıtım ünitelerinden ücretsiz olarak sunulmaktadır."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Zemzem Kuyusu",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=csmllN8NZwY&t=330s"
+      }
+    ]
   },
   {
     "id": 10,
@@ -186,7 +365,40 @@
     "description": "Hz. Hacer'in oğlu Hz. İsmail için su ararken koştuğu iki tepe. Umre ve hac ibadetinin farz rüknü olan sa'y ibadeti bu iki tepe arasında yedi kez gidip gelerek yerine getirilir. Günümüzde Mescid-i Haram bünyesinde kapalı bir koridorla birbirine bağlanmıştır.",
     "historicalPeriod": "Hz. İbrahim dönemi - M.Ö. 2000",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/safa-merve-2.jpg",
+    "howToGetThere": "Safa ve Merve, Mescid-i Haram'ın içinde, Kâbe'ye bitişik bir koridorda yer alır. Mescid-i Haram'a giren herkes yürüyerek doğrudan ulaşabilir.",
+    "importantInfo": {
+      "reference": "Bakara Suresi, 158. Ayet",
+      "arabicText": "اِنَّ الصَّفَا وَالْمَرْوَةَ مِنْ شَعَٓائِرِ اللّٰهِۚ فَمَنْ حَجَّ الْبَيْتَ اَوِ اعْتَمَرَ فَلَا جُنَاحَ عَلَيْهِ اَنْ يَطَّوَّفَ بِهِمَاۜ وَمَنْ تَطَوَّعَ خَيْرًاۙ فَاِنَّ اللّٰهَ شَاكِرٌ عَلٖيمٌ\n﴿١٥٨﴾",
+      "translation": "﴾158﴿\nSafa ile Merve, Allah'ın koyduğu nişanelerdendir. Kâbe'yi hac veya umre niyetiyle ziyaret eden bir kimsenin bu iki tepe arasında sa'y yapmasında herhangi bir sakınca yoktur. Gönülden bir hayır işleyen kimse bilmelidir ki Allah yapılan iyiliğin karşılığını verir ve her şeyi hakkıyla bilir.",
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Safa ve Merve, Kur'an-ı Kerim'de Allah'ın nişaneleri (şeâir) arasında sayılan iki kutsal tepedir.\nHac ve umrenin önemli ibadetlerinden olan sa'y, bu iki tepe arasında yedi defa gidip gelmek suretiyle yapılır.\nSa'y ibadeti, Hz. Hacer'in oğluna su ararken gösterdiği sabır, gayret ve tevekkülü temsil eder."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Hz. İbrahim (a.s.), Allah'ın emriyle eşi Hacer ve oğlu İsmail'i Mekke vadisinde bırakmıştır.\nSu tükenince Hz. Hacer, Safa ile Merve arasında yedi kez gidip gelerek su aramıştır.\nBu sırada Allah'ın mucizesi olarak Zemzem Kuyusu ortaya çıkmış ve Hz. İsmail suya kavuşmuştur."
+        }
+      ],
+      "sideItemsBoxed": true
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Safa ve Merve",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=GMJoRtuNzGo&t=36s"
+      },
+      {
+        "id": 2,
+        "title": "Safa ve Merve",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=e65PFGJEZac&t=297s"
+      }
+    ]
   },
   {
     "id": 11,
@@ -196,7 +408,39 @@
     "description": "Mekke'nin kuzeyinde yer alan tarihi mezarlık. Hz. Hatice, Hz. Abdülmuttalib ve Hz. Peygamber'in pek çok yakını burada yatmaktadır. Müslümanlar için derin manevi öneme sahip bu mezarlık, ziyaret edilen önemli kutsal mekânlardan biridir.",
     "historicalPeriod": "İslam'ın ilk dönemlerinden itibaren",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/cennetul-mualla-2.jpg",
+    "howToGetThere": "Cennetü'l-Mualla, Mekke'nin kuzeyinde, Mescid-i Haram'a araçla yaklaşık 10 dakika mesafede yer alır. Mekke içindeki toplu taşıma veya taksi ile kolayca ulaşılabilir.",
+    "directionsVideo": {
+      "id": 2,
+      "title": "Cennetü'l-Mualla Yolu",
+      "year": "2024",
+      "url": "https://www.youtube.com/watch?v=-mLZwido93Y"
+    },
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Cennetü'l-Muallâ, Mekke'nin en eski ve en önemli mezarlığıdır.\nİslam tarihinin ilk dönemlerinden günümüze kadar kullanılan kutsal kabristanlardan biridir.\nHz. Peygamber'in (s.a.v.) birçok yakını ve sahabesi burada medfundur."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Cennetü'l-Muallâ'nın geçmişi İslam öncesi döneme kadar uzanmaktadır.\nHatice bint Hüveylid burada defnedilmiştir. İslam'ı ilk kabul eden kişi ve Peygamber Efendimizin ilk eşidir.\nAbdülmuttalib burada medfundur.\nEbû Tâlib burada defnedilmiştir. Peygamber Efendimizi uzun yıllar himaye etmiştir.\nRivayetlere göre Peygamber Efendimizin oğulları Kasım ve Abdullah da burada medfundur."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Cennetü'l-Muallâ, Mescid-i Haram'ın kuzeydoğusunda, yaklaşık 1–2 kilometre mesafede yer almaktadır.\nGiriş ve ziyaret saatleri dönemsel olarak yetkili makamlar tarafından düzenlenmektedir."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Cennetü'l-Mualla",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=pLXOHMvXgdQ&t=261s"
+      }
+    ]
   },
   {
     "id": 12,
@@ -206,7 +450,33 @@
     "description": "Hz. Muhammed'in doğduğu yere işaret eden kutsal mekân. Günümüzde Mekke Kütüphanesi olarak kullanılan bu yapı, Hz. Peygamber'in doğum yerine inşa edilmiştir ve pek çok ziyaretçi tarafından ziyaret edilmektedir.",
     "historicalPeriod": "M. 570 (Hz. Peygamber'in doğum yılı)",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/mevlid-i-nebi-2.jpg",
+    "howToGetThere": "Mevlid-i Nebi, Mescid-i Haram'a yaklaşık 500 metre mesafede, Mekke Kütüphanesi'nin bulunduğu bölgede yer alır. Mescid-i Haram'dan yürüyerek kısa sürede ulaşılabilir.",
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Hz. Muhammed'in (s.a.v.) miladi yaklaşık 570 yılında dünyaya geldiği evin bulunduğu kabul edilen yerdir.\nPeygamber Efendimizin çocukluk yıllarının ilk dönemini geçirdiği yer olarak kabul edilir."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Ev, Mekke'nin eski yerleşim bölgelerinden biri olan Şi'b-i Benî Hâşim'de bulunuyordu.\nPeygamber Efendimizin dedesi Abdülmuttalib'in ailesine ait olduğu rivayet edilmektedir.\nİlk dönemlerde ev korunmuş, daha sonraki yüzyıllarda çeşitli onarımlar görmüştür.\nOsmanlı döneminde de ziyaret edilen önemli tarihî mekânlardan biri olmuştur.\n1951 yılında yapı yıkılmış, yerine daha sonra bir kütüphane inşa edilmiştir."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Günümüzde bu noktada Mekke Kütüphanesi (Maktabat Makkah al-Mukarramah) bulunmaktadır.\nBina dışarıdan görülebilmekte, ancak genellikle ziyaretçilere açık değildir.\nSuudi Arabistan yönetimi, tarihî mekânların ibadet yeri hâline getirilmesini önlemek amacıyla alanı kütüphane olarak düzenlemiştir."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Mevlid-i Nebi",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=nbgWkKzg0sM&t=532s"
+      }
+    ]
   },
   {
     "id": 13,
@@ -216,7 +486,39 @@
     "description": "Hz. Peygamber'in Kuran okurken bir grup cinin Müslüman olduğuna dair rivayete atfen inşa edilen mescit. Kâbe'nin kuzeyinde yer alan bu mescit, ziyaretçilerin uğradığı önemli bir noktadır.",
     "historicalPeriod": "Hz. Peygamber dönemi - M. 7. yüzyıl",
     "type": "mosque",
-    "videos": []
+    "image": "assets/images/video-card/cin-mescidi-2.jpg",
+    "howToGetThere": "Cin Mescidi, Mescid-i Haram'ın kuzeyinde, Hacun Mezarlığı yakınında yer alır. Kâbe'ye yaklaşık 1,5 km uzaklıktadır ve yürüyerek kısa sürede ulaşılabilir.",
+    "directionsVideo": {
+      "id": 2,
+      "title": "Cin Mescidi Yolu",
+      "year": "2024",
+      "url": "https://www.youtube.com/watch?v=-mLZwido93Y"
+    },
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Cin Mescidi, Mekke'de Hacun bölgesi yakınlarında bulunan tarihî mescitlerden biridir.\nRivayete göre Peygamber Efendimiz (s.a.v.), burada Kur'an-ı Kerim okurken bir grup cin Kur'an'ı dinlemiş ve İslam'ı kabul etmiştir."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Peygamber Efendimiz (s.a.v.), Mekke'de insanlara İslam'ı tebliğ ettiği dönemde bir gece Kur'an okurken cinlerden bir topluluk onu dikkatle dinlemiştir.\nKur'an'ın etkisinden etkilenen bu topluluk iman etmiş ve kendi kavimlerini Allah'ın dinine davet etmek üzere geri dönmüştür.\nBu hadise, İslam'ın yalnızca insanlara değil, cinlere de gönderilen evrensel bir mesaj olduğunu göstermektedir.\nDaha sonraki dönemlerde bu hatırayı yaşatmak amacıyla olayın gerçekleştiği kabul edilen yere Cin Mescidi inşa edilmiştir."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Cin Mescidi, Mescid-i Haram'ın kuzeyinde, Hacun Mezarlığı yakınında yer almaktadır.\nKâbe'ye yaklaşık 1,5 kilometre uzaklıktadır ve yürüyerek kısa sürede ulaşılabilir."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Cin Mescidi",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=0Q2w6Ytj-ZA&t=1s"
+      }
+    ]
   },
   {
     "id": 14,
@@ -226,7 +528,24 @@
     "description": "Hz. Peygamber ile Hz. Ebu Bekir'in hicret yolculuğunda Mekkelilerin takibinden saklandıkları kutsal mağara. Üç gün burada kaldıktan sonra Medine'ye hareket etmişlerdir. Mekke'nin güneyindeki Sevr Dağı'nın zirvesinde yer almaktadır.",
     "historicalPeriod": "M. 622 (Hicret yılı)",
     "type": "cave",
-    "videos": []
+    "image": "assets/images/video-card/sevr-magarasi-2.jpg",
+    "howToGetThere": "Sevr Mağarası, Mekke'nin güneyinde, Sevr Dağı'nın zirvesinde yer alır. Dağın eteğinden mağaraya ulaşmak için yaklaşık 1,5-2 saat süren zorlu bir yürüyüş gerekmektedir.",
+    "importantInfo": {
+      "reference": "Tevbe Suresi, 40. Ayet",
+      "arabicText": "اِلَّا تَنْصُرُوهُ فَقَدْ نَصَرَهُ اللّٰهُ اِذْ اَخْرَجَهُ الَّذٖينَ كَفَرُوا ثَانِيَ اثْنَيْنِ اِذْ هُمَا فِي الْغَارِ اِذْ يَقُولُ لِصَاحِبِهٖ لَا تَحْزَنْ اِنَّ اللّٰهَ مَعَنَاۚ فَاَنْزَلَ اللّٰهُ سَكٖينَتَهُ عَلَيْهِ وَاَيَّدَهُ بِجُنُودٍ لَمْ تَرَوْهَا وَجَعَلَ كَلِمَةَ الَّذٖينَ كَفَرُوا السُّفْلٰىؕ وَكَلِمَةُ اللّٰهِ هِيَ الْعُلْيَاؕ وَاللّٰهُ عَزٖيزٌ حَكٖيمٌ\n﴿٤٠﴾",
+      "translation": "﴾40﴿\nSiz peygambere yardımcı olmasanız da önemli değil. Nitekim inkârcılar onu, iki kişiden biri olarak yurdundan çıkardıklarında Allah ona yardım etmişti: Hani onlar mağaradaydılar; arkadaşına \"Tasalanma! Allah bizimle beraberdir\" diyordu. Derken Allah ona kendi katından bir güven duygusu indirdi, sizin göremediğiniz askerlerle onu destekledi ve inkârcıların sözünü değersiz hale getirdi. Allah'ın sözü ise en yücedir. Çünkü Allah mutlak galiptir, hikmet sahibidir.",
+      "description": "Hicretin başlangıcında Hz. Peygamber (s.a.v.) ve Hz. Ebû Bekir burada üç gece kalmıştır.\nRivayetlere göre mağaranın girişinde örümceğin ağ örmesi ve güvercinin yuva yapması, müşriklerin mağaraya girmemesine vesile olmuştur.\nBurada yaşanan olay, Kur'an-ı Kerim'de de hicret sırasında Allah'ın yardımının bir örneği olarak zikredilmiştir.",
+      "descriptionInline": true
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Sevr Mağarası",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=XWg8NCwg-dE&t=152s"
+      }
+    ]
   },
   {
     "id": 15,
@@ -236,7 +555,33 @@
     "description": "Mina'da bulunan büyük mescit. Hz. Peygamber başta olmak üzere pek çok peygamberin burada namaz kıldığına inanılmaktadır. Hac döneminde milyonlarca hacının namaz kıldığı ve ibadet ettiği önemli bir mekân.",
     "historicalPeriod": "İslam'ın ilk dönemlerinden itibaren",
     "type": "mosque",
-    "videos": []
+    "image": "assets/images/video-card/mescid-i-hayf-2.webp",
+    "howToGetThere": "Mescid-i Hayf, Mina bölgesinde, Cemerat'a yakın konumda yer alır. Mekke'den araçla yaklaşık 15-20 dakikada ulaşılabilir; hac döneminde bölgeye toplu ulaşım ile gidilir.",
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Mescid-i Hayf, Mina bölgesinde, Cemerat'a yakın konumda bulunan tarihî ve kutsal mescitlerden biridir.\nRivayetlere göre birçok peygamber bu bölgede namaz kılmış, Hz. Muhammed (s.a.v.) de Veda Haccı sırasında burada ibadet etmiştir.\nHac ibadeti süresince Mina'da konaklayan hacılar için önemli bir ziyaret noktasıdır."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Peygamber Efendimiz (s.a.v.), Veda Haccı sırasında Mina'da bulunduğu günlerde bu mescitte namaz kılmıştır.\nHadis kaynaklarında, yetmiş kadar peygamberin bu bölgede namaz kıldığı rivayet edilmektedir. Bu rivayet, Mescid-i Hayf'ın İslam tarihindeki manevi değerini artırmıştır."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Mescid-i Hayf, Mina'nın güney eteklerinde, Cemerat Köprüsü'ne yakın bir konumda yer almaktadır.\nYaklaşık 25-30 bin kişilik cemaat kapasitesine sahiptir."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Mescid-i Hayf",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=QEZzmllEgDs&t=4s"
+      }
+    ]
   },
   {
     "id": 16,
@@ -246,7 +591,33 @@
     "description": "Hz. Peygamber'in Medineli Müslümanlarla biat ettiği kutsal yer. Birinci ve İkinci Akabe Biatları burada gerçekleşmiş, böylece Medine'ye hicretin temelleri atılmıştır. Mina sınırları içindedir.",
     "historicalPeriod": "M. 621-622 (Akabe Biatları)",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/akabe-2.jpg",
+    "howToGetThere": "Akabe, Mina bölgesindeki Cemerat Kompleksi içinde yer alır. Mekke'den araçla yaklaşık 15-20 dakikada ulaşılabilir; hac döneminde bölgeye toplu ulaşım ile gidilir.",
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Akabe, Mina'da bulunan üç cemreden en büyüğüdür ve hac ibadetinin önemli menâsikinden biri olan şeytan taşlama burada başlar.\nHacılar, Kurban Bayramı'nın birinci günü (10 Zilhicce) ilk olarak Büyük Cemre'ye yedi taş atarlar.\nBu ibadet, Hz. İbrahim'in (a.s.) Allah'ın emrine itaat ederken kendisini engellemeye çalışan şeytanı taşlamasını sembolik olarak hatırlatır."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Rivayete göre Hz. İbrahim (a.s.), oğlu Hz. İsmail'i kurban etmek üzere giderken şeytan üç farklı yerde karşısına çıkmış, Allah'ın emriyle onu taşlayarak uzaklaştırmıştır.\nPeygamber Efendimiz (s.a.v.) de Veda Haccı sırasında Akabe'de şeytan taşlamış ve hac ibadetinin uygulanışını ümmetine fiilen göstermiştir."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Akabe, Mina'daki modern Cemerat Kompleksi içerisinde yer almaktadır.\nÇok katlı ve geniş yapısıyla milyonlarca hacının güvenli şekilde ibadet edebilmesi sağlanmaktadır.\nTaşlama sırasında yalnızca nohut büyüklüğünde taşlar kullanılır ve her taş atılırken \"Bismillahi Allahu Ekber\" denilir."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Akabe",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=xuq21doNkJg"
+      }
+    ]
   },
   {
     "id": 17,
@@ -256,7 +627,30 @@
     "description": "Müzdelife'de bulunan kutsal mescit ve anıt. Hacıların Arafat'tan döndükten sonra sabaha kadar bekleyip sabah namazını kıldıkları ve dua ettikleri yer. Kur'an-ı Kerim'de 'Meş'aru'l-Haram' adıyla zikredilmektedir.",
     "historicalPeriod": "İslam öncesi dönemden itibaren",
     "type": "mosque",
-    "videos": []
+    "image": "assets/images/video-card/mesarul-haram-3.jpg",
+    "howToGetThere": "Meş'aru'l-Haram, Müzdelife bölgesinde yer alır. Mekke'den araçla yaklaşık 20-30 dakikada ulaşılabilir; hac döneminde bölgeye toplu ulaşım ile gidilir.",
+    "importantInfo": {
+      "reference": "Bakara Suresi, 198-199. Ayetler",
+      "arabicText": "لَيْسَ عَلَيْكُمْ جُنَاحٌ اَنْ تَبْتَغُوا فَضْلًا مِنْ رَبِّكُمْۜ فَاِذَٓا اَفَضْتُمْ مِنْ عَرَفَاتٍ فَاذْكُرُوا اللّٰهَ عِنْدَ الْمَشْعَرِ الْحَرَامِۖ وَاذْكُرُوهُ كَمَا هَدٰيكُمْۚ وَاِنْ كُنْتُمْ مِنْ قَبْلِهٖ لَمِنَ الضَّٓالّٖينَ\n﴿١٩٨﴾\nثُمَّ اَفٖيضُوا مِنْ حَيْثُ اَفَاضَ النَّاسُ وَاسْتَغْفِرُوا اللّٰهَؕ اِنَّ اللّٰهَ غَفُورٌ رَحٖيمٌ\n﴿١٩٩﴾",
+      "translation": "﴾198﴿\nRabbinizin lütfunu ve rızkını aramanızda bir sakınca yoktur. Arafat'tan ayrılıp döndüğünüzde Meş'ar-i Haram'da Allah'ı anın; sizi doğru yola ilettiği gibi O'nu anın. Bundan önce siz doğru yolu bilmeyenlerdendiniz.\n﴾199﴿\nSonra siz de diğer insanların döndüğü yerden dönün ve Allah'tan bağışlanma dileyin. Şüphesiz Allah çok bağışlayıcı, çok merhametlidir.",
+      "items": [
+        {
+          "title": "Tarihî Önemi",
+          "text": "Meş'ar-i Harâm, Hz. İbrahim'den (a.s.) beri hac ibadetinin önemli duraklarından biri olmuştur.\nHz. Muhammed (s.a.v.), Veda Haccı sırasında sabah namazını burada kılmış, güneş doğuncaya kadar dua ve zikirle meşgul olmuştur.\nPeygamber Efendimiz, burada ümmeti için dua etmiş ve hac ibadetinin uygulanışını fiilen göstermiştir.\nAsırlardır milyonlarca Müslüman, hac ibadetinin bir parçası olarak burada vakit geçirerek Allah'ı zikretmektedir.\nMeş'ar-i Harâm, Arafat'tan Mina'ya geçişte hacıların toplandığı en önemli duraktır."
+        }
+      ],
+      "narrowSideItems": true,
+      "sideItemsBoxed": true
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Meş'aru'l-Haram",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=ySRDnHzfv0w&t=1s"
+      }
+    ]
   },
   {
     "id": 18,
@@ -266,7 +660,39 @@
     "description": "Arafat yakınlarında, Hz. Peygamber'in Veda Hutbesi'ni okuduğu yere inşa edilen büyük mescit. Hac döneminde milyonlarca hacının ziyaret ettiği bu mescit, İslam dünyasının en büyük camilerinden biridir.",
     "historicalPeriod": "M. 632 (Veda Haccı yılı)",
     "type": "mosque",
-    "videos": []
+    "image": "assets/images/video-card/nemire-mescidi.jpg",
+    "howToGetThere": "Nemire Mescidi, Arafat bölgesinin batı sınırında yer alır. Mekke'den araçla yaklaşık 30-40 dakikada ulaşılabilir; hac döneminde bölgeye toplu ulaşım ile gidilir.",
+    "directionsVideo": {
+      "id": 2,
+      "title": "Nemire Mescidi Yolu",
+      "year": "2024",
+      "url": "https://www.youtube.com/watch?v=x68nz9NWK3o"
+    },
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Nemire Mescidi, Arafat sınırının hemen yanında yer alan ve hac ibadetinin en önemli mekânlarından biridir.\nHz. Muhammed (s.a.v.), Veda Haccı sırasında burada konaklamış ve öğle vakti meşhur Veda Hutbesi'ni irad etmiştir.\nHacılar, Zilhicce'nin 9. günü öğle ve ikindi namazlarını burada cem ederek kılar, ardından Arafat vakfesi için Arafat bölgesine geçerler."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Peygamber Efendimiz (s.a.v.), hicretin 10. yılında yaptığı Veda Haccı sırasında burada konaklamıştır.\nİslam tarihinin en önemli konuşmalarından biri kabul edilen Veda Hutbesi, burada on binlerce sahabeye hitaben okunmuştur.\nVeda Hutbesi'nde can, mal ve namus dokunulmazlığı, faiz yasağı, kadın hakları, kardeşlik ve Kur'an ile sünnete bağlılık gibi temel İslam prensipleri vurgulanmıştır."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Mescid, Arafat Ovası'nın batı tarafında yer alır.\nYaklaşık 300 bin kişilik kapasitesiyle dünyanın en büyük mescitlerinden biridir.\nHac mevsiminde yalnızca Zilhicce'nin 9. günü ibadete açılır ve milyonlarca hacıya hizmet verir."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Nemire Mescidi",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=iRETchAJNOs"
+      }
+    ]
   },
   {
     "id": 19,
@@ -276,7 +702,44 @@
     "description": "Hz. Peygamber'in Taif seferinden dönerken ganimet paylaştıktan sonra ihrama girdiği ve umre yaptığı kutsal yer. Mekke'nin kuzeydoğusunda bir mikat noktası olarak kabul edilmektedir.",
     "historicalPeriod": "M. 630 (Mekke'nin Fethi sonrası)",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/cirane-mescidi-2.jpg",
+    "howToGetThere": "Ci'rane, Mekke'nin kuzeydoğusunda, şehir merkezine yaklaşık 25 km uzaklıkta yer alan bir mikat noktasıdır. Mekke'den araçla yaklaşık 30-40 dakikada ulaşılabilir.",
+    "directionsVideo": {
+      "id": 2,
+      "title": "Cirane Yolu",
+      "year": "2024",
+      "type": "standard",
+      "url": "https://www.youtube.com/watch?v=Zho1kAx0rbc"
+    },
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Konum",
+          "text": "Mekke'nin kuzeydoğusunda yaklaşık 25 km."
+        },
+        {
+          "title": "Özelliği",
+          "text": "Mîkat bölgesidir."
+        },
+        {
+          "title": "Burada Ne Yapılır?",
+          "text": "• Gusül/abdest\n• İhram giyilir\n• Niyet edilir\n• Telbiye başlanır"
+        },
+        {
+          "title": "Tarihi Önemi",
+          "text": "Huneyn dönüşü Peygamber Efendimiz buradan ihrama girmiştir."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Cirane",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=crPiNyNTBgU&t=154s"
+      }
+    ]
   },
   {
     "id": 20,
@@ -286,6 +749,32 @@
     "description": "Hz. Peygamber ile Mekkeliler arasında barış antlaşmasının imzalandığı tarihi yer. Hudeybiye Antlaşması Müslümanların Kâbe'yi ziyaret hakkını güvence altına almış ve İslam'ın yayılmasına zemin hazırlamıştır.",
     "historicalPeriod": "M. 628 (Hudeybiye Antlaşması)",
     "type": "historical",
-    "videos": []
+    "image": "assets/images/video-card/hudeybiye-2.jpg",
+    "howToGetThere": "Hudeybiye, Mekke'nin kuzeybatısında, şehir merkezine araçla yaklaşık 30 dakika mesafede yer alır. Mekke'den araçla kolayca ulaşılabilir.",
+    "importantInfo": {
+      "items": [
+        {
+          "title": "Önemi",
+          "text": "Hudeybiye, Mekke'nin batısında yer alan ve Hudeybiye Antlaşması'nın imzalandığı tarihî bölgedir.\nHicretin 6. yılında (628) Hz. Muhammed (s.a.v.) umre yapmak amacıyla yaklaşık 1.400 sahabeyle buraya gelmiştir.\nMekkeli müşriklerin Kâbe'ye girişe izin vermemesi üzerine burada görüşmeler yapılmış ve Hudeybiye Antlaşması imzalanmıştır.\nKur'an-ı Kerim'de bu antlaşma \"apaçık bir fetih\" olarak nitelendirilmiştir."
+        },
+        {
+          "title": "Tarihî Önemi",
+          "text": "Hudeybiye Antlaşması ile Müslümanlar ve Mekkeli müşrikler arasında 10 yıllık barış kararlaştırılmıştır.\nAntlaşmaya göre Müslümanlar o yıl umre yapmadan Medine'ye dönecek, ertesi yıl üç günlüğüne Mekke'ye gelip umre yapabileceklerdi.\nİlk bakışta Müslümanların aleyhine gibi görünen bazı maddeler, uzun vadede İslam'ın hızla yayılmasına zemin hazırlamıştır.\nAntlaşmadan sonra güven ortamı oluşmuş ve birçok kişi İslam'ı kabul etmiştir.\nYaklaşık iki yıl sonra müşriklerin antlaşmayı bozması üzerine Mekke'nin Fethi gerçekleşmiştir."
+        },
+        {
+          "title": "Günümüzde",
+          "text": "Hudeybiye, Mekke şehir merkezinin yaklaşık 20–25 km batısında yer almaktadır.\nBölgede, antlaşmanın yapıldığı yeri hatırlatan Şümeysî (Hudeybiye) Bölgesi bulunmaktadır.\nYakınında, halk arasında Hudeybiye Mescidi (Mescidü'ş-Şecere) olarak bilinen tarihî bir mescit yer almaktadır."
+        }
+      ]
+    },
+    "videos": [
+      {
+        "id": 1,
+        "title": "Hudeybiye",
+        "year": "2024",
+        "type": "standard",
+        "url": "https://www.youtube.com/watch?v=L1gvKf9obK8"
+      }
+    ]
   }
 ]

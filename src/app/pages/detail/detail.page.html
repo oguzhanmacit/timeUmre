@@ -2,10 +2,17 @@
   [title]="location?.name ?? 'Yükleniyor…'"
   [showBack]="true"
   [showHome]="true"
-  [white]="true"
   [translucent]="false"
 >
 </app-header>
+
+<!-- ── SAYFA GENELİ ARKA PLAN FOTOĞRAFI ── -->
+<div
+  class="page-bg"
+  [class.page-bg--empty]="!heroImage"
+  [style.backgroundImage]="heroImage ? 'url(' + heroImage + ')' : null"
+></div>
+<div class="page-bg-overlay"></div>
 
 <ion-content>
   <div *ngIf="isLoading" class="loading-state">
@@ -13,114 +20,190 @@
   </div>
 
   <ng-container *ngIf="!isLoading && location">
-    <!-- ── BİLGİ BÖLÜMÜ ── -->
-    <div class="info-body">
-      <div class="chips-row">
-        <ion-chip [color]="chipColor(location.type)" outline>
-          <ion-label>{{ typeLabel(location.type) }}</ion-label>
-        </ion-chip>
-        <ion-chip color="primary" outline>
-          <ion-icon name="time-outline"></ion-icon>
-          <ion-label>{{ location.historicalPeriod }}</ion-label>
-        </ion-chip>
+    <!-- ── HERO İÇERİĞİ (arka plan sayfa genelinde) ── -->
+    <section class="hero2">
+      <div class="hero2__chips">
+        <span class="hero2-chip" [class]="'hero2-chip--' + location.type">
+          {{ typeLabel(location.type) }}
+        </span>
+        <span class="hero2-chip hero2-chip--period">
+          {{ location.historicalPeriod }}
+        </span>
       </div>
 
-      <h1 class="loc-title">{{ location.name }}</h1>
+      <h1 class="hero2__title">{{ location.name }}</h1>
+      <p class="hero2__desc">{{ location.description }}</p>
 
-      <section class="section">
-        <h3 class="section-title">Hakkında</h3>
-        <p class="loc-desc">{{ location.description }}</p>
-      </section>
+      <div class="hero2__actions">
+        <button class="hero2__btn hero2__btn--map" (click)="openMap()">
+          <ion-icon name="location-sharp"></ion-icon>
+          Haritada Göster
+        </button>
+        <button class="hero2__btn hero2__btn--info" (click)="scrollToInfo()">
+          Daha Fazla Bilgi
+        </button>
+      </div>
+    </section>
 
-      <section class="section">
-        <h3 class="section-title">Nasıl Giderim?</h3>
+    <!-- ── İÇERİK SÜTUNLARI ── -->
+    <section class="content-grid" #infoAnchor>
+      <!-- VİDEOLAR + NASIL GİDİLİR + ÖNEMLİ BİLGİLER: tek satırda yan yana -->
+      <div
+        class="grid-col"
+        *ngIf="videoCards.length > 0 || location.howToGetThere || location.importantInfo"
+      >
+        <div class="mini-row">
+          <!-- Normal videolar: başlık kendi bölümünün içinde, en üstte -->
+          <div class="mini-section mini-section--videos">
+            <h3 class="grid-col__heading">
+              Videolar
+              <span class="grid-badge" *ngIf="videoCards.length > 0">{{ videoCards.length }}</span>
+            </h3>
 
-        <!-- Hyperlapse videoları -->
-        <div
-          class="hl-card"
-          *ngFor="let card of hyperlapseCards"
-          (click)="playVideo(card.video)"
-        >
-          <div class="hl-thumb">
-            <img
-              *ngIf="card.thumbnail"
-              [src]="card.thumbnail"
-              [alt]="card.video.title"
-              class="thumb-img"
-            />
-            <div *ngIf="!card.thumbnail" class="thumb-placeholder">
-              <ion-icon name="videocam-outline"></ion-icon>
+            <div class="mini-section__cards">
+              <div
+                class="mini-card"
+                *ngFor="let card of videoCards"
+                (click)="playVideo(card.video)"
+              >
+                <div class="mini-thumb">
+                  <img
+                    *ngIf="card.thumbnail"
+                    [src]="card.thumbnail"
+                    [alt]="card.video.title"
+                    class="mini-thumb-img"
+                  />
+                  <div *ngIf="!card.thumbnail" class="thumb-placeholder">
+                    <ion-icon name="videocam-outline"></ion-icon>
+                  </div>
+                  <div class="mini-play">
+                    <ion-icon name="play-circle-outline"></ion-icon>
+                  </div>
+                </div>
+                <h4 class="mini-title">{{ card.video.title }}</h4>
+                <span class="mini-year">{{ card.video.year }}</span>
+              </div>
             </div>
-            <div class="play-btn-sm">
-              <ion-icon name="play-circle-outline"></ion-icon>
-            </div>
-            <span class="hyperlapse-badge">⚡ Nasıl Giderim ?</span>
           </div>
-          <div class="hl-info">
-            <p class="hl-title">{{ card.video.title }}</p>
-            <span class="hl-year">
-              <ion-icon name="calendar-outline"></ion-icon>
-              {{ card.video.year }}
-            </span>
+
+          <!-- Ayırıcı çizgi -->
+          <div class="mini-divider" *ngIf="videoCards.length > 0 && location.howToGetThere"></div>
+
+          <!-- NASIL GİDİLİR videoları -->
+          <ng-container *ngIf="location.howToGetThere">
+            <div class="mini-card mini-card--info">
+              <h4 class="grid-col__heading">Nasıl Gidilir?</h4>
+              <p class="mini-desc">{{ location.howToGetThere }}</p>
+            </div>
+
+            <div
+              class="mini-card"
+              *ngIf="directionsVideoCard"
+              (click)="playVideo(directionsVideoCard.video)"
+            >
+              <div class="mini-thumb">
+                <img
+                  *ngIf="directionsVideoCard.thumbnail"
+                  [src]="directionsVideoCard.thumbnail"
+                  [alt]="directionsVideoCard.video.title"
+                  class="mini-thumb-img"
+                />
+                <div *ngIf="!directionsVideoCard.thumbnail" class="thumb-placeholder">
+                  <ion-icon name="videocam-outline"></ion-icon>
+                </div>
+                <div class="mini-play">
+                  <ion-icon name="play-circle-outline"></ion-icon>
+                </div>
+              </div>
+              <h4 class="mini-title">{{ directionsVideoCard.video.title }}</h4>
+              <span class="mini-year">{{ directionsVideoCard.video.year }}</span>
+            </div>
+          </ng-container>
+
+          <!-- ÖNEMLİ BİLGİLER: satırın en sağında -->
+          <div class="mini-quote-card" *ngIf="location.importantInfo">
+            <div
+              class="quote-top"
+              *ngIf="(location.importantInfo.arabicText || location.importantInfo.translation) || sideInfoItems.length > 0"
+            >
+              <div
+                class="quote-verse"
+                [class.quote-verse--boxed]="location.importantInfo.hadith"
+                *ngIf="location.importantInfo.arabicText || location.importantInfo.translation"
+              >
+                <p class="quote-ref" *ngIf="location.importantInfo.reference">
+                  {{ location.importantInfo.reference }}
+                </p>
+                <p class="quote-verse__arabic" *ngIf="location.importantInfo.arabicText">
+                  {{ location.importantInfo.arabicText }}
+                </p>
+                <div class="quote-verse__divider" *ngIf="location.importantInfo.arabicText && location.importantInfo.translation"></div>
+                <p class="quote-verse__translation" *ngIf="location.importantInfo.translation">
+                  {{ location.importantInfo.translation }}
+                </p>
+              </div>
+
+              <!-- Ayetin/hadisin yanında dikey olarak sıralanan bilgi maddeleri (ör. Önemi altında Tarihî Önemi) -->
+              <div
+                class="info-stack"
+                [class.info-stack--narrow]="location.importantInfo.narrowSideItems"
+                [class.info-stack--boxed]="location.importantInfo.sideItemsBoxed"
+                *ngIf="sideInfoItems.length > 0"
+              >
+                <ng-container *ngFor="let item of sideInfoItems; let last = last">
+                  <div class="info-item">
+                    <p class="info-item__title">{{ item.title }}</p>
+                    <p class="info-item__text">{{ item.text }}</p>
+                  </div>
+                  <div class="info-stack__divider" *ngIf="!last"></div>
+                </ng-container>
+              </div>
+
+              <!-- Bazı lokasyonlarda (ör. Sevr Mağarası) açıklama, ayetin yanında kendine ait bir kutuda gösterilir -->
+              <div
+                class="quote-desc-box"
+                *ngIf="location.importantInfo.descriptionInline && location.importantInfo.description"
+              >
+                <p class="quote-desc-box__text">{{ location.importantInfo.description }}</p>
+              </div>
+            </div>
+
+            <hr class="quote-divider" *ngIf="location.importantInfo.description && !location.importantInfo.descriptionInline" />
+            <p class="quote-desc" *ngIf="location.importantInfo.description && !location.importantInfo.descriptionInline">
+              {{ location.importantInfo.description }}
+            </p>
+
+            <!-- Genel bilgi listesi (ör. Ci'rane: konum / özellik / yapılacaklar / tarihçe) -->
+            <div class="info-list" *ngIf="rowInfoItems.length > 0">
+              <ng-container *ngFor="let item of rowInfoItems; let last = last">
+                <div class="info-item">
+                  <p class="info-item__title">{{ item.title }}</p>
+                  <p class="info-item__text">{{ item.text }}</p>
+                </div>
+                <div class="info-divider" *ngIf="!last"></div>
+              </ng-container>
+            </div>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
 
-    <!-- ── VİDEOLAR ── -->
-    <div class="videos-section" *ngIf="standardCards.length > 0">
-      <h3 class="videos-heading">
-        <ion-icon name="videocam-outline"></ion-icon>
-        Videolar
-        <span class="video-count">{{ standardCards.length }}</span>
-      </h3>
-
-      <!-- Yatay kaydırmalı liste -->
-      <div class="video-list">
-        <div
-          class="video-card"
-          *ngFor="let card of standardCards"
-          (click)="playVideo(card.video)"
-        >
-          <!-- Küçük resim -->
-          <div class="thumb-wrap">
-            <img
-              *ngIf="card.thumbnail"
-              [src]="card.thumbnail"
-              [alt]="card.video.title"
-              class="thumb-img"
-            />
-            <div *ngIf="!card.thumbnail" class="thumb-placeholder">
-              <ion-icon name="videocam-outline"></ion-icon>
-            </div>
-            <div class="play-btn">
-              <ion-icon name="play-circle-outline"></ion-icon>
-            </div>
+      <!-- Video yok -->
+      <div
+        class="grid-col"
+        *ngIf="videoCards.length === 0 && !location.howToGetThere && !location.importantInfo"
+      >
+        <h3 class="grid-col__heading">Videolar</h3>
+        <div class="no-video">
+          <div class="placeholder-glow"></div>
+          <div class="placeholder-body">
+            <ion-icon name="videocam-outline" class="placeholder-icon"></ion-icon>
+            <p class="placeholder-label">Medya Hazırlanıyor</p>
+            <p class="placeholder-sub">Bu mekâna ait video yakında eklenecek</p>
           </div>
-
-          <!-- Başlık + Yıl -->
-          <p class="video-title">{{ card.video.title }}</p>
-          <span class="video-year">
-            <ion-icon name="calendar-outline"></ion-icon>
-            {{ card.video.year }}
-          </span>
+          <span class="placeholder-badge">YAKINDA</span>
         </div>
       </div>
-    </div>
-
-    <!-- Video yok -->
-    <div
-      *ngIf="standardCards.length === 0 && hyperlapseCards.length === 0"
-      class="no-video"
-    >
-      <div class="placeholder-glow"></div>
-      <div class="placeholder-body">
-        <ion-icon name="videocam-outline" class="placeholder-icon"></ion-icon>
-        <p class="placeholder-label">Medya Hazırlanıyor</p>
-        <p class="placeholder-sub">Bu mekâna ait video yakında eklenecek</p>
-      </div>
-      <span class="placeholder-badge">YAKINDA</span>
-    </div>
+    </section>
   </ng-container>
 
   <!-- Video player overlay -->

@@ -16,8 +16,10 @@ ion-content {
   padding-top: env(safe-area-inset-top, 0px);
 
   &--scrolled {
-    background: rgba(14, 14, 14, 0.76);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(18, 18, 18, 0.92);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
 }
 
@@ -71,6 +73,9 @@ ion-content {
 .nf-nav {
   display: flex;
   align-items: center;
+  // "safe": öğeler sığmazsa ortalamayı bırakır, baştan kaydırılabilir kalır
+  justify-content: center;
+  justify-content: safe center;
   gap: 20px;
   padding: 0 20px 12px;
   overflow-x: auto;
@@ -79,6 +84,7 @@ ion-content {
 }
 
 .nf-nav-item {
+  position: relative;
   background: none;
   border: none;
   color: rgba(255, 255, 255, 0.6);
@@ -92,6 +98,18 @@ ion-content {
   &.active {
     color: #fff;
     font-weight: 700;
+
+    // Altın vurgu çizgisi — aktif sekmeyi belirginleştirir
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -3px;
+      height: 2px;
+      border-radius: 1px;
+      background: #c9a84c;
+    }
   }
 }
 
@@ -1406,7 +1424,10 @@ ion-content {
 
 :host-context([data-theme="light"]) .nf-nav-item {
   color: rgba(61,40,0,0.55);
-  &.active { color: #3d2800; }
+  &.active {
+    color: #3d2800;
+    &::after { background: #b8860b; }
+  }
 }
 
 :host-context([data-theme="light"]) .nf-dropdown-menu {

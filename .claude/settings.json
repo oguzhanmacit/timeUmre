@@ -20,12 +20,23 @@
       "Bash(npm --version)",
       "Bash(echo \"PID: $!\")",
       "Bash(sleep 15 && tail -30 /tmp/ng-serve.log)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(curl -sf http://localhost:4300 -o /dev/null -w \"HTTP:%{http_code}\\\\n\")",
+      "Bash(rm -f /tmp/ng-serve.log)",
+      "Bash(nohup npx ng serve --port 4300)",
+      "Bash(disown)",
+      "Bash(echo \"started pid $!\")",
+      "Bash(curl -sf http://localhost:4300 -o /dev/null)",
+      "Bash(node shot2.js)",
+      "Bash(node shot3.js)",
+      "Bash(pkill -f \"ng serve\" 2>/dev/null; pkill -f \"vite\" 2>/dev/null *)",
+      "Bash(chromium-cli --help)"
     ],
     "additionalDirectories": [
       "c:\\Users\\Administrator\\.claude\\projects\\c--Users-Administrator-Desktop-TimeUmre\\memory",
       "c:\\Users\\Administrator\\Desktop",
-      "c:\\Users\\Administrator\\Downloads"
+      "c:\\Users\\Administrator\\Downloads",
+      "C:\\Users\\VAHDEF~1\\AppData\\Local\\Temp\\pw-check"
     ]
   }
 }

@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import {
   IonHeader, IonToolbar, IonTitle,
   IonButtons, IonButton, IonIcon,
@@ -24,7 +23,6 @@ export class AppHeaderComponent {
   @Input() title       = '';
   @Input() showBack    = false;
   @Input() showHome    = false;
-  @Input() white       = false;
   @Input() translucent = true;
 
   /** Parent bağlarsa varsayılan navigasyon yerine bu event tetiklenir */
@@ -37,7 +35,9 @@ export class AppHeaderComponent {
 
   goBack() {
     if (this.backClick.observed) this.backClick.emit();
-    else this.location.back();
+    // Derin linkle gelindiyse geçmiş boştur; geri yerine ana sayfaya dön
+    else if (window.history.length > 1) this.location.back();
+    else this.router.navigate(['/']);
   }
 
   goHome() {
