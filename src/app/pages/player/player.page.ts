@@ -175,6 +175,11 @@ export class PlayerPage implements OnInit, OnChanges, OnDestroy {
         } catch {}
       };
       window.addEventListener('message', this.boundOnMessage);
+      // Yalnızca ngOnDestroy'da kaydetmek yetersizdi: Ionic'in IonRouterOutlet'i
+      // sayfaları yığında canlı tutar (RouteReuseStrategy sağlanmadığından bile),
+      // bu yüzden başka sekmeye geçişte ngOnDestroy güvenilir tetiklenmiyor ve
+      // ana sayfadaki izleme çizgisi hiç güncellenmiyordu. 15sn'de bir de kaydedilir.
+      this.saveInterval = setInterval(() => this.saveWatchHistory(this.url), 15_000);
       return;
     }
 

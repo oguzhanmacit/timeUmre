@@ -1,5 +1,16 @@
 apply plugin: 'com.android.application'
 
+// Release imzası android/key.properties'ten okunur (gitignore'da; şifre repoya girmez).
+// Dosya yoksa ya da yer tutucular doldurulmamışsa imzasız release üretilir.
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+    keystorePropertiesFile.withInputStream { keystoreProperties.load(it) }
+}
+def hasSigning = keystorePropertiesFile.exists() &&
+    keystoreProperties['storePassword'] != 'YER_TUTUCU' &&
+    keystoreProperties['keyAlias'] != 'YER_TUTUCU'
+
 android {
     namespace "com.umrem.app"
     compileSdk rootProject.ext.compileSdkVersion
@@ -7,8 +18,8 @@ android {
         applicationId "com.umrem.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 7
-        versionName "1.3"
+        versionCode 9
+        versionName "1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,15 +27,31 @@ android {
             ignoreAssetsPattern '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        if (hasSigning) {
+            release {
+                storeFile file(keystoreProperties['storeFile'])
+                storePassword keystoreProperties['storePassword']
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+            }
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            if (hasSigning) {
+                signingConfig signingConfigs.release
+            }
+            // R8: kodu küçültür (Firebase/Play Services şişkinliğini azaltır), kullanılmayan
+            // kaynakları atar ve Play'in istediği mapping dosyasını AAB'ye gömer.
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility JavaVersion.VERSION_21
+        targetCompatibility JavaVersion.VERSION_21
     }
 
     bundle {

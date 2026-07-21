@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonContent, IonIcon, AlertController, ToastController } from '@ionic/angular/standalone';
@@ -9,6 +9,8 @@ import {
   downloadOutline, personOutline,
 } from 'ionicons/icons';
 import { VideoNotesService, VideoNote } from '../../services/video-notes.service';
+import { AuthService } from '../../services/auth.service';
+import { VideoPopupComponent } from '../../components/video-popup/video-popup.component';
 
 export interface NoteGroup {
   url: string;
@@ -22,13 +24,15 @@ export interface NoteGroup {
 @Component({
   selector: 'app-notlarim',
   standalone: true,
-  imports: [CommonModule, IonContent, IonIcon],
+  imports: [CommonModule, IonContent, IonIcon, VideoPopupComponent],
   templateUrl: './notlarim.page.html',
   styleUrls: ['./notlarim.page.scss'],
 })
 export class NotlarimPage implements OnInit {
   groups: NoteGroup[] = [];
   activeTab = 'notes';
+
+  @ViewChild('videoPopup') videoPopup?: VideoPopupComponent;
 
   private readonly PALETTE = [
     '#1a7a4a', '#c17f24', '#7b5ea7', '#4a90d9',
@@ -40,11 +44,17 @@ export class NotlarimPage implements OnInit {
     private router:     Router,
     private alertCtrl:  AlertController,
     private toastCtrl:  ToastController,
+    private auth:       AuthService,
   ) {
     addIcons({
       playCircleOutline, trashOutline, timeOutline,
       documentTextOutline, homeOutline, mapOutline,
       downloadOutline, personOutline,
+    });
+    // Notlar Firestore'dan asenkron gelir; snapshot her güncellendiğinde liste tazelenir.
+    effect(() => {
+      this.videoNotes.notes();
+      this.load();
     });
   }
 
@@ -88,8 +98,14 @@ export class NotlarimPage implements OnInit {
     });
   }
 
+  /** Not videoları rota adımlarındaki gibi sayfadan ayrılmadan popup'ta oynar. */
   watchVideo(note: VideoNote) {
-    this.router.navigate(['/watch'], { queryParams: { url: note.url, t: note.second } });
+    this.videoPopup?.open(note.url, note.title, note.second);
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    if (this.videoPopup?.isOpen) this.videoPopup.close();
   }
 
   async deleteNote(note: VideoNote) {
@@ -126,7 +142,8 @@ export class NotlarimPage implements OnInit {
   async setTab(tab: string) {
     if (tab === 'home')    { this.router.navigate(['/']); return; }
     if (tab === 'explore') { this.router.navigate(['/harita']); return; }
-    if (tab === 'downloads' || tab === 'profile') {
+    if (tab === 'profile') { this.router.navigate([this.auth.accountRoute]); return; }
+    if (tab === 'downloads') {
       const toast = await this.toastCtrl.create({
         message: 'Bu özellik yakında geliyor!',
         duration: 1800, position: 'bottom', cssClass: 'nf-toast', color: 'dark',

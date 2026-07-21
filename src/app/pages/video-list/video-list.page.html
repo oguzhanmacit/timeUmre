@@ -5,7 +5,7 @@
   </div>
 
   <div class="vl-grid" *ngIf="videos.length > 0">
-    <div class="vl-card" *ngFor="let video of videos" (click)="playVideo(video.url)">
+    <div class="vl-card" *ngFor="let video of videos" (click)="playVideo(video.url, video.label)">
       <div class="vl-card-thumb">
         <img [src]="ytThumb(video.url)" [alt]="video.label" />
         <div class="vl-card-play-overlay">
@@ -20,3 +20,6 @@
     <p>İçerik bulunamadı.</p>
   </div>
 </ion-content>
+
+<!-- Video oynatma popup'ı — liste videoları sayfadan ayrılmadan burada oynar -->
+<app-video-popup #videoPopup></app-video-popup>

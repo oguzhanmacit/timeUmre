@@ -14,6 +14,7 @@ import {
 import * as L from 'leaflet';
 import { LocationService } from '../../services/location.service';
 import { MapCacheService } from '../../services/map-cache.service';
+import { AuthService } from '../../services/auth.service';
 import { UmreLocation, UserPosition } from '../../models/location.model';
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -68,6 +69,7 @@ export class HaritaPage implements OnInit, AfterViewInit, OnDestroy {
     private mapCache: MapCacheService,
     private router: Router,
     private toastCtrl: ToastController,
+    private auth: AuthService,
   ) {
     addIcons({
       locateOutline, warningOutline, businessOutline, flagOutline, triangleOutline, apertureOutline,
@@ -97,7 +99,8 @@ export class HaritaPage implements OnInit, AfterViewInit, OnDestroy {
     if (tab === 'search') { this.router.navigate(['/lokasyonlar']); return; }
     if (tab === 'explore') return;
     if (tab === 'notes') { this.router.navigate(['/notlarim']); return; }
-    if (tab === 'downloads' || tab === 'profile') {
+    if (tab === 'profile') { this.router.navigate([this.auth.accountRoute]); return; }
+    if (tab === 'downloads') {
       const toast = await this.toastCtrl.create({
         message: 'Bu özellik yakında geliyor!',
         duration: 1800,

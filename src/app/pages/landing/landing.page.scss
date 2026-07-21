@@ -2,6 +2,10 @@
 ion-content {
   --background: #141414;
   --padding-bottom: 70px;
+  // Global header yarı saydam (Netflix tarzı) tasarlandı; sadece bu sayfada hero
+  // görseli header'ın altına itilmez, header'ın arkasından/altından görünür —
+  // aradaki düz renkli boşluk kalkar. Diğer sayfalarda global padding aynen kalır.
+  --padding-top: 0;
 }
 
 /* ── Hero ── */
@@ -236,9 +240,65 @@ ion-content {
   }
 }
 
+/* Satır kaydırma okları — touchpad'i olmayan (fare) kullanıcılar için */
+.nf-row-scroll-wrap {
+  position: relative;
+}
+
+.nf-row-arrow {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  z-index: 20; /* hover'da scale alan kartların (z-index: 10) üstünde kalmalı */
+  width: 44px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  opacity: 0;
+  pointer-events: none; /* görünmezken alttaki kartların tıklamasını engellemesin */
+  transition: opacity 0.2s ease;
+
+  ion-icon {
+    font-size: 30px;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.9));
+  }
+
+  &--left {
+    left: 0;
+    background: linear-gradient(to right, rgba(10, 10, 10, 0.85), transparent);
+  }
+
+  &--right {
+    right: 0;
+    background: linear-gradient(to left, rgba(10, 10, 10, 0.85), transparent);
+  }
+
+  &:hover ion-icon {
+    transform: scale(1.2);
+  }
+}
+
+/* Yalnızca fare (fine pointer) cihazlarda, satırın üzerindeyken VE o yönde
+   kaydırılacak içerik varken görünür (rs-can-* sınıflarını landing.page.ts basar);
+   dokunmatik cihazlarda parmakla kaydırma davranışı değişmeden kalır. */
+@media (hover: hover) and (pointer: fine) {
+  .nf-row-arrow {
+    display: flex;
+  }
+
+  .nf-row-scroll-wrap.rs-can-left:hover .nf-row-arrow--left,
+  .nf-row-scroll-wrap.rs-can-right:hover .nf-row-arrow--right {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
 .nf-card {
   flex-shrink: 0;
-  width: 120px;
+  width: 105px;
   cursor: pointer;
   position: relative;
   transition: transform 0.2s ease;
@@ -256,10 +316,20 @@ ion-content {
   }
 }
 
+// Scroll sürerken (host'a landing.page.ts ekler) hover büyümesi kapatılır:
+// scale, imlecin altındaki wheel hedefini oynatıp kaydırmayı aralıklı yutuyor.
+:host(.nf-scrolling) .nf-card {
+  transition: none;
+
+  &:hover {
+    transform: none;
+  }
+}
+
 .nf-card-img {
   position: relative;
-  width: 120px;
-  height: 170px;
+  width: 105px;
+  height: 150px;
   border-radius: 6px;
   overflow: hidden;
   background: #2a2a2a;
@@ -331,44 +401,6 @@ ion-content {
 
   &--done {
     background: #46d369;
-  }
-}
-
-.nf-row-title--continue {
-  color: #c9a84c;
-}
-
-.nf-card-badge--play {
-  background: rgba(0, 0, 0, 0.55);
-  border-radius: 50%;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  ion-icon {
-    font-size: 14px;
-    color: #fff;
-  }
-}
-
-.nf-card-dismiss {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.65);
-  border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 2;
-  ion-icon {
-    font-size: 13px;
-    color: #fff;
   }
 }
 
@@ -742,26 +774,37 @@ ion-content {
   to { transform: rotate(360deg); }
 }
 
-/* Büyük daire play butonu — Tabii stili */
-.nf-sheet-actions {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.nf-sheet-play-circle {
-  background: none;
+/* Oynat: hero görselinin tam ortasında, arkasında kontrast için koyu daire */
+.nf-sheet-hero-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
   border: none;
-  cursor: pointer;
-  padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity 0.2s;
+  cursor: pointer;
+  backdrop-filter: blur(1px);
+  transition: transform 0.2s ease, background 0.2s ease;
 
-  &:hover { opacity: 0.85; }
-  &:active { opacity: 0.7; }
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.55);
+    transform: translate(-50%, -50%) scale(1.06);
+  }
+  &:active {
+    transform: translate(-50%, -50%) scale(0.96);
+  }
 }
 
 /* ── Bölüm listesi (Tabii episode rows) ── */
@@ -1109,16 +1152,16 @@ ion-content {
 @media (min-width: 768px) {
   .nf-row-scroll {
     gap: 16px;
-    padding: 0 24px 8px;
+    padding: 0 24px 8px 48px;
   }
 
   .nf-card {
-    width: 260px;
+    width: 175px;
   }
 
   .nf-card-img {
-    width: 260px;
-    height: 420px;
+    width: 175px;
+    height: 280px;
     background-size: cover;
     background-position: center top;
   }
@@ -1129,8 +1172,16 @@ ion-content {
 
   .nf-row-title {
     font-size: 18px;
-    padding: 0 24px;
+    padding: 0 24px 0 48px;
     margin: 0 0 14px;
+  }
+
+  .nf-stories-row {
+    padding-left: 48px;
+  }
+
+  .nf-hero-content {
+    padding-left: 48px;
   }
 }
 

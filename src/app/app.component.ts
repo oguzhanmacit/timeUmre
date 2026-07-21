@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { OfflineBannerComponent } from './components/offline-banner/offline-banner.component';
 import {
@@ -14,38 +14,48 @@ import { UmreContentService } from './services/umre-content.service';
   imports: [IonApp, IonRouterOutlet, OfflineBannerComponent, PremiumHeaderComponent],
   template: `
     <ion-app>
-      <app-premium-header
-        [navItems]="premiumNavItems"
-        (navItemSelect)="onHeaderNavSelect($event)"
-        (search)="onHeaderSearch($event)"
-      ></app-premium-header>
+      @if (!isAuthRoute) {
+        <app-premium-header
+          [navItems]="premiumNavItems"
+          (navItemSelect)="onHeaderNavSelect($event)"
+        ></app-premium-header>
+      }
       <app-offline-banner></app-offline-banner>
       <ion-router-outlet></ion-router-outlet>
     </ion-app>
   `,
 })
 export class AppComponent {
+  /** Giriş/kayıt ekranları tam ekran (Netflix tarzı) olduğundan header gizlenir. */
+  isAuthRoute = false;
+
   constructor(
     private readonly router: Router,
     private readonly content: UmreContentService,
-  ) {}
+  ) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isAuthRoute = event.urlAfterRedirects.startsWith('/auth');
+      }
+    });
+  }
 
   get premiumNavItems(): PremiumNavItem[] {
     return [
       {
         id: 'umre',
         label: 'Umre',
-        children: this.content.umreItems.map((item, i) => ({
-          id: `umre-${i}`,
-          label: item.label,
-          payload: item,
-        })),
+        payload: { setKey: 'umre' },
       },
-      ...this.content.giderimItems.map((item, i) => ({
-        id: `giderim-${i}`,
+      ...this.content.giderimItems.map(item => ({
+        id: item.id,
         label: item.label,
         route: item.route,
-        payload: item.route ? undefined : item,
+        payload: item.route
+          ? undefined
+          : item.videos?.length
+            ? { setKey: item.id }
+            : { videoUrl: item.videoUrl },
       })),
     ];
   }
@@ -53,28 +63,12 @@ export class AppComponent {
   onHeaderNavSelect(item: PremiumNavItem) {
     if (!item.payload) return;
 
-    if (item.id.startsWith('umre-')) {
-      const payload = item.payload as { videoUrl?: string };
-      if (payload.videoUrl) this.playVideo(payload.videoUrl);
-      return;
-    }
-
-    const payload = item.payload as {
-      label: string;
-      videoUrl?: string;
-      videos?: { label: string; url: string }[];
-    };
-    if (payload.videos?.length) {
-      this.router.navigate(['/video-list'], {
-        state: { title: payload.label, videos: payload.videos },
-      });
+    const payload = item.payload as { setKey?: string; videoUrl?: string };
+    if (payload.setKey) {
+      this.router.navigate(['/video-list'], { queryParams: { set: payload.setKey } });
       return;
     }
     if (payload.videoUrl) this.playVideo(payload.videoUrl);
-  }
-
-  onHeaderSearch(query: string) {
-    this.router.navigate(['/lokasyonlar'], { queryParams: { q: query } });
   }
 
   private playVideo(url: string) {

@@ -1,5 +1,11 @@
 export type City = 'Jeddah' | 'Makkah' | 'Madinah';
-export type StepType = 'airport' | 'transport' | 'hotel' | 'worship' | 'visit' | 'return';
+export type StepType =
+  | 'airport'
+  | 'transport'
+  | 'hotel'
+  | 'worship'
+  | 'visit'
+  | 'return';
 export type TransportType = 'train' | 'taxi' | 'bus' | 'private_transfer';
 
 export interface TransportOption {
@@ -25,7 +31,6 @@ export interface UmrahRouteStep {
   city: City;
   type: StepType;
   shortDescription: string;
-  content: string;
   checklist: string[];
   transportOptions?: TransportOption[];
   videoUrl?: string;

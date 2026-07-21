@@ -1,0 +1,223 @@
+.vp-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.82);
+  z-index: 9100;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.vp-popup {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9101;
+  width: min(92vw, 960px);
+  /* Not paneli açılınca viewport'tan taşmasın: video karesi gerekirse küçülür,
+     panel kendi içinde kayar — Kaydet butonu her zaman erişilebilir kalır. */
+  max-height: calc(100vh - 24px);
+  display: flex;
+  flex-direction: column;
+}
+
+.vp-frame {
+  aspect-ratio: 16 / 9;
+  flex: 0 1 auto;
+  min-height: 160px;
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.75);
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+.vp-close {
+  position: absolute;
+  top: -24px;
+  right: -40px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  ion-icon {
+    font-size: 22px;
+    color: #fff;
+  }
+
+  &:active {
+    background: rgba(0, 0, 0, 0.8);
+  }
+}
+
+.vp-note-fab {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px 6px 9px;
+  border-radius: 20px;
+  background: rgba(0, 0, 0, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  backdrop-filter: blur(4px);
+  transition: background 0.15s, border-color 0.15s;
+
+  ion-icon {
+    font-size: 15px;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  &.active {
+    background: rgba(184, 134, 11, 0.75);
+    border-color: #c9a84c;
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+.vp-note-panel {
+  margin-top: 10px;
+  background: #101010;
+  border: 1px solid rgba(234, 179, 8, 0.22);
+  border-radius: 14px;
+  padding: 14px 16px;
+  flex: 0 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  animation: vp-in 0.2s ease;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.22) transparent;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.22);
+    border-radius: 3px;
+  }
+}
+
+@keyframes vp-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.vp-prev-notes {
+  margin-bottom: 10px;
+}
+
+.vp-prev-label {
+  margin: 0 0 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.vp-prev-item {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.vp-prev-time {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #c9a84c;
+  min-width: 32px;
+}
+
+.vp-prev-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.vp-note-textarea {
+  width: 100%;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 10px 12px;
+  resize: none;
+  outline: none;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  &:focus {
+    border-color: rgba(193, 127, 36, 0.5);
+  }
+}
+
+.vp-note-save {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #b8860b, #f5c842);
+  border: none;
+  border-radius: 6px;
+  color: #000;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+
+  &:active {
+    opacity: 0.8;
+  }
+
+  ion-icon {
+    font-size: 16px;
+  }
+}

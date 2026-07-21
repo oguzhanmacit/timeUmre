@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "25731289047",
+    "project_id": "umrehber",
+    "storage_bucket": "umrehber.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:25731289047:android:2bc397e5c9d6db62810592",
+        "android_client_info": {
+          "package_name": "com.umrem.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "25731289047-49itj6rdts582v91iptmgmp93bav8n51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umrem.app",
+            "certificate_hash": "9697b5bf974b544f7ee8c8a9d1bb4fd7aefa5f30"
+          }
+        },
+        {
+          "client_id": "25731289047-erpsao9egmckfe3o7aqiuvp07tv14m31.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.umrem.app",
+            "certificate_hash": "94ca937a9eab3a4ee30c2f4c7af6be9433e1d6a6"
+          }
+        },
+        {
+          "client_id": "25731289047-in9kaorotdik5o5onqkchs90iiadrsb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAReFzz_wHHC1Eq4BNL2x_PWf7y7M4OJRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "25731289047-in9kaorotdik5o5onqkchs90iiadrsb1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

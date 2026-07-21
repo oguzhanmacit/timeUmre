@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent, IonIcon, ToastController, AlertController, ActionSheetController } from '@ionic/angular/standalone';
@@ -15,11 +15,12 @@ import {
 import { UMRAH_ROUTES } from '../data/umrah-routes.data';
 import { UmrahRoute, UmrahRouteStep, City, StepType, TransportType } from '../../../models/route.model';
 import { RouteChecklistService } from '../../../services/route-checklist.service';
+import { VideoPopupComponent } from '../../../components/video-popup/video-popup.component';
 
 @Component({
   selector: 'app-route-detail',
   standalone: true,
-  imports: [CommonModule, IonContent, IonIcon],
+  imports: [CommonModule, IonContent, IonIcon, VideoPopupComponent],
   templateUrl: './route-detail.page.html',
   styleUrls: ['./route-detail.page.scss'],
 })
@@ -34,6 +35,9 @@ export class RouteDetailPage implements OnInit {
 
   nextStepDialogOpen = false;
   pendingNextStep: UmrahRouteStep | null = null;
+
+  /* Rota adımı videoları başka sayfaya gitmeden bu popup'ta oynatılır. */
+  @ViewChild('videoPopup') videoPopup?: VideoPopupComponent;
 
   private routeId = '';
 
@@ -53,6 +57,11 @@ export class RouteDetailPage implements OnInit {
       chevronForwardOutline, chevronDownOutline, refreshOutline,
       shareOutline, bookmarkOutline, createOutline, informationCircleOutline,
       arrowForwardOutline,
+    });
+    // Checklist Firestore'dan asenkron gelir; snapshot güncellenince durum tazelenir.
+    effect(() => {
+      this.checklistService.states();
+      if (this.route) this.loadCheckStates();
     });
   }
 
@@ -79,9 +88,36 @@ export class RouteDetailPage implements OnInit {
     this.popupOpen = true;
   }
 
+  /** Kart tıklaması: aynı kart açıksa kapat, değilse o kartı genişlet. */
+  togglePopup(stepId: string) {
+    if (this.popupOpen && this.popupStep?.id === stepId) {
+      this.closePopup();
+    } else {
+      this.openPopup(stepId);
+    }
+  }
+
+  isStepExpanded(stepId: string): boolean {
+    return this.popupOpen && this.popupStep?.id === stepId;
+  }
+
   closePopup() {
     this.popupOpen = false;
     this.expandedTransportKey = null;
+  }
+
+  /** Adım panelinin tek kapanma yolu: Escape (üst bar ve yüzer buton kaldırıldı). */
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    if (this.videoPopup?.isOpen) {
+      this.videoPopup.close();
+      return;
+    }
+    if (this.nextStepDialogOpen) {
+      this.dismissNextStep();
+      return;
+    }
+    if (this.popupOpen) this.closePopup();
   }
 
   toggleTransport(stepId: string, optIndex: number) {
@@ -168,7 +204,7 @@ export class RouteDetailPage implements OnInit {
     if (!opt.videos?.length) return;
 
     if (opt.videos.length === 1) {
-      this.playVideo(opt.videos[0].url);
+      this.playVideo(opt.videos[0].url, opt.videos[0].label ?? opt.title);
       return;
     }
 
@@ -179,7 +215,7 @@ export class RouteDetailPage implements OnInit {
         ...opt.videos.map(v => ({
           text: v.label,
           icon: 'play-circle-outline',
-          handler: () => { this.playVideo(v.url); },
+          handler: () => { this.playVideo(v.url, v.label); },
         })),
         { text: 'Vazgeç', role: 'cancel' },
       ],
@@ -187,8 +223,9 @@ export class RouteDetailPage implements OnInit {
     await sheet.present();
   }
 
-  playVideo(url: string) {
-    this.router.navigate(['/watch'], { queryParams: { url } });
+  /** Rota adımı videoları sayfadan ayrılmadan paylaşılan popup bileşeninde oynatılır. */
+  playVideo(url: string, title?: string) {
+    this.videoPopup?.open(url, title ?? this.popupStep?.title ?? 'Rota Videosu');
   }
 
   goBack() {
@@ -201,7 +238,8 @@ export class RouteDetailPage implements OnInit {
     if (tab === 'search')  { this.router.navigate(['/lokasyonlar']); return; }
     if (tab === 'explore') { this.router.navigate(['/harita']); return; }
     if (tab === 'notes') { this.router.navigate(['/notlarim']); return; }
-    if (tab === 'downloads' || tab === 'profile') {
+    if (tab === 'profile') { this.router.navigate(['/profile']); return; }
+    if (tab === 'downloads') {
       const toast = await this.toastCtrl.create({
         message: 'Bu özellik yakında geliyor!',
         duration: 1800,
@@ -330,19 +368,17 @@ export class RouteDetailPage implements OnInit {
     return !step.hideVideoButton && !!(step.videoUrl || step.videos?.length);
   }
 
+  /** Birden çok video varsa tekli küçük resim yerine kart içinde ızgara gösterilir. */
+  hasMultipleVideos(step: UmrahRouteStep): boolean {
+    return !!(step.videos && step.videos.length > 1);
+  }
+
+  /** Yalnızca tekli video kutusundan çağrılır (çoklu videoda her öğe kendi tıklamasıyla oynar). */
   openStepVideo() {
     if (!this.popupStep) return;
-    const step = this.popupStep;
-
-    if (step.videos && step.videos.length > 1) {
-      this.closePopup();
-      this.router.navigate(['/umrah-routes', this.routeId, 'step-videos', step.id]);
-      return;
-    }
-
-    const url = step.videos?.[0]?.url ?? step.videoUrl;
+    const url = this.popupStep.videos?.[0]?.url ?? this.popupStep.videoUrl;
     if (url) {
-      this.closePopup();
+      // Kart açık kalır; video üstte popup'ta oynar.
       this.playVideo(url);
     } else {
       this.toastCtrl.create({
@@ -422,25 +458,4 @@ export class RouteDetailPage implements OnInit {
     await toast.present();
   }
 
-  async shareStep() {
-    const toast = await this.toastCtrl.create({
-      message: 'Paylaşım özelliği yakında geliyor!',
-      duration: 1800,
-      position: 'bottom',
-      cssClass: 'nf-toast',
-      color: 'dark',
-    });
-    await toast.present();
-  }
-
-  async bookmarkStep() {
-    const toast = await this.toastCtrl.create({
-      message: 'Adım kaydedildi!',
-      duration: 1600,
-      position: 'bottom',
-      cssClass: 'nf-toast',
-      color: 'dark',
-    });
-    await toast.present();
-  }
 }

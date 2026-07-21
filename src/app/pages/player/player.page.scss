@@ -1,6 +1,7 @@
+// --padding-top bilerek ezilmez: global kural (styles.scss) fixed header'ın
+// altında kalması için içeriğe var(--app-header-height) kadar üst boşluk verir.
 ion-content {
   --background: #0d0d0d;
-  --padding-top: 0;
   --padding-bottom: 0;
 }
 
@@ -103,7 +104,7 @@ ion-content {
     border-top: none;
     border-left: 1px solid rgba(255,255,255,.07);
     padding: 16px 14px;
-    height: 100vh;
+    height: calc(100vh - var(--app-header-height));
     overflow-y: auto;
     background: #111;
   }

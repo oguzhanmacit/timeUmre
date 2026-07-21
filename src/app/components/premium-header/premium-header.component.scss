@@ -39,7 +39,6 @@ button {
     rgba(0, 0, 0, 0.6) 0%,
     rgba(0, 0, 0, 0.25) 100%
   );
-  -webkit-backdrop-filter: blur(var(--ph-blur));
   border-bottom: 1px solid transparent;
   transform: translateY(0);
   transition:
@@ -83,7 +82,10 @@ button {
   position: relative;
   display: flex;
   align-items: center;
-  height: 100%;
+  // Header ≤1024px'te 2 satır (üst satır + kaydırmalı şerit); flex:1 üst satırın
+  // kalan yüksekliği almasını sağlar, masaüstünde şerit gizli olduğundan 100%'e denk gelir.
+  flex: 1;
+  min-height: 0;
   padding-left: clamp(24px, 4vw, 64px);
   padding-right: clamp(40px, 6vw, 96px);
   gap: 32px;
@@ -222,139 +224,66 @@ button {
   flex-shrink: 0;
 }
 
-.ph-icon-btn {
-  width: 38px;
-  height: 38px;
+/* ── Hesap (profil/giriş) ── */
+.ph-account {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 7px;
+  text-decoration: none;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--ph-white);
-  cursor: pointer;
-  transition:
-    background 0.2s ease,
-    border-color 0.2s ease;
-
-  ion-icon {
-    font-size: 18px;
-  }
-
-  &:hover,
-  &:focus-visible {
-    background: rgba(255, 255, 255, 0.14);
-    border-color: var(--ph-gold-soft);
-  }
+  max-width: 140px;
 }
 
-.ph-search {
-  display: flex;
-  align-items: center;
+.ph-account-icon {
+  font-size: 26px;
+  color: var(--ph-white);
+  flex-shrink: 0;
 }
 
-.ph-search-input {
-  width: 0;
-  height: 38px;
-  opacity: 0;
-  padding: 0;
-  margin-right: 0;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--ph-white);
+.ph-account-label {
   font-size: 13px;
-  transition:
-    width var(--ph-transition),
-    opacity 0.2s ease,
-    padding var(--ph-transition),
-    margin var(--ph-transition);
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.4);
-  }
-
-  &--visible {
-    width: 220px;
-    opacity: 1;
-    padding: 0 12px;
-    margin-right: 8px;
-  }
+  font-weight: 600;
+  color: var(--ph-white);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* ── Hamburger tetikleyici (tablet/mobil) ── */
-.ph-menu-trigger {
-  display: none;
-  width: 38px;
-  height: 38px;
-  flex-direction: column;
+/* ── Tablet/mobil: yatay kaydırmalı menü şeridi ── */
+.ph-strip {
+  display: none; // masaüstünde satır-içi .ph-nav kullanılır
   align-items: center;
-  justify-content: center;
-  gap: 5px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
+  gap: 4px;
+  height: 40px;
   flex-shrink: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 
-  span {
-    width: 20px;
-    height: 2px;
-    background: var(--ph-white);
-    transition:
-      transform 0.25s ease,
-      opacity 0.25s ease;
-  }
-
-  &[aria-expanded="true"] {
-    span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-    span:nth-child(2) {
-      opacity: 0;
-    }
-    span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
+  // Kaydırma çubuğu gizli — parmakla kaydırma davranışı korunur.
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
   }
 }
 
-/* ── Tablet/mobil panel ── */
-.ph-mobile-panel {
-  position: absolute;
-  top: 100%;
-  right: 16px;
-  width: 280px;
-  max-height: calc(100vh - var(--ph-height) - 16px);
-  overflow-y: auto;
-  background: rgba(8, 8, 8, 0.98);
-  border: 1px solid rgba(212, 175, 55, 0.18);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55);
-  animation: ph-fade-in 0.2s ease;
-}
-
-.ph-mobile-item {
-  display: block;
-  width: 100%;
-  text-align: left;
+.ph-strip-link {
+  flex-shrink: 0;
   background: none;
   border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   color: var(--ph-text-dim);
-  font-size: 14.5px;
+  font-size: 13.5px;
   font-weight: 600;
-  padding: 15px 20px;
+  padding: 8px 12px;
   cursor: pointer;
-  transition:
-    color 0.15s ease,
-    background 0.15s ease;
+  white-space: nowrap;
+  transition: color 0.15s ease;
 
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover,
+  &:active,
   &:focus-visible {
     color: var(--ph-white);
-    background: rgba(212, 175, 55, 0.08);
   }
 }
 
@@ -368,11 +297,22 @@ button {
 
 /* ── Responsive ── */
 @media (max-width: 1024px) {
+  :host {
+    // Masaüstünde header, ion-content'in sağdaki kaydırma çubuğuna binmesin diye
+    // daraltılır; mobil/tablette çubuk kaplama (overlay) olduğundan boşluk bırakılmaz.
+    --ph-scrollbar-w: 0px;
+  }
+
   .ph-nav {
     display: none;
   }
 
-  .ph-menu-trigger {
+  // Hesap simgesi/ismi mobilde gösterilmez; profile giriş alt navdaki Profil sekmesinden.
+  .ph-account {
+    display: none;
+  }
+
+  .ph-strip {
     display: flex;
   }
 }
@@ -389,24 +329,6 @@ button {
 
   .ph-actions {
     gap: 8px;
-  }
-
-  .ph-search-input--visible {
-    width: 140px;
-  }
-
-  .ph-mobile-panel {
-    position: fixed;
-    top: var(--ph-height);
-    left: 0;
-    right: 0;
-    width: 100%;
-    /* .ph-header'ın backdrop-filter'ı fixed elemanlar için containing block oluşturur;
-       bu yüzden "bottom: 0" header kutusuna göre hesaplanır. 100vh viewport'a göre sabit kalır. */
-    height: calc(100vh - var(--ph-height));
-    max-height: none;
-    border-left: none;
-    border-right: none;
   }
 }
 

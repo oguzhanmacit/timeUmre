@@ -4,15 +4,22 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  NgZone,
   OnDestroy,
   Output,
+  Signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavigationStart, Router, RouterLink } from '@angular/router';
 import { IonIcon } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { chevronDownOutline, compassOutline, searchOutline } from 'ionicons/icons';
+import {
+  chevronDownOutline,
+  compassOutline,
+  personCircleOutline,
+} from 'ionicons/icons';
 import { Subscription } from 'rxjs';
+import { AuthService, AppUser } from '../../services/auth.service';
 
 export interface PremiumNavItem {
   id: string;
@@ -48,36 +55,55 @@ export class PremiumHeaderComponent implements OnDestroy {
         { id: 'umre-sss', label: 'Sıkça Sorulan Sorular' },
       ],
     },
-    { id: 'rota', label: 'Adım Adım Rota Rehberi', route: ['/umrah-routes'] },
-    { id: 'vize', label: 'Vize İşlemleri' },
-    { id: 'tren', label: 'Hızlı Tren İşlemleri' },
-    { id: 'nusuk', label: 'Nusuk Uygulaması (Ravza Randevusu)' },
+    { id: 'rota', label: 'Rota Rehberi', route: ['/umrah-routes'] },
+    { id: 'vize', label: 'Vize' },
+    { id: 'tren', label: 'Hızlı Tren' },
+    { id: 'nusuk', label: 'Ravza Randevusu' },
   ];
 
   /** route içermeyen bir öğe seçildiğinde tetiklenir; navigasyonu üst bileşen üstlenir. */
   @Output() navItemSelect = new EventEmitter<PremiumNavItem>();
-  @Output() search = new EventEmitter<string>();
 
   openDropdownId: string | null = null;
-  searchOpen = false;
-  mobileMenuOpen = false;
+  /** Header yalnızca sayfa en tepedeyken görünür; aşağı inildiğinde gizlenir. */
   hidden = false;
 
   private internalScrolled = false;
-  private lastScrollTop = 0;
   private readonly routerSub: Subscription;
+
+  /** Hesap durumu: giriş açıkken avatar/isim, kapalıyken "Giriş Yap" gösterir. */
+  readonly user: Signal<AppUser | null>;
+
+  /** Kalıcı hesap → profil; misafir (anonim) veya oturumsuz → login. */
+  get accountRoute(): string {
+    return this.authService.accountRoute;
+  }
+
+  get accountLabel(): string {
+    const u = this.user();
+    return u && !u.isAnonymous ? u.displayName || 'Profilim' : 'Giriş Yap';
+  }
 
   constructor(
     private readonly router: Router,
     private readonly hostEl: ElementRef<HTMLElement>,
+    private readonly zone: NgZone,
+    private readonly authService: AuthService,
   ) {
-    addIcons({ compassOutline, chevronDownOutline, searchOutline });
-    this.routerSub = this.router.events.subscribe(event => {
+    this.user = this.authService.user;
+    addIcons({ compassOutline, chevronDownOutline, personCircleOutline });
+    this.routerSub = this.router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.closeAll();
-        this.setHidden(false);
-        this.lastScrollTop = 0;
+        this.hidden = false;
       }
+    });
+    // Zone dışında dinlenir; aksi halde her scroll karesi tüm uygulamada change
+    // detection tetikler. Zone'a yalnızca durum gerçekten değiştiğinde girilir.
+    this.zone.runOutsideAngular(() => {
+      document.addEventListener('ionScroll', this.onIonScroll, {
+        passive: true,
+      });
     });
   }
 
@@ -87,7 +113,9 @@ export class PremiumHeaderComponent implements OnDestroy {
 
   /** Mobil çekmece için alt menüleri düz bir listeye açar. */
   get flatMobileItems(): PremiumNavItem[] {
-    return this.navItems.flatMap(item => (item.children?.length ? item.children : [item]));
+    return this.navItems.flatMap((item) =>
+      item.children?.length ? item.children : [item],
+    );
   }
 
   /**
@@ -95,42 +123,28 @@ export class PremiumHeaderComponent implements OnDestroy {
    * normal "scroll" event'i document'e (composed olmadığı için) hiç yansımaz. Ionic'in
    * bunun için özel olarak dışa açtığı "ionScroll" custom event'i (scrollEvents=true
    * gerektirir) dinleyerek hangi sayfa aktif olursa olsun scroll'u global olarak yakalıyoruz.
+   * Zone dışında çalışır (constructor'daki addEventListener) — arrow function olması
+   * this bağlamını korur.
    */
-  @HostListener('document:ionScroll', ['$event'])
-  onIonScroll(event: Event): void {
+  private readonly onIonScroll = (event: Event): void => {
     const detail = (event as CustomEvent<{ scrollTop: number }>).detail;
     const scrollTop = detail.scrollTop;
 
     if (this.scrolled === null) {
       const scrolledNext = scrollTop > 40;
-      if (scrolledNext !== this.internalScrolled) this.internalScrolled = scrolledNext;
-    }
-
-    const menuOpen = this.openDropdownId !== null || this.mobileMenuOpen || this.searchOpen;
-    const delta = scrollTop - this.lastScrollTop;
-    if (!menuOpen && Math.abs(delta) > 4) {
-      if (scrollTop <= this.headerHeight()) {
-        this.setHidden(false);
-      } else if (delta > 0) {
-        this.setHidden(true);
-      } else {
-        this.setHidden(false);
+      if (scrolledNext !== this.internalScrolled) {
+        this.zone.run(() => (this.internalScrolled = scrolledNext));
       }
     }
-    this.lastScrollTop = scrollTop;
-  }
 
-  /** `hidden` durumunu ve buna bağlı `ion-router-outlet` boşluğunu (styles.scss) senkron tutar. */
-  private setHidden(value: boolean): void {
-    if (this.hidden === value) return;
-    this.hidden = value;
-    document.body.classList.toggle('ph-header-hidden', value);
-  }
-
-  private headerHeight(): number {
-    const raw = getComputedStyle(this.hostEl.nativeElement).getPropertyValue('--app-header-height');
-    return parseFloat(raw) || 80;
-  }
+    // Yalnızca en tepede görünür: yukarı kaydırmak yetmez, sayfanın başına
+    // dönülmesi gerekir. Menü açıkken gizlenmez.
+    const menuOpen = this.openDropdownId !== null;
+    const nextHidden = !menuOpen && scrollTop > 60;
+    if (nextHidden !== this.hidden) {
+      this.zone.run(() => (this.hidden = nextHidden));
+    }
+  };
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
@@ -149,23 +163,6 @@ export class PremiumHeaderComponent implements OnDestroy {
     this.openDropdownId = this.openDropdownId === id ? null : id;
   }
 
-  toggleSearch(event: Event, input?: HTMLInputElement): void {
-    event.stopPropagation();
-    this.searchOpen = !this.searchOpen;
-    if (this.searchOpen) input?.focus();
-  }
-
-  submitSearch(value: string): void {
-    const query = value.trim();
-    if (!query) return;
-    this.search.emit(query);
-  }
-
-  toggleMobileMenu(event: Event): void {
-    event.stopPropagation();
-    this.mobileMenuOpen = !this.mobileMenuOpen;
-  }
-
   selectItem(item: PremiumNavItem): void {
     this.closeAll();
     if (item.route) {
@@ -179,14 +176,12 @@ export class PremiumHeaderComponent implements OnDestroy {
     return item.id;
   }
 
-  private closeAll(): void {
+  closeAll(): void {
     this.openDropdownId = null;
-    this.mobileMenuOpen = false;
-    this.searchOpen = false;
   }
 
   ngOnDestroy(): void {
     this.routerSub.unsubscribe();
-    document.body.classList.remove('ph-header-hidden');
+    document.removeEventListener('ionScroll', this.onIonScroll);
   }
 }

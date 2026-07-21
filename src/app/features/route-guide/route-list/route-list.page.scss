@@ -5,19 +5,19 @@ ion-content {
 
 /* ── Accent variables per card ── */
 .rl-card--gold {
-  --rl-accent:        #d4af37;
-  --rl-accent-rgb:    212, 175, 55;
-  --rl-accent-fill:   #d4af37;
-  --rl-grad-from:     rgba(184, 146, 78, 0.22);
-  --rl-border:        rgba(212, 175, 55, 0.3);
+  --rl-accent: #d4af37;
+  --rl-accent-rgb: 212, 175, 55;
+  --rl-accent-fill: #d4af37;
+  --rl-grad-from: rgba(184, 146, 78, 0.22);
+  --rl-border: rgba(212, 175, 55, 0.3);
 }
 
 .rl-card--green {
-  --rl-accent:        #34d399;
-  --rl-accent-rgb:    52, 211, 153;
-  --rl-accent-fill:   #10b981;
-  --rl-grad-from:     rgba(34, 197, 94, 0.2);
-  --rl-border:        rgba(52, 211, 153, 0.3);
+  --rl-accent: #34d399;
+  --rl-accent-rgb: 52, 211, 153;
+  --rl-accent-fill: #10b981;
+  --rl-grad-from: rgba(34, 197, 94, 0.2);
+  --rl-border: rgba(52, 211, 153, 0.3);
 }
 
 /* ── Intro ── */
@@ -62,7 +62,9 @@ ion-content {
   background: #1a1a1a;
   transition: transform 0.2s ease;
 
-  &:active { transform: scale(0.985); }
+  &:active {
+    transform: scale(0.985);
+  }
 }
 
 /* ── Background layers ── */
@@ -78,7 +80,6 @@ ion-content {
   object-fit: cover;
   object-position: center;
 }
-
 
 .rl-card-gradient {
   position: absolute;
@@ -191,8 +192,12 @@ ion-content {
   top: 50%;
   transform: translateY(-50%);
 
-  &--left  { left: 0; }
-  &--right { right: 0; }
+  &--left {
+    left: 0;
+  }
+  &--right {
+    right: 0;
+  }
 }
 
 /* ── CTA button ── */
@@ -206,7 +211,9 @@ ion-content {
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.25s ease, color 0.25s ease;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease;
 
   &:hover {
     background: var(--rl-accent-fill);
@@ -229,7 +236,7 @@ ion-content {
   .rl-intro {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 72px 40px 32px;
+    padding: 0px 40px 0px;
   }
 
   .rl-intro-title {
@@ -317,14 +324,22 @@ ion-content {
   }
 
   &.active {
-    ion-icon { color: #fff; }
-    span     { color: #fff; }
+    ion-icon {
+      color: #fff;
+    }
+    span {
+      color: #fff;
+    }
   }
 
   &--explore {
     position: relative;
     top: -14px;
-    span { color: #c9a84c; font-weight: 700; margin-top: 4px; }
+    span {
+      color: #c9a84c;
+      font-weight: 700;
+      margin-top: 4px;
+    }
   }
 }
 
@@ -338,5 +353,8 @@ ion-content {
   justify-content: center;
   box-shadow: 0 4px 16px rgba(201, 168, 76, 0.5);
 
-  ion-icon { font-size: 26px; color: #fff !important; }
+  ion-icon {
+    font-size: 26px;
+    color: #fff !important;
+  }
 }

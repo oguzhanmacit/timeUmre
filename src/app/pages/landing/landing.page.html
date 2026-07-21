@@ -94,34 +94,16 @@
       </div>
     </div>
 
-    <div class="nf-row" *ngIf="continueWatchingItems.length > 0">
-      <h3 class="nf-row-title nf-row-title--continue">İZLEMEYE DEVAM ET</h3>
-      <div class="nf-row-scroll">
-        <div
-          class="nf-card"
-          *ngFor="let item of continueWatchingItems"
-          (click)="continueWatching(item)"
-        >
-          <div class="nf-card-img">
-            <img [src]="item.imageUrl" [alt]="item.title" loading="lazy" />
-            <div class="nf-card-badge nf-card-badge--play">
-              <ion-icon name="play-outline"></ion-icon>
-            </div>
-            <button class="nf-card-dismiss" (click)="removeContinueWatching(item, $event)" aria-label="Listeden kaldır">
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-            <div class="nf-watch-bar">
-              <div class="nf-watch-fill" [style.width.%]="getWatchFillPct(item.watchUrl)"></div>
-            </div>
-          </div>
-          <p class="nf-card-title">{{ item.title }}</p>
-        </div>
-      </div>
-    </div>
-
     <div class="nf-row" *ngFor="let row of rows">
       <h3 class="nf-row-title">{{ row.title }}</h3>
-      <div class="nf-row-scroll">
+      <div class="nf-row-scroll-wrap" (mouseenter)="updateRowArrows(rowEl)">
+        <button class="nf-row-arrow nf-row-arrow--left" (click)="scrollRow(rowEl, -1)" aria-label="Sola kaydır">
+          <ion-icon name="chevron-back-outline"></ion-icon>
+        </button>
+        <button class="nf-row-arrow nf-row-arrow--right" (click)="scrollRow(rowEl, 1)" aria-label="Sağa kaydır">
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </button>
+      <div class="nf-row-scroll" #rowEl (scroll)="updateRowArrows(rowEl)">
         <div
           class="nf-card"
           *ngFor="let item of row.items"
@@ -140,6 +122,7 @@
           </div>
           <p class="nf-card-title">{{ item.title }}</p>
         </div>
+      </div>
       </div>
     </div>
   </div>
@@ -162,6 +145,13 @@
   >
     <div class="nf-sheet-hero-gradient"></div>
 
+    <!-- Oynat: hero görselinin tam ortasında, tek/çoklu video ayrımı olmadan -->
+    <button class="nf-sheet-hero-play" *ngIf="sheetItem" (click)="playHero()" aria-label="Oynat">
+      <svg width="56" height="56" viewBox="0 0 78 79" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M78 39.996c0 21.54-17.46 39-39 39s-39-17.46-39-39c0-21.539 17.46-39 39-39s39 17.461 39 39zM30.82 48.74V31.032c0-1.196.523-2.073 1.569-2.634 1.046-.56 2.054-.504 3.026.168l14.232 8.854c.822.672 1.233 1.531 1.233 2.577s-.41 1.83-1.233 2.354l-14.232 9.077c-.972.673-1.98.729-3.026.168-1.046-.56-1.57-1.512-1.57-2.857z"/>
+      </svg>
+    </button>
+
     <!-- Tabii SVG X kapat butonu -->
     <button class="nf-sheet-close" (click)="closeSheet()">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38" width="18" height="18" fill="#FAFAFA">
@@ -182,13 +172,15 @@
     </div>
   </div>
 
-  <!-- Tabii-style tab bar -->
+  <!-- Tabii-style tab bar: çoklu videoda "Videolar" sekmesi de var; tekli videoda
+       oynatma hero'daki merkezi butona taşındığından yalnızca "Detaylar" kalır. -->
   <div class="nf-sheet-tabs" *ngIf="sheetItem">
     <button
+      *ngIf="sheetItem.videos?.length"
       class="nf-sheet-tab"
       [class.active]="activeSheetTab === 'main'"
       (click)="setSheetTab('main')"
-    >{{ sheetItem.videos?.length ? 'Videolar' : 'İzle' }}</button>
+    >Videolar</button>
     <button
       class="nf-sheet-tab"
       [class.active]="activeSheetTab === 'detaylar'"
@@ -199,28 +191,11 @@
   <!-- İçerik alanı -->
   <div class="nf-sheet-body" *ngIf="sheetItem">
 
-    <!-- ── İzle / Videolar sekmesi ── -->
+    <!-- ── Videolar sekmesi (yalnızca çoklu video) ── -->
     <ng-container *ngIf="activeSheetTab === 'main'">
 
-      <!-- Tek video: büyük daire play butonu -->
-      <div class="nf-sheet-actions" *ngIf="!sheetItem.videos?.length">
-        <button class="nf-sheet-play-circle" (click)="playSheet()">
-          <svg width="56" height="56" viewBox="0 0 78 79" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M78 39.996c0 21.54-17.46 39-39 39s-39-17.46-39-39c0-21.539 17.46-39 39-39s39 17.461 39 39zM30.82 48.74V31.032c0-1.196.523-2.073 1.569-2.634 1.046-.56 2.054-.504 3.026.168l14.232 8.854c.822.672 1.233 1.531 1.233 2.577s-.41 1.83-1.233 2.354l-14.232 9.077c-.972.673-1.98.729-3.026.168-1.046-.56-1.57-1.512-1.57-2.857z"/>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Çoklu video: play + bölüm listesi -->
+      <!-- Bölüm listesi (ilk bölümü oynatma hero'ya taşındı) -->
       <div class="nf-episodes" *ngIf="sheetItem.videos?.length">
-        <div class="nf-sheet-actions">
-          <button class="nf-sheet-play-circle" (click)="playSheetVideo(sheetItem.videos![0].url)">
-            <svg width="56" height="56" viewBox="0 0 78 79" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M78 39.996c0 21.54-17.46 39-39 39s-39-17.46-39-39c0-21.539 17.46-39 39-39s39 17.461 39 39zM30.82 48.74V31.032c0-1.196.523-2.073 1.569-2.634 1.046-.56 2.054-.504 3.026.168l14.232 8.854c.822.672 1.233 1.531 1.233 2.577s-.41 1.83-1.233 2.354l-14.232 9.077c-.972.673-1.98.729-3.026.168-1.046-.56-1.57-1.512-1.57-2.857z"/>
-            </svg>
-          </button>
-        </div>
-
         <div class="nf-episodes-header">
           <span class="nf-episodes-title">Videolar</span>
           <span class="nf-episodes-count">{{ sheetItem.videos!.length }} İçerik</span>

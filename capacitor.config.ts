@@ -9,6 +9,12 @@ const config: CapacitorConfig = {
   webDir: 'dist/timewarp/browser',
 
   plugins: {
+    FirebaseAuthentication: {
+      // Native katman da oturum açar (google-services.json gerektirir); JS SDK'ya
+      // credential köprüsü auth.service.ts'de kurulu (signInWithCredential).
+      skipNativeAuth: false,
+      providers: ['google.com', 'phone'],
+    },
     SplashScreen: {
       launchShowDuration: 2500,
       launchAutoHide: true,

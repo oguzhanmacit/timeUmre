@@ -1,0 +1,131 @@
+<ion-content [fullscreen]="true">
+  <div class="pf-wrap" *ngIf="user() as u">
+    <h1 class="pf-name">{{ u.displayName || 'Misafir Kullanıcı' }}</h1>
+    <p class="pf-email" *ngIf="u.email">
+      <ion-icon name="mail-outline"></ion-icon>
+      {{ u.email }}
+    </p>
+
+    <!-- Misafir: hesap oluşturma çağrısı -->
+    <div class="pf-guest-card" *ngIf="u.isAnonymous">
+      <ion-icon name="sparkles-outline"></ion-icon>
+      <div>
+        <p class="pf-guest-title">Misafir olarak geziniyorsun</p>
+        <p class="pf-guest-desc">
+          Notların ve izleme geçmişin şu anki cihazına bağlı. Hesap oluşturursan
+          hiçbir şey kaybolmadan tüm cihazlarında senkron kalır.
+        </p>
+        <a class="pf-guest-btn" routerLink="/auth/register">Hesap Oluştur</a>
+      </div>
+    </div>
+
+    <!-- Telefon doğrulama (isteğe bağlı; yalnızca kalıcı hesaplar — misafirden numara istenmez) -->
+    <div class="pf-phone" *ngIf="!u.isAnonymous">
+      <div class="pf-phone-head">
+        <ion-icon name="call-outline"></ion-icon>
+        <span>Telefon Doğrulama</span>
+      </div>
+
+      <ng-container *ngIf="u.phoneNumber; else phoneFlow">
+        <p class="pf-phone-done">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+          <span><strong>{{ u.phoneNumber }}</strong> doğrulandı</span>
+        </p>
+      </ng-container>
+
+      <ng-template #phoneFlow>
+        <p class="pf-phone-desc">
+          İsteğe bağlı: numaranı SMS ile doğrula. Bir telefon numarası yalnızca tek bir
+          hesaba bağlanabilir.
+        </p>
+
+        <div class="pf-phone-row" *ngIf="phoneStep() === 'idle'">
+          <input
+            type="tel"
+            placeholder="+90 5xx xxx xx xx"
+            [(ngModel)]="phone"
+            (keydown.enter)="sendPhoneCode()"
+            [disabled]="phoneBusy()"
+            autocomplete="tel"
+          />
+          <button (click)="sendPhoneCode()" [disabled]="phoneBusy()">
+            {{ phoneBusy() ? 'Gönderiliyor...' : 'Kod Gönder' }}
+          </button>
+        </div>
+
+        <ng-container *ngIf="phoneStep() === 'code'">
+          <p class="pf-phone-sent">{{ phone }} numarasına SMS kodu gönderildi.</p>
+          <div class="pf-phone-row">
+            <input
+              inputmode="numeric"
+              autocomplete="one-time-code"
+              placeholder="6 haneli kod"
+              [(ngModel)]="smsCode"
+              (keydown.enter)="verifyPhoneCode()"
+              [disabled]="phoneBusy()"
+            />
+            <button (click)="verifyPhoneCode()" [disabled]="phoneBusy()">
+              {{ phoneBusy() ? 'Doğrulanıyor...' : 'Doğrula' }}
+            </button>
+          </div>
+          <button class="pf-phone-change" (click)="changePhone()">Numarayı değiştir</button>
+        </ng-container>
+
+        <p class="pf-phone-error" *ngIf="phoneError()">{{ phoneError() }}</p>
+        <p class="pf-phone-captcha-hint" *ngIf="phoneBusy() && phoneStep() === 'idle'">
+          Robot olmadığını doğrulamak için aşağıdaki kutuyu işaretle:
+        </p>
+        <!-- Firebase reCAPTCHA widget'ı bu konteynere bağlanır (web) -->
+        <div id="pf-recaptcha" class="pf-recaptcha"></div>
+      </ng-template>
+    </div>
+
+    <!-- Kayıtlı kullanıcı: referans kodu -->
+    <div class="pf-referral" *ngIf="!u.isAnonymous && referralCode() as code">
+      <div class="pf-referral-head">
+        <ion-icon name="gift-outline"></ion-icon>
+        <span>Referans Kodun</span>
+      </div>
+      <div class="pf-referral-row">
+        <span class="pf-referral-code">{{ code }}</span>
+        <button class="pf-referral-copy" (click)="copyReferralCode()" aria-label="Kodu kopyala">
+          <ion-icon [name]="copied ? 'checkmark-outline' : 'copy-outline'"></ion-icon>
+          {{ copied ? 'Kopyalandı' : 'Kopyala' }}
+        </button>
+      </div>
+      <p class="pf-referral-desc">Bu kodu arkadaşlarınla paylaşabilirsin.</p>
+    </div>
+
+    <!-- Kayıtlı kullanıcı: çıkış -->
+    <button class="pf-logout" *ngIf="!u.isAnonymous" (click)="logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      Çıkış Yap
+    </button>
+  </div>
+</ion-content>
+
+<!-- Bottom Nav -->
+<div class="nf-bottom-nav">
+  <button class="nf-tab" (click)="setTab('home')">
+    <ion-icon name="home-outline"></ion-icon>
+    <span>Ana Sayfa</span>
+  </button>
+  <button class="nf-tab" (click)="setTab('notes')">
+    <ion-icon name="document-text-outline"></ion-icon>
+    <span>Notlarım</span>
+  </button>
+  <button class="nf-tab nf-tab--explore" (click)="setTab('explore')">
+    <div class="nf-explore-btn">
+      <ion-icon name="map-outline"></ion-icon>
+    </div>
+    <span>Keşfet</span>
+  </button>
+  <button class="nf-tab" (click)="setTab('downloads')">
+    <ion-icon name="download-outline"></ion-icon>
+    <span>İndirilenler</span>
+  </button>
+  <button class="nf-tab active" (click)="setTab('profile')">
+    <ion-icon name="person-outline"></ion-icon>
+    <span>Profil</span>
+  </button>
+</div>

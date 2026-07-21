@@ -1,0 +1,204 @@
+ion-content {
+  --background: #000;
+  // Global header bu ekranda gizli (app.component isAuthRoute); styles.scss'in
+  // header için verdiği sabit üst padding burada boşluk yaratmasın.
+  --padding-top: 0;
+}
+
+/* ── Netflix tarzı tam ekran hero: Kâbe görseli + koyu degrade örtü ── */
+.auth-hero {
+  position: relative;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px 48px;
+
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: url('/assets/kabe.jpg') center / cover no-repeat;
+    filter: brightness(0.45);
+    z-index: 0;
+  }
+
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.75) 0%,
+      rgba(0, 0, 0, 0.35) 40%,
+      rgba(0, 0, 0, 0.85) 100%
+    );
+    z-index: 0;
+  }
+}
+
+.auth-brand {
+  position: relative;
+  z-index: 1;
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 4px;
+
+  img {
+    height: 34px;
+    width: auto;
+    border-radius: 8px;
+    /* logo-lale.png beyaz zeminli; koyu hero üzerinde keskin beyaz kare durmasın */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  span {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #f5c842;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 400px;
+  margin: auto 0;
+  background: rgba(0, 0, 0, 0.72);
+  border-radius: 8px;
+  padding: 40px 36px 32px;
+  backdrop-filter: blur(2px);
+
+  @media (max-width: 480px) {
+    padding: 28px 22px 24px;
+  }
+}
+
+.auth-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 22px;
+}
+
+.auth-field {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  padding: 0 14px;
+  margin-bottom: 12px;
+  transition: border-color 0.15s;
+
+  &:focus-within {
+    border-color: rgba(234, 179, 8, 0.6);
+  }
+
+  ion-icon {
+    font-size: 17px;
+    color: rgba(255, 255, 255, 0.4);
+    flex-shrink: 0;
+  }
+
+  input {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    font-size: 14px;
+    padding: 14px 0;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+  }
+}
+
+.auth-error {
+  font-size: 12.5px;
+  color: #f87171;
+  margin: 4px 0 12px;
+}
+
+.auth-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: opacity 0.15s, filter 0.15s;
+
+  &:active {
+    opacity: 0.85;
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  ion-icon {
+    font-size: 17px;
+  }
+
+  &--primary {
+    background: linear-gradient(135deg, #b8860b, #f5c842);
+    color: #000;
+  }
+
+  &--google {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+  }
+
+  &--ghost {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 4px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 12px;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+  }
+}
+
+.auth-switch {
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 22px 0 0;
+
+  a {
+    color: #f5c842;
+    font-weight: 700;
+    text-decoration: none;
+  }
+}

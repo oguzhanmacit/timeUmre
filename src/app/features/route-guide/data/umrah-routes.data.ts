@@ -19,11 +19,6 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         city: 'Jeddah',
         type: 'airport',
         shortDescription: "Pasaport, bagaj ve Mekke'ye geçiş hazırlığı.",
-        content:
-          "Kral Abdülaziz Uluslararası Havalimanı'na indiğinizde umre vizeli pasaportunuzla pasaport kontrolü kuyruğuna geçin. " +
-          'Bagajlarınızı aldıktan sonra gerekiyorsa riyal bozundurun; terminal içinde hem döviz bürosu hem ATM mevcuttur. ' +
-          'Yerel SIM kart veya e-SIM almanız navigasyon ve iletişim açısından büyük kolaylık sağlar. ' +
-          "Mekke'ye ihramlı giriş yapacaksanız terminaldeki tuvaletlerde ihramınızı giyip niyet edin.",
         checklist: [
           'Pasaport ve umre vizesi kontrol edildi',
           'Bagajlar teslim alındı, hasar kontrolü yapıldı',
@@ -42,11 +37,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         type: 'transport',
         shortDescription:
           "Hızlı tren, taksi veya özel transfer ile Mekke'ye ulaşım.",
-        content:
-          "Cidde'den Mekke'ye yaklaşık 80 km mesafe bulunmaktadır. " +
-          'En hızlı seçenek olan Haramain Yüksek Hızlı Treni Abdülaziz istasyonundan kalkar; bilet satın almak için uygulamayı önceden indirmeniz önerilir. ' +
-          'Taksi veya özel transferler havalimanı çıkışında hazır beklemektedir. ' +
-          'Mekke, gayrimüslimlere kapalı kutsal bir şehirdir; giriş noktalarında kontrol yapılabilir.',
+
         checklist: [],
         showCompleteButton: true,
         hideVideoButton: true,
@@ -148,11 +139,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         city: 'Makkah',
         type: 'hotel',
         shortDescription: "Otele giriş, hazırlık ve Harem'e ilk oryantasyon.",
-        content:
-          'Otele giriş yaptıktan sonra bagajlarınızı bırakın ve kısa bir dinlenmenin ardından oryantasyon yapın. ' +
-          "Otel personeliyle Mescid-i Haram'a en yakın çıkışı ve yürüyüş süresini öğrenin. " +
-          'Umreye çıkmadan önce abdest alın, ihramınızın düzgün olduğunu kontrol edin ve yanınıza su ile küçük bir çanta alın. ' +
-          'Kaybolma ihtimaline karşı otel kartını veya adresini telefona kaydedin.',
+
         checklist: [
           'Odaya giriş yapıldı, eşyalar yerleştirildi',
           "Harem'e en yakın çıkış ve güzergâh öğrenildi",
@@ -169,11 +156,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         city: 'Makkah',
         type: 'worship',
         shortDescription: "Tavaf, sa'y ve ihramdan çıkış adımları.",
-        content:
-          "Mescid-i Haram'a girişte sağ ayakla girin ve Kâbe'yi gördüğünüzde dua edin. " +
-          "Tavaf, Hacer-i Esved hizasından başlayarak Kâbe'nin solunda kalacak şekilde yedi tur yapılır. " +
-          "Tavaf namazının ardından Zemzem içip Safa-Merve arasında yedi tur sa'y yapılır. " +
-          "Sa'y tamamlandıktan sonra saçlarınızı kestirerek veya kazıtarak ihramdan çıkın.",
+
         checklist: [
           'Niyet edildi ve telbiye getirildi',
           "Mescid-i Haram'a sağ ayakla girildi",
@@ -193,11 +176,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         type: 'transport',
         shortDescription:
           "Haramain treni veya özel transfer ile Medine'ye geçiş.",
-        content:
-          "Mekke'den Medine'ye yaklaşık 450 km mesafe bulunmaktadır. " +
-          "Haramain Yüksek Hızlı Treni bu güzergâhı yaklaşık 2 saatte kat eder; bilet temini için Mekke Merkez İstasyonu'na gelin. " +
-          'Özel transfer veya otobüs alternatifleri 5-6 saat sürebilir ancak daha esnek saatler sunar. ' +
-          "Medine'de otele yerleşmeden önce Mescid-i Nebevî'nin konumunu haritada işaretleyin.",
+
         checklist: [],
         showCompleteButton: true,
         hideVideoButton: true,
@@ -259,11 +238,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         city: 'Madinah',
         type: 'return',
         shortDescription: 'Otelden çıkış, Zemzem ve havalimanına transfer.',
-        content:
-          'Dönüş gününde uçuş saatinizden en az 3 saat önce havalimanında olmanız önerilir. ' +
-          'Otelden çıkmadan önce Zemzem suyu alıp bavullarınıza uygun şekilde yerleştirin; kontrollü bagajda 5 litre Zemzem taşıyabilirsiniz. ' +
-          'Prens Muhammed bin Abdülaziz Havalimanı şehir merkezine yaklaşık 15 km uzaklıktadır. ' +
-          'Dönüş yolculuğunuzda tüm kutsal mekânlara veda ederken dua etmeyi unutmayın.',
+
         checklist: [
           'Uçuş saati ve kapı numarası kontrol edildi',
           'Otel check-out tamamlandı',
@@ -295,10 +270,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         type: 'airport',
         shortDescription:
           "Medine'ye iniş, pasaport ve bagaj işlemleri, ardından otele geçiş.",
-        content:
-          "Medine Havalimanı'na vardığınızda ilk olarak pasaport kontrolünden geçilir ve bagajlar alınır. " +
-          'Bu rotada ilk durak Medine olduğu için yolculuk daha sakin bir ziyaret süreciyle başlar. ' +
-          "Havalimanından çıktıktan sonra otel transferinizi kontrol edin, otel adresinizi hazır bulundurun ve Mescid-i Nebevî'ye yakınlığınızı öğrenin.",
+
         checklist: [
           'Pasaport kontrolünden geç',
           'Bagajını al',
@@ -340,10 +312,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         type: 'hotel',
         shortDescription:
           'Otele giriş, dinlenme ve Mescid-i Nebevî ziyareti için hazırlık.',
-        content:
-          "Medine'ye vardıktan sonra otele yerleşmek, eşyaları güvenli şekilde bırakmak ve kısa süre dinlenmek önemlidir. " +
-          "İlk gün Mescid-i Nebevî'ye gitmeden önce otelden mescide gidiş ve dönüş yolunu öğrenin. " +
-          'Kalabalıkta kaybolmamak için otel kartı, konum bilgisi veya yakın çevredeki belirgin noktalar not edilmelidir.',
+
         checklist: [
           'Otele giriş yap',
           'Eşyalarını yerleştir',
@@ -362,10 +331,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         type: 'visit',
         shortDescription:
           'Mescid-i Nebevî, Ravza, Kuba, Uhud ve diğer önemli ziyaret noktaları.',
-        content:
-          "Medine'deki en önemli ziyaret noktası Mescid-i Nebevî'dir. " +
-          "Bunun yanında Ravza ziyareti, Kuba Mescidi, Uhud, Kıbleteyn Mescidi ve Cennetü'l-Baki gibi önemli yerler de ziyaret edilebilir. " +
-          'Ziyaret planınızı kalabalık saatleri, ulaşım mesafelerini ve grup düzeninizi dikkate alarak yapmanız önerilir.',
+
         checklist: [
           "Mescid-i Nebevî'de namaz kıl",
           'Ravza ziyareti için plan yap',
@@ -376,12 +342,27 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
           'Hurma pazarı için zaman ayır',
         ],
         videos: [
-          { label: "Mescid-i Nebevî", url: 'https://www.youtube.com/watch?v=v7WFFtQ2Bh8' },
-          { label: 'Ravza Ziyareti', url: 'https://www.youtube.com/watch?v=mxWQG5j-Up8' },
-          { label: 'Kuba Mescidi', url: 'https://www.youtube.com/watch?v=04SFVpWEMak' },
+          {
+            label: 'Mescid-i Nebevî',
+            url: 'https://www.youtube.com/watch?v=v7WFFtQ2Bh8',
+          },
+          {
+            label: 'Ravza Ziyareti',
+            url: 'https://www.youtube.com/watch?v=mxWQG5j-Up8',
+          },
+          {
+            label: 'Kuba Mescidi',
+            url: 'https://www.youtube.com/watch?v=04SFVpWEMak',
+          },
           { label: 'Uhud', url: 'https://www.youtube.com/watch?v=tFewPu71Z6U' },
-          { label: 'Kıbleteyn Mescidi', url: 'https://www.youtube.com/watch?v=H9ILS0ocIJk' },
-          { label: "Cennetü'l-Baki", url: 'https://www.youtube.com/watch?v=nxcVSrqjkAk' },
+          {
+            label: 'Kıbleteyn Mescidi',
+            url: 'https://www.youtube.com/watch?v=H9ILS0ocIJk',
+          },
+          {
+            label: "Cennetü'l-Baki",
+            url: 'https://www.youtube.com/watch?v=nxcVSrqjkAk',
+          },
         ],
         transportOptions: [
           {
@@ -415,10 +396,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         type: 'transport',
         shortDescription:
           "Mekke'ye umre için geçmeden önce ihram, niyet ve ulaşım hazırlığı.",
-        content:
-          "Medine'den Mekke'ye hareket etmeden önce ihramınızı giyin, gusül alın ve niyet edin. " +
-          "Otel çıkış saatinizi ve bilet ya da transfer bilginizi önceden teyit edin; Mekke otel adresinizi telefonunuza kaydedin. " +
-          'Yolculuk boyunca telbiye getirmeye devam edin ve ihram yasaklarına dikkat edin.',
+
         checklist: [
           'İhram kıyafetini hazırla',
           'Gerekirse gusül ve abdest hazırlığı yap',
@@ -438,10 +416,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         type: 'transport',
         shortDescription:
           "Medine'den Mekke'ye tren, otobüs veya özel transfer ile geçiş.",
-        content:
-          "Medine'den Mekke'ye geçiş için Haramain treni, otobüs, taksi veya özel transfer seçenekleri kullanılabilir. " +
-          'Tren kullanılıyorsa istasyona zamanında gitmek, bilet ve bagaj kurallarını kontrol etmek önemlidir. ' +
-          'Özel transfer veya otobüs kullanılıyorsa yolculuk süresi ve mola düzeni önceden öğrenilmelidir.',
+
         checklist: [],
         showCompleteButton: true,
         hideVideoButton: true,
@@ -472,7 +447,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
             type: 'bus',
             title: 'Otobüs / Taksi',
             description:
-              "Uygun fiyatlı seçenek; yolculuk süresi yaklaşık 5-6 saat. Uzun yol taksileri Medine-Mekke güzergâhında sabit tarifeli çalışmaktadır.",
+              'Uygun fiyatlı seçenek; yolculuk süresi yaklaşık 5-6 saat. Uzun yol taksileri Medine-Mekke güzergâhında sabit tarifeli çalışmaktadır.',
             recommendedFor: 'Ekonomik seyahat tercih edenler',
             imageUrl: 'assets/images/saptco.png',
             imageUrl2: 'assets/images/taxi.png',
@@ -492,10 +467,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         city: 'Makkah',
         type: 'hotel',
         shortDescription: "Mekke'ye varış, otele giriş ve umreye hazırlık.",
-        content:
-          "Mekke'ye vardığınızda öncelikle otelinize geçip eşyalarınızı bırakın. " +
-          "Umre ibadetine başlamadan önce kısa bir dinlenme, abdest hazırlığı ve Harem'e gidiş yolunu öğrenmek faydalı olur. " +
-          "Otelden Mescid-i Haram'a giderken dönüş yolunu ve buluşma noktasını mutlaka belirleyin.",
+
         checklist: [
           'Mekke oteline giriş yap',
           'Eşyalarını güvenli şekilde bırak',
@@ -514,10 +486,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         type: 'worship',
         shortDescription:
           "Tavaf, sa'y ve tıraş ile umre ibadetinin tamamlanması.",
-        content:
-          "Mekke'ye umre niyetiyle gelen kullanıcı için bu rotanın en önemli adımı umre ibadetidir. " +
-          "Mescid-i Haram'a girişten sonra tavaf yapılır, ardından tavaf namazı kılınır, zemzem içilir ve Safa ile Merve arasında sa'y tamamlanır. " +
-          'Son olarak tıraş olunarak ihramdan çıkılır.',
+
         checklist: [
           'Umre niyetini kontrol et',
           'Telbiye getir',
@@ -538,11 +507,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         type: 'return',
         shortDescription:
           "Mekke'den Cidde Havalimanı'na geçiş ve dönüş uçuşu hazırlığı.",
-        content:
-          "Dönüş günü Mekke'den Cidde Havalimanı'na geçilir. " +
-          'Uçuş saatinizi, terminal bilginizi, bagajınızı ve pasaportunuzu önceden kontrol edin. ' +
-          'Trafik veya yoğunluk ihtimaline karşı havalimanına erken hareket etmek önemlidir. ' +
-          'Zemzem taşıma kuralları ve havayolu bagaj limitleri de dönüş öncesinde kontrol edilmelidir.',
+
         checklist: [
           'Uçuş saatini kontrol et',
           'Terminal bilgisini kontrol et',
@@ -618,11 +583,7 @@ export const UMRAH_ROUTES: UmrahRoute[] = [
         city: 'Jeddah',
         type: 'return',
         shortDescription: 'Check-in, güvenlik ve dönüş uçuşu hazırlığı.',
-        content:
-          "Cidde Havalimanı'na ulaştıktan sonra havayolunuzun terminalini doğrulayın. " +
-          'Check-in işlemini tamamlayın, bagajınızı teslim edin ve pasaport/güvenlik kontrolünden geçin. ' +
-          'Zemzem suyu taşıma kurallarına ve havayolu bagaj sınırlarına dikkat edin. ' +
-          'Gate bilgisini ekrana bakarak takip edin ve uçuş saatinden en az 2 saat önce kapıda olun.',
+
         checklist: [
           'Terminal bilgisi kontrol edildi',
           'Check-in tamamlandı, kart alındı',

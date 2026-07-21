@@ -9,18 +9,19 @@
 @import "@ionic/angular/css/flex-utils.css";
 @import "leaflet/dist/leaflet.css";
 
-// Global premium header ion-router-outlet'in üstünde normal akışta durur;
-// ion-router-outlet Ionic tarafından "position: absolute; inset: 0" ile viewport'u
-// dolduracak şekilde ayarlandığından, header'ın kapladığı alan kadar aşağı itilmesi gerekir.
-// Header scroll ile yukarı kayıp gizlenince (body.ph-header-hidden), bu boşluk da kapanır;
-// aksi halde header'ın arkasındaki bo­ş alan sayfa arka planıyla "asılı siyah şerit" gibi kalır.
-ion-router-outlet {
-  top: var(--app-header-height);
-  transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+// Global premium header sayfanın üzerinde overlay durur (position: fixed); boşluk,
+// ion-router-outlet itilerek değil ion-content'in sabit iç padding'iyle verilir.
+// Outlet'in top'unu header gizlenirken değiştirmek scroll konteynerinin geometrisini
+// scroll sırasında oynatıp gizle/göster eşiğinde titreme döngüsü yaratıyordu; sabit
+// padding ile header'ın gizlenmesi (salt transform) scroll'u hiç etkilemez.
+ion-content {
+  --padding-top: var(--app-header-height);
 }
 
-body.ph-header-hidden ion-router-outlet {
-  top: 0;
+// Video popup'ı (app-video-popup) açıkken global header gizlenir; sayfa içi popup
+// Ionic sayfa stacking context'inde kaldığından z-index ile header'ın üstüne çıkamıyor.
+body.video-popup-open app-premium-header {
+  display: none;
 }
 
 // Media modal — bottom-sheet stili

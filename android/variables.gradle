@@ -1,5 +1,6 @@
 ext {
-    minSdkVersion = 22
+    // firebase-auth 24.x minSdk 23 (Android 6.0) gerektiriyor; 22 (Android 5.1) desteği bırakıldı.
+    minSdkVersion = 23
     compileSdkVersion = 35
     targetSdkVersion = 35
     androidxActivityVersion = '1.8.0'
@@ -13,4 +14,7 @@ ext {
     androidxJunitVersion = '1.1.5'
     androidxEspressoCoreVersion = '3.5.1'
     cordovaAndroidVersion = '10.1.1'
+    // @capacitor-firebase/authentication: Google ile giriş için Play Services
+    // bağımlılıklarını dahil eder (yoksa native Google sign-in çalışmaz).
+    rgcfaIncludeGoogle = true
 }

@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true">
+  <div class="auth-hero">
+    <header class="auth-brand">
+      <img src="assets/logo-lale.png" alt="" />
+      <span>Umre Rehberi</span>
+    </header>
+
+    <div class="auth-card">
+      <h1 class="auth-title">Oturum Aç</h1>
+
+      <div class="auth-field">
+        <ion-icon name="mail-outline"></ion-icon>
+        <input
+          type="email"
+          placeholder="E-posta"
+          [(ngModel)]="email"
+          (keydown.enter)="loginWithEmail()"
+          autocomplete="email"
+        />
+      </div>
+      <div class="auth-field">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <input
+          type="password"
+          placeholder="Şifre"
+          [(ngModel)]="password"
+          (keydown.enter)="loginWithEmail()"
+          autocomplete="current-password"
+        />
+      </div>
+
+      <p class="auth-error" *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+      <button class="auth-btn auth-btn--primary" [disabled]="loading()" (click)="loginWithEmail()">
+        {{ loading() ? 'Giriş yapılıyor...' : 'Oturum Aç' }}
+      </button>
+
+      <div class="auth-divider"><span>veya</span></div>
+
+      <button class="auth-btn auth-btn--google" [disabled]="loading()" (click)="loginWithGoogle()">
+        <ion-icon name="logo-google"></ion-icon>
+        Google ile Devam Et
+      </button>
+
+      <button class="auth-btn auth-btn--ghost" [disabled]="loading()" (click)="continueAsGuest()">
+        <ion-icon name="person-outline"></ion-icon>
+        Misafir Olarak Devam Et
+      </button>
+
+      <p class="auth-switch">
+        Umre Rehberi'nde yeni misin?
+        <a routerLink="/auth/register">Hemen kaydol</a>
+      </p>
+    </div>
+  </div>
+</ion-content>

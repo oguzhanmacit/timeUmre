@@ -57,6 +57,9 @@
 
 </ion-content>
 
+<!-- Video oynatma popup'ı — notlardaki videolar sayfadan ayrılmadan burada oynar -->
+<app-video-popup #videoPopup></app-video-popup>
+
 <!-- Bottom Nav -->
 <div class="nf-bottom-nav">
   <button class="nf-tab" [class.active]="activeTab === 'home'" (click)="setTab('home')">

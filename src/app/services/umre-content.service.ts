@@ -6,10 +6,16 @@ export interface UmreStepItem {
 }
 
 export interface GiderimItem {
+  id: string;
   label: string;
   videoUrl?: string;
   videos?: { label: string; url: string }[];
   route?: string[];
+}
+
+export interface VideoSet {
+  title: string;
+  videos: { label: string; url: string }[];
 }
 
 /** Umre adımları + "nasıl giderim" içerikleri — global header ve ana sayfa (devam et listesi) arasında paylaşılan tek kaynak. */
@@ -42,14 +48,16 @@ export class UmreContentService {
 
   readonly giderimItems: GiderimItem[] = [
     {
-      label: 'Adım Adım Rota Rehberi',
+      id: 'rota',
+      label: 'Rota Rehberi',
       route: ['/umrah-routes'],
     },
     {
-      label: 'Vize İşlemleri',
+      id: 'vize',
+      label: 'Vize',
       videos: [
         {
-          label: 'Vize İşlemleri',
+          label: 'Vize',
           url: 'https://www.youtube.com/watch?v=s9dvUYCZhFo&t=3s',
         },
         {
@@ -59,12 +67,32 @@ export class UmreContentService {
       ],
     },
     {
-      label: 'Hızlı Tren İşlemleri',
+      id: 'tren',
+      label: 'Hızlı Tren',
       videoUrl: 'https://www.youtube.com/watch?v=kKVuT_joVLI',
     },
     {
-      label: 'Nusuk Uygulaması (Ravza Randevusu)',
+      id: 'nusuk',
+      label: 'Ravza Randevusu (Nusuk)',
       videoUrl: 'https://www.youtube.com/watch?v=3WdFmS_vmP0',
     },
   ];
+
+  /** video-list sayfası listeyi URL'deki ?set= anahtarından bununla çözer (deep-link/yenileme güvenli). */
+  getVideoSet(key: string): VideoSet | null {
+    if (key === 'umre') {
+      return {
+        title: 'Umre',
+        videos: this.umreItems
+          .filter((item) => item.videoUrl)
+          .map((item) => ({ label: item.label, url: item.videoUrl! })),
+      };
+    }
+    const item = this.giderimItems.find((g) => g.id === key);
+    if (!item) return null;
+    const videos =
+      item.videos ??
+      (item.videoUrl ? [{ label: item.label, url: item.videoUrl }] : []);
+    return videos.length ? { title: item.label, videos } : null;
+  }
 }

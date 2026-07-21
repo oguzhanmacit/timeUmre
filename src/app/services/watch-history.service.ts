@@ -1,55 +1,86 @@
-import { Injectable } from '@angular/core';
-
-const STORAGE_KEY = 'tu_watch_history';
+import { Injectable, Signal, effect, signal } from '@angular/core';
+import { collection, doc, onSnapshot, setDoc, Unsubscribe } from 'firebase/firestore';
+import { firestore } from './firebase-app';
+import { AuthService } from './auth.service';
 
 export interface WatchEntry {
   seconds: number;
   completed: boolean;
   updatedAt?: number;
   duration?: number;
-  dismissed?: boolean;
 }
 
+/**
+ * Firestore'a bağlı: `users/{uid}/watchHistory/{docId}`. `key()` ile üretilen normalize
+ * anahtar ham URL içerebildiğinden (YouTube olmayan linkler) Firestore doc ID'sinde
+ * yasak olan "/" karakteri `encodeURIComponent` ile temizlenir. API senkron kalır;
+ * bkz. video-notes.service.ts'teki cache/optimistic-write açıklaması — aynı desen.
+ */
 @Injectable({ providedIn: 'root' })
 export class WatchHistoryService {
-  private store: Record<string, WatchEntry> = {};
+  private readonly cache = signal<Record<string, WatchEntry>>({});
+  readonly entries: Signal<Record<string, WatchEntry>> = this.cache.asReadonly();
 
-  constructor() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) this.store = JSON.parse(raw);
-    } catch {}
+  private unsubscribe: Unsubscribe | null = null;
+
+  constructor(private readonly auth: AuthService) {
+    effect(() => {
+      const uid = this.auth.user()?.uid ?? null;
+      this.unsubscribe?.();
+      this.unsubscribe = null;
+      this.cache.set({});
+      if (!uid) return;
+
+      this.unsubscribe = onSnapshot(
+        collection(firestore, 'users', uid, 'watchHistory'),
+        snap => {
+          const next: Record<string, WatchEntry> = {};
+          snap.forEach(d => {
+            next[decodeURIComponent(d.id)] = d.data() as WatchEntry;
+          });
+          this.cache.set(next);
+        },
+        e => console.warn('[WatchHistory] Dinleyici hatası:', e.code),
+      );
+    }, { allowSignalWrites: true });
   }
 
   getEntry(url: string): WatchEntry | null {
-    return this.store[this.key(url)] ?? null;
+    return this.cache()[this.key(url)] ?? null;
   }
 
   recordSeconds(url: string, seconds: number, duration?: number): void {
     const k = this.key(url);
-    const prev = this.store[k] ?? { seconds: 0, completed: false };
-    if (seconds > prev.seconds) {
-      this.store[k] = {
-        ...prev,
-        seconds: Math.floor(seconds),
-        updatedAt: Date.now(),
-        ...(duration && duration > 0 ? { duration: Math.floor(duration) } : {}),
-      };
-      this.persist();
-    }
+    const prev = this.cache()[k] ?? { seconds: 0, completed: false };
+    if (seconds <= prev.seconds) return;
+
+    const next: WatchEntry = {
+      ...prev,
+      seconds: Math.floor(seconds),
+      updatedAt: Date.now(),
+      ...(duration && duration > 0 ? { duration: Math.floor(duration) } : {}),
+    };
+    this.cache.update(map => ({ ...map, [k]: next }));
+    this.persist(k, next);
   }
 
   markCompleted(url: string): void {
     const k = this.key(url);
-    this.store[k] = { seconds: this.store[k]?.seconds ?? 0, completed: true, updatedAt: Date.now() };
-    this.persist();
+    const next: WatchEntry = {
+      seconds: this.cache()[k]?.seconds ?? 0,
+      completed: true,
+      updatedAt: Date.now(),
+    };
+    this.cache.update(map => ({ ...map, [k]: next }));
+    this.persist(k, next);
   }
 
-  dismiss(url: string): void {
-    const k = this.key(url);
-    const prev = this.store[k] ?? { seconds: 0, completed: false };
-    this.store[k] = { ...prev, dismissed: true };
-    this.persist();
+  private persist(key: string, entry: WatchEntry): void {
+    const uid = this.auth.user()?.uid;
+    if (!uid) return;
+    setDoc(doc(firestore, 'users', uid, 'watchHistory', encodeURIComponent(key)), entry).catch(e =>
+      console.error('[WatchHistory] Kaydetme başarısız:', e),
+    );
   }
 
   private key(url: string): string {
@@ -65,11 +96,5 @@ export class WatchHistoryService {
       }
     } catch {}
     return url;
-  }
-
-  private persist(): void {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.store));
-    } catch {}
   }
 }

@@ -44,8 +44,16 @@
   --app-header-height: 80px;
 }
 
+// ≤1024px: masaüstü satır-içi menü sığmadığından header 2 satıra çıkar —
+// üst satır (logo/hesap) + 40px'lik yatay kaydırmalı menü şeridi.
+@media (max-width: 1024px) {
+  :root {
+    --app-header-height: 120px; // 80 + 40 şerit
+  }
+}
+
 @media (max-width: 640px) {
   :root {
-    --app-header-height: 64px;
+    --app-header-height: 104px; // 64 + 40 şerit
   }
 }

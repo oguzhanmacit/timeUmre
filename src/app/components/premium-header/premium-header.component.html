@@ -63,50 +63,23 @@
 
     <!-- Sağ aksiyonlar -->
     <div class="ph-actions">
-      <div class="ph-search" [class.ph-search--open]="searchOpen">
-        <input
-          #searchInput
-          type="search"
-          class="ph-search-input"
-          [class.ph-search-input--visible]="searchOpen"
-          placeholder="Rota, video, konum ara..."
-          aria-label="Arama"
-          (keydown.enter)="submitSearch(searchInput.value)"
-        />
-        <button
-          type="button"
-          class="ph-icon-btn"
-          [attr.aria-expanded]="searchOpen"
-          aria-label="Arama kutusunu aç/kapat"
-          (click)="toggleSearch($event, searchInput)"
-        >
-          <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
-        </button>
-      </div>
+      <a class="ph-account" [routerLink]="accountRoute" [attr.aria-label]="accountLabel">
+        <ion-icon name="person-circle-outline" class="ph-account-icon"></ion-icon>
+        <span class="ph-account-label">{{ accountLabel }}</span>
+      </a>
 
-      <button
-        type="button"
-        class="ph-menu-trigger"
-        [attr.aria-expanded]="mobileMenuOpen"
-        aria-label="Menüyü aç/kapat"
-        aria-controls="ph-mobile-panel"
-        (click)="toggleMobileMenu($event)"
-      >
-        <span></span><span></span><span></span>
-      </button>
     </div>
   </div>
 
-  <!-- Tablet/mobil menü paneli -->
-  <div class="ph-mobile-panel" id="ph-mobile-panel" role="menu" *ngIf="mobileMenuOpen">
+  <!-- Tablet/mobil: yatay kaydırmalı menü şeridi (masaüstü satır-içi menünün yerini alır) -->
+  <nav class="ph-strip" aria-label="Ana menü">
     <button
       type="button"
-      class="ph-mobile-item"
-      role="menuitem"
+      class="ph-strip-link"
       *ngFor="let item of flatMobileItems; trackBy: trackById"
       (click)="selectItem(item)"
     >
       {{ item.label }}
     </button>
-  </div>
+  </nav>
 </header>

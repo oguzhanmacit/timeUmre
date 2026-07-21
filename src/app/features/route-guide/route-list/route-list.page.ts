@@ -45,7 +45,8 @@ export class RouteListPage {
     if (tab === 'home')    { this.router.navigate(['/']); return; }
     if (tab === 'explore') { this.router.navigate(['/harita']); return; }
     if (tab === 'notes') { this.router.navigate(['/notlarim']); return; }
-    if (tab === 'downloads' || tab === 'profile') {
+    if (tab === 'profile') { this.router.navigate(['/profile']); return; }
+    if (tab === 'downloads') {
       const toast = await this.toastCtrl.create({
         message: 'Bu özellik yakında geliyor!',
         duration: 1800,

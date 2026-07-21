@@ -1,0 +1,38 @@
+<ion-content [fullscreen]="true">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h1 class="auth-title">Kayıt Ol</h1>
+      <p class="auth-sub">Hesap oluştur, verilerin tüm cihazlarında senkron kalsın.</p>
+
+      <div class="auth-field">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <input type="text" placeholder="Ad Soyad" [(ngModel)]="name" autocomplete="name" />
+      </div>
+      <div class="auth-field">
+        <ion-icon name="mail-outline"></ion-icon>
+        <input type="email" placeholder="E-posta" [(ngModel)]="email" autocomplete="email" />
+      </div>
+      <div class="auth-field">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <input
+          type="password"
+          placeholder="Şifre (en az 6 karakter)"
+          [(ngModel)]="password"
+          (keydown.enter)="register()"
+          autocomplete="new-password"
+        />
+      </div>
+
+      <p class="auth-error" *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+      <button class="auth-btn auth-btn--primary" [disabled]="loading()" (click)="register()">
+        {{ loading() ? 'Kayıt olunuyor...' : 'Kayıt Ol' }}
+      </button>
+
+      <p class="auth-switch">
+        Zaten hesabın var mı?
+        <a routerLink="/auth/login">Giriş Yap</a>
+      </p>
+    </div>
+  </div>
+</ion-content>

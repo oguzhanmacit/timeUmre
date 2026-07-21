@@ -1,4 +1,10 @@
-﻿import { Component } from '@angular/core';
+﻿import {
+  Component,
+  ElementRef,
+  NgZone,
+  OnDestroy,
+  effect,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonContent,
@@ -16,6 +22,7 @@ import {
   personOutline,
   mapOutline,
   chevronDownOutline,
+  chevronBackOutline,
   closeOutline,
   playOutline,
   playCircleOutline,
@@ -33,7 +40,8 @@ import {
 } from '../../services/watch-history.service';
 import { UmreLocation } from '../../models/location.model';
 import { VideoFeedService } from '../../services/video-feed.service';
-import { UmreContentService } from '../../services/umre-content.service';
+import { AuthService } from '../../services/auth.service';
+import { RouteChecklistService } from '../../services/route-checklist.service';
 
 interface ContentItem {
   title: string;
@@ -51,7 +59,6 @@ interface ContentRow {
   items: ContentItem[];
 }
 
-
 @Component({
   selector: 'app-landing',
   standalone: true,
@@ -59,8 +66,10 @@ interface ContentRow {
   templateUrl: './landing.page.html',
   styleUrls: ['./landing.page.scss'],
 })
-export class LandingPage {
+export class LandingPage implements OnDestroy {
   activeTab = 'home';
+
+  private scrollIdleTimer: ReturnType<typeof setTimeout> | null = null;
 
   // ── Umre adımları ──────────────────────────────
   umreItems2 = [
@@ -126,7 +135,13 @@ export class LandingPage {
     pink?: boolean;
     blue?: boolean;
   }[] = [];
-  private checklistStorageKey = '';
+  /** users/{uid}/checklists/{id} altında sabit doküman ID'leri (RouteChecklistService paylaşılır). */
+  private static readonly CHECKLIST_IDS = {
+    umre: 'story-umre-adimlari',
+    resmi: 'story-resmi-islemler',
+    bavul: 'story-bavul',
+  } as const;
+  private checklistId = '';
   blueSectionOpen = true;
   pinkSectionOpen = true;
 
@@ -178,47 +193,40 @@ export class LandingPage {
     return totalChecked / items.length;
   }
 
-  private loadAllChecklists() {
-    this.loadOne(this.umreItems2, 'umre-checklist-v1');
-    this.loadOne(this.resmiItems, 'resmi-checklist-v1');
-    this.loadOne(this.bavulItems, 'bavul-checklist-v2');
+  /** Firestore snapshot'ından (RouteChecklistService cache'i) items dizisine checked durumunu uygular. */
+  private syncChecklistFromDb(
+    items: { checked: boolean }[],
+    checklistId: string,
+  ): void {
+    const state = this.checklistService.getChecklistState(checklistId);
+    items.forEach((item, i) => {
+      item.checked = state[`item:${i}`] ?? false;
+    });
   }
-  private loadOne(items: { label: string; checked: boolean }[], key: string) {
-    try {
-      const saved = localStorage.getItem(key);
-      if (saved) {
-        const states: boolean[] = JSON.parse(saved);
-        states.forEach((c, i) => {
-          if (items[i]) items[i].checked = c;
-        });
-      }
-    } catch {}
-  }
-  private saveChecklist() {
-    localStorage.setItem(
-      this.checklistStorageKey,
-      JSON.stringify(this.checklistItems.map((i) => i.checked)),
-    );
+  private syncAllChecklistsFromDb(): void {
+    this.syncChecklistFromDb(this.umreItems2, LandingPage.CHECKLIST_IDS.umre);
+    this.syncChecklistFromDb(this.resmiItems, LandingPage.CHECKLIST_IDS.resmi);
+    this.syncChecklistFromDb(this.bavulItems, LandingPage.CHECKLIST_IDS.bavul);
   }
 
   openUmreChecklist() {
     this.checklistItems = this.umreItems2;
     this.checklistTitle = 'Umre Adımları';
-    this.checklistStorageKey = 'umre-checklist-v1';
+    this.checklistId = LandingPage.CHECKLIST_IDS.umre;
     this.checklistSequential = true;
     this.checklistOpen = true;
   }
   openResmiChecklist() {
     this.checklistItems = this.resmiItems;
     this.checklistTitle = 'Resmi İşlemler';
-    this.checklistStorageKey = 'resmi-checklist-v1';
+    this.checklistId = LandingPage.CHECKLIST_IDS.resmi;
     this.checklistSequential = false;
     this.checklistOpen = true;
   }
   openBavulChecklist() {
     this.checklistItems = this.bavulItems;
     this.checklistTitle = 'Bavul';
-    this.checklistStorageKey = 'bavul-checklist-v2';
+    this.checklistId = LandingPage.CHECKLIST_IDS.bavul;
     this.checklistSequential = false;
     this.blueSectionOpen = this.bavulItems.some((i) => i.blue && i.checked);
     this.pinkSectionOpen = this.bavulItems.some((i) => i.pink && i.checked);
@@ -242,14 +250,16 @@ export class LandingPage {
       if (this.checklistSequential) {
         for (let i = index; i < this.checklistItems.length; i++) {
           this.checklistItems[i].checked = false;
+          this.checklistService.updateChecklistItem(this.checklistId, 'item', i, false);
         }
       } else {
         item.checked = false;
+        this.checklistService.updateChecklistItem(this.checklistId, 'item', index, false);
       }
     } else {
       item.checked = true;
+      this.checklistService.updateChecklistItem(this.checklistId, 'item', index, true);
     }
-    this.saveChecklist();
   }
 
   sheetOpen = false;
@@ -257,71 +267,28 @@ export class LandingPage {
   sheetLocation: UmreLocation | null = null;
   sheetLoading = false;
   activeSheetTab: 'main' | 'detaylar' = 'main';
-  continueWatchingItems: ContentItem[] = [];
 
   bgUrl(url: string): string {
     return `url("${url}")`;
   }
 
-  ionViewWillEnter() {
-    this.buildContinueWatching();
+  /** Fare kullanıcıları için satır oklarıyla yatay kaydırma (görünür genişliğin %80'i kadar). */
+  scrollRow(el: HTMLElement, dir: number): void {
+    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: 'smooth' });
   }
 
-  private buildContinueWatching(): void {
-    const all: ContentItem[] = [];
-
-    for (const row of this.rows) {
-      for (const item of row.items) {
-        if (item.watchUrl) all.push(item);
-      }
-    }
-
-    for (const item of this.content.umreItems) {
-      if (item.videoUrl) {
-        all.push({
-          title: item.label,
-          imageUrl: this.ytThumb(item.videoUrl),
-          route: [],
-          watchUrl: item.videoUrl,
-        });
-      }
-    }
-
-    for (const item of this.content.giderimItems) {
-      if (item.videoUrl) {
-        all.push({
-          title: item.label,
-          imageUrl: this.ytThumb(item.videoUrl),
-          route: [],
-          watchUrl: item.videoUrl,
-        });
-      }
-      for (const v of item.videos ?? []) {
-        all.push({
-          title: v.label,
-          imageUrl: this.ytThumb(v.url),
-          route: [],
-          watchUrl: v.url,
-        });
-      }
-    }
-
-    const sorted = all
-      .filter((item) => {
-        const e = this.watchHistory.getEntry(item.watchUrl!);
-        return e && e.seconds > 15 && !e.completed && !e.dismissed;
-      })
-      .sort((a, b) => {
-        const ea = this.watchHistory.getEntry(a.watchUrl!)!;
-        const eb = this.watchHistory.getEntry(b.watchUrl!)!;
-        return (eb.updatedAt ?? 0) - (ea.updatedAt ?? 0);
-      });
-
-    const MAX = 10;
-    sorted
-      .slice(MAX)
-      .forEach((item) => this.watchHistory.dismiss(item.watchUrl!));
-    this.continueWatchingItems = sorted.slice(0, MAX);
+  /**
+   * Satır ucuna gelindiğinde o yöndeki oku gizlemek için wrapper'a durum sınıfları
+   * basar. Hover'a girişte (ilk durum) ve her scroll'da çağrılır.
+   */
+  updateRowArrows(el: HTMLElement): void {
+    const wrap = el.parentElement;
+    if (!wrap) return;
+    wrap.classList.toggle('rs-can-left', el.scrollLeft > 4);
+    wrap.classList.toggle(
+      'rs-can-right',
+      el.scrollLeft + el.clientWidth < el.scrollWidth - 4,
+    );
   }
 
   ytThumb(url: string): string {
@@ -329,21 +296,6 @@ export class LandingPage {
       /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([^&?/\s]{11})/,
     );
     return m ? `https://img.youtube.com/vi/${m[1]}/hqdefault.jpg` : '';
-  }
-
-  continueWatching(item: ContentItem): void {
-    const seconds = this.watchHistory.getEntry(item.watchUrl!)?.seconds ?? 0;
-    this.router.navigate(['/watch'], {
-      queryParams: { url: item.watchUrl, t: Math.floor(seconds) },
-    });
-  }
-
-  removeContinueWatching(item: ContentItem, event: Event): void {
-    event.stopPropagation();
-    this.watchHistory.dismiss(item.watchUrl!);
-    this.continueWatchingItems = this.continueWatchingItems.filter(
-      (i) => i.watchUrl !== item.watchUrl,
-    );
   }
 
   getWatchFillPct(url?: string): number {
@@ -359,8 +311,7 @@ export class LandingPage {
   featured = {
     title: 'UMRE YOLCULUĞU:',
     subtitle: 'KUTSAL TOPRAKLARA ADIM ADIM',
-    description:
-      'Kutsal yolculuğunuz için adım adım rehber, dualar ve hazırlıklar.',
+    description: 'Kutsal yolculuğunuz için adım adım rehber.',
     imageUrl: 'assets/kabe.jpg',
   };
 
@@ -448,6 +399,7 @@ export class LandingPage {
           title: 'Hira Mağarası',
           imageUrl: 'assets/images/video-card/hira mağarası.jpg',
           route: ['/location', '5'],
+          duration: '06:13',
         },
 
         {
@@ -455,116 +407,102 @@ export class LandingPage {
           imageUrl: 'assets/images/video-card/meşarı haram.jpg',
           route: ['/location', '4'],
           watchUrl: 'https://www.youtube.com/watch?v=fWu6lsNMu5U',
+          duration: '16:27',
         },
         {
           title: "Cennetü'l-Mualla",
           imageUrl: 'assets/images/video-card/cennet-ul-mualla-b.jpg',
           route: ['/location', '11'],
           watchUrl: 'https://www.youtube.com/watch?v=pLXOHMvXgdQ',
+          duration: '12:00',
         },
         {
           title: 'Mescid-i Hayf',
           imageUrl: 'assets/images/video-card/Hayf-Mescidi.jpeg',
           route: ['/location', '15'],
           watchUrl: 'https://www.youtube.com/watch?v=QEZzmllEgDs',
+          duration: '3:18',
         },
         {
           title: 'Akabe',
           imageUrl: 'assets/images/video-card/akabe.jpg',
           route: ['/location', '16'],
           watchUrl: 'https://www.youtube.com/watch?v=xuq21doNkJg',
+          duration: '15:22',
         },
         {
           title: 'Efendimizin Doğduğu Ev',
           imageUrl: 'assets/images/video-card/Efendimizin Doğduğu Ev.jpg',
           route: ['/location', '12'],
           watchUrl: 'https://www.youtube.com/watch?v=nbgWkKzg0sM',
+          duration: '12:49',
         },
         {
           title: 'Cirane Mescidi',
           imageUrl: 'assets/images/video-card/mescid-i-cirane-b.jpg',
           route: ['/location', '19'],
           watchUrl: 'https://www.youtube.com/watch?v=crPiNyNTBgU&t=154s',
+          duration: '17:16',
         },
         {
           title: 'Mina',
           imageUrl: 'assets/images/video-card/mina.png',
           route: ['/location', '2'],
           watchUrl: 'https://www.youtube.com/watch?v=1BtvcvwDSnY',
+          duration: '19:30',
         },
         {
           title: 'Sevr Mağarası',
           imageUrl: 'assets/images/video-card/sevr mağarası.jpg',
           route: ['/location', '14'],
           watchUrl: 'https://www.youtube.com/watch?v=XWg8NCwg-dE&t=666s',
+          duration: '15:06',
         },
         {
           title: 'Arafat Yapay Zeka',
           imageUrl: 'assets/images/video-card/arafat yapay zeka.jpg',
           route: ['/location', '3'],
+          duration: '25:24',
         },
         {
           title: 'Arafat',
           imageUrl: 'assets/images/video-card/arafat.jpg',
           route: ['/location', '3'],
           watchUrl: 'https://www.youtube.com/watch?v=UotSoX79jCs',
+          duration: '9:53',
         },
         {
           title: 'Cin Mescidi',
           imageUrl: 'assets/images/video-card/mescid-i-cin-a_m.jpg',
           route: ['/location', '13'],
           watchUrl: 'https://www.youtube.com/watch?v=0Q2w6Ytj-ZA',
+          duration: '5:37',
         },
         {
           title: 'Hudeybiye',
           imageUrl: 'assets/images/video-card/hudeybiye-e.jpg',
           route: ['/location', '20'],
           watchUrl: 'https://www.youtube.com/watch?v=L1gvKf9obK8',
+          duration: '28:14',
         },
-        // {
-        //   title: 'Mescid-i Haram',
-        //   imageUrl: YT('4w3cVQECMMA'),
-        //   route: ['/location', '1'],
-        // },
+
         {
           title: 'Safa ve Merve',
           imageUrl: 'assets/images/video-card/Safa ve Merve.jpg',
           route: ['/location', '10'],
           watchUrl: 'https://www.youtube.com/watch?v=e65PFGJEZac',
+          duration: '10:10',
         },
         {
           title: "Meş'aru'l-Haram",
           imageUrl: 'assets/images/video-card/MESHAIRI-HARAM.jpg',
           route: ['/location', '17'],
           watchUrl: 'https://www.youtube.com/watch?v=ySRDnHzfv0w',
+          duration: '3:47',
         },
       ],
     },
-    // {
-    //   title: 'MEKKE-MEDİNE YOLCULUĞU',
-    //   items: [
-    //     {
-    //       title: 'Reci Olayı',
-    //       imageUrl: YT('GTZs2OHLSbA'),
-    //       route: ['/harita'],
-    //     },
-    //     {
-    //       title: 'Usfan',
-    //       imageUrl: YT('4w3cVQECMMA'),
-    //       route: ['/harita'],
-    //     },
-    //     {
-    //       title: 'Mescid-i Feth',
-    //       imageUrl: YT('_8h8GP6yFlg'),
-    //       route: ['/harita'],
-    //     },
-    //     {
-    //       title: 'Meymune Validemizin Kabri',
-    //       imageUrl: YT('KfANUcmZbLg'),
-    //       route: ['/harita'],
-    //     },
-    //   ],
-    // },
+
     {
       title: 'MEDİNE KUTSAL MEKÂNLARI',
 
@@ -574,24 +512,28 @@ export class LandingPage {
           imageUrl: 'assets/images/video-card/mescidi nebevi.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=3POpzHkrRW8',
+          duration: '28:53',
         },
         {
           title: 'Hücre-i Saadet',
           imageUrl: 'assets/images/video-card/Hücre-i Saadet.webp',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=b6g4z4Ra-Zs',
+          duration: '6:02',
         },
         {
           title: 'Mescid-i Nebevi Çevresi',
           imageUrl: 'assets/images/video-card/mescidi-nebevi çevresi.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=FoP_klbWDxk',
+          duration: '21:02',
         },
         {
           title: "Cennetü'l-Baki",
           imageUrl: "assets/images/video-card/Cennetü'l-Baki.jpg",
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=Mp364suPaMQ',
+          duration: '15:27',
         },
         {
           title: 'Kuba Mescidi',
@@ -614,12 +556,14 @@ export class LandingPage {
           imageUrl: 'assets/images/video-card/Uhud.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=SsmjpWYuTZA',
+          duration: '53:57',
         },
         {
           title: 'Hendek Savaşı',
           imageUrl: 'assets/images/video-card/Hendek.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=FiXUZmp50ag',
+          duration: '59:15',
         },
         {
           title: 'Cuma Mescidi',
@@ -635,27 +579,32 @@ export class LandingPage {
         },
         {
           title: 'İslamın İlk Yıllarında Medine (3 Boyutlu)',
-          imageUrl: 'assets/images/video-card/İslamın İlk Yıllarında Medine (3 Boyutlu).jpg',
+          imageUrl:
+            'assets/images/video-card/İslamın İlk Yıllarında Medine (3 Boyutlu).jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=To3P-utMW_I',
+          duration: '3:06',
         },
         {
           title: 'Mescid-i Fadıh (İçkinin Yasak Edildiği Yer)',
           imageUrl: 'assets/images/video-card/mescidi fadıh.webp',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=MBl5murv3cc',
+          duration: '1:48',
         },
         {
           title: 'Selamlama Kapısı',
           imageUrl: 'assets/images/video-card/Selamlama Kapısı.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=BXEvIqzk6MA',
+          duration: '9:26',
         },
         {
           title: 'Medine Hakkında Önemli Bilgiler',
           imageUrl: 'assets/images/video-card/medine hakkında.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=Pw6MT-ou9cQ&t=1110s',
+          duration: '43:30',
         },
         {
           title: "190 No'lu Otobüs",
@@ -663,6 +612,7 @@ export class LandingPage {
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/nkl8BWyokDw',
           label: 'Nasıl Giderim?',
+          duration: '0:50',
         },
       ],
     },
@@ -671,34 +621,40 @@ export class LandingPage {
 
       items: [
         {
-          title: 'Güney Terminali',
+          title: 'Güney Terminali (Eski Terminal)',
           imageUrl: 'assets/images/video-card/güney terminali.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/tc4tttsyMDc',
+          duration: '1:30',
         },
         {
           title: "Havalimanı'na Varış",
           imageUrl: 'assets/images/video-card/havalimanına varış.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=Os5rO3TngqU&t=81s',
+          duration: '14:16',
         },
         {
           title: 'Havalimanından Mekke Tren İstasyonuna Geçiş',
-          imageUrl: 'assets/images/video-card/havalimanından tren istasyonuna geçiş.webp',
+          imageUrl:
+            'assets/images/video-card/havalimanından tren istasyonuna geçiş.webp',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=iEn3ePl8_Ik',
+          duration: '6:23',
         },
         {
           title: "Cidde'den Mekke'ye Geçiş",
           imageUrl: 'assets/images/video-card/ciddeden mekkeye geçiş.jpeg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=dHXam3UYvW4',
+          duration: '15:53',
         },
         {
           title: "Cidde'den Mekke'ye Geçiş (Alternatif)",
           imageUrl: 'assets/images/video-card/alternatif.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/MecNuMUNBqY',
+          duration: '0:58',
         },
         {
           title: "Cidde'ye Dön",
@@ -738,7 +694,8 @@ export class LandingPage {
         },
         {
           title: "Mescid-i Nebevi'den Medine Havalimanı'na Dönüş",
-          imageUrl: 'assets/images/video-card/mescidi nebiden medine havalimanına.jpg',
+          imageUrl:
+            'assets/images/video-card/mescidi nebiden medine havalimanına.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/sQqKoNd9sP0',
         },
@@ -747,12 +704,14 @@ export class LandingPage {
           imageUrl: 'assets/images/video-card/otobüs ile mescidi nebeviye.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/y4YhzHi3GGU',
+          duration: '0:44',
         },
         {
           title: 'Havalimanına Ulaşım ve Zemzem Alış Noktası',
           imageUrl: 'assets/images/video-card/zemzem noktası.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/caG0I8jXDxs',
+          duration: '0:59',
         },
       ],
     },
@@ -765,36 +724,47 @@ export class LandingPage {
           imageUrl: 'assets/images/video-card/medine hurma.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=vbUnheReqQk',
+          duration: '26:37',
         },
         {
           title: "Mekke'de Hurma Nereden Alınır?",
           imageUrl: 'assets/images/video-card/mekke hurma.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=IMwzeTtCPeA',
+          duration: '4:54',
         },
         {
           title: 'Hava Alanında Zemzem Nereden Alınır?',
           imageUrl: 'assets/images/video-card/havaalanında zemzem nerden.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/ICsAa4DS8fM',
+          duration: '0:24',
         },
         {
           title: 'Havalimanına Ulaşım ve Zemzem Alış Noktası',
           imageUrl: 'assets/images/video-card/zemzem noktası.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/caG0I8jXDxs',
+          duration: '0:59',
         },
         {
           title: 'Kâbe Yakınında Süper Market',
           imageUrl: 'assets/images/video-card/süpermarket.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/GG9w4EVGqlA',
+          duration: '0:35',
         },
         {
           title: "Medine'de Süper Market",
           imageUrl: 'https://img.youtube.com/vi/CqP8d8eh2_I/hqdefault.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/shorts/CqP8d8eh2_I',
+        },
+        {
+          title: 'Medine de Türk Restoranı',
+          imageUrl: 'https://img.youtube.com/vi/C8aQR9A75yk/hqdefault.jpg',
+          route: ['/harita'],
+          watchUrl: 'https://www.youtube.com/shorts/C8aQR9A75yk',
         },
       ],
     },
@@ -807,7 +777,8 @@ export class LandingPage {
           imageUrl: 'https://img.youtube.com/vi/OjPuBpnOCcU/hqdefault.jpg',
           route: ['/harita'],
           type: 'Hatıra Serisi',
-          description: 'Mahmut Sami Kirazoğlu\'nun Mekke ve Medine hatıralarından oluşan bu video listesi, kutsal topraklarda yaşanan manevi atmosferi, ziyaret edilen mübarek mekânları ve umre yolculuğunun kalpte bıraktığı izleri samimi bir anlatımla sunar. Mekke ve Medine\'ye dair hatıralar, ziyaret noktaları, ibadet bilinci ve yolculuk tecrübeleri üzerinden izleyiciye hem bilgilendirici hem de duygusal bir rehberlik sağlar.',
+          description:
+            "Mahmut Sami Kirazoğlu'nun Mekke ve Medine hatıralarından oluşan bu video listesi, kutsal topraklarda yaşanan manevi atmosferi, ziyaret edilen mübarek mekânları ve umre yolculuğunun kalpte bıraktığı izleri samimi bir anlatımla sunar. Mekke ve Medine'ye dair hatıralar, ziyaret noktaları, ibadet bilinci ve yolculuk tecrübeleri üzerinden izleyiciye hem bilgilendirici hem de duygusal bir rehberlik sağlar.",
           videos: [
             {
               label: 'Mekke - Medine Hatıraları 1',
@@ -833,12 +804,15 @@ export class LandingPage {
           imageUrl: 'assets/images/video-card/umre hatıraları.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=hPNx7bKbOBs',
+          duration: '59:55',
         },
         {
           title: 'Hücre-i Sadete En Yakın Nokta',
-          imageUrl: 'assets/images/video-card/hücrei saadete en yakın nokta.jpg',
+          imageUrl:
+            'assets/images/video-card/hücrei saadete en yakın nokta.jpg',
           route: ['/harita'],
           watchUrl: 'https://www.youtube.com/watch?v=Ljp1-BuuViI',
+          duration: '3:49',
         },
       ],
     },
@@ -850,8 +824,23 @@ export class LandingPage {
     private locationService: LocationService,
     private watchHistory: WatchHistoryService,
     private feed: VideoFeedService,
-    private content: UmreContentService,
+    private auth: AuthService,
+    private checklistService: RouteChecklistService,
+    private readonly zone: NgZone,
+    private readonly hostEl: ElementRef<HTMLElement>,
   ) {
+    // Kart hover büyümesi (scale) scroll sırasında imlecin altındaki hedefi
+    // sürekli değiştirip wheel kaydırmalarını aralıklı yutuyordu; scroll boyunca
+    // hover efektini kapatan sınıf zone dışında yönetilir (CD tetiklemez).
+    this.zone.runOutsideAngular(() => {
+      this.hostEl.nativeElement.addEventListener(
+        'ionScroll',
+        this.onContentScroll,
+        {
+          passive: true,
+        },
+      );
+    });
     addIcons({
       compassOutline,
       searchOutline,
@@ -869,8 +858,19 @@ export class LandingPage {
       femaleOutline,
       maleOutline,
       chevronForwardOutline,
+      chevronBackOutline,
     });
-    this.loadAllChecklists();
+    // Story checklist'leri (Umre Adımları/Resmi İşlemler/Bavul) Firestore'dan
+    // asenkron gelir; snapshot güncellenince story rozetleri ve açık modal tazelenir.
+    effect(() => {
+      this.checklistService.states();
+      this.syncAllChecklistsFromDb();
+    });
+    // İzleme geçmişi Firestore'dan asenkron gelir; snapshot güncellenince
+    // kart ilerleme çubukları (getWatchFillPct/getWatchEntry) tazelenir.
+    effect(() => {
+      this.watchHistory.entries();
+    });
     this.feed.videos = this.rows
       .flatMap((r) => r.items)
       .filter((i) => !!i.watchUrl)
@@ -880,6 +880,25 @@ export class LandingPage {
         url: i.watchUrl!,
         duration: i.duration,
       }));
+  }
+
+  /** ionScroll host'a kabarcıklanır; sınıf sadece bu sayfanın kartlarını etkiler. */
+  private readonly onContentScroll = (): void => {
+    const el = this.hostEl.nativeElement;
+    el.classList.add('nf-scrolling');
+    if (this.scrollIdleTimer) clearTimeout(this.scrollIdleTimer);
+    this.scrollIdleTimer = setTimeout(
+      () => el.classList.remove('nf-scrolling'),
+      140,
+    );
+  };
+
+  ngOnDestroy(): void {
+    this.hostEl.nativeElement.removeEventListener(
+      'ionScroll',
+      this.onContentScroll,
+    );
+    if (this.scrollIdleTimer) clearTimeout(this.scrollIdleTimer);
   }
 
   getWatchEntry(url?: string): WatchEntry | null {
@@ -897,7 +916,10 @@ export class LandingPage {
     this.sheetItem = item;
     this.sheetOpen = true;
     this.sheetLocation = null;
-    this.activeSheetTab = 'main';
+    // "İzle" sekmesi kaldırıldı: tekli videoda oynatma artık hero'daki merkezi
+    // butonla yapılıyor, bu yüzden sekme doğrudan Detaylar'la açılır. Çoklu
+    // videoda "Videolar" sekmesi (bölüm listesi) varlığını koruyor.
+    this.activeSheetTab = item.videos?.length ? 'main' : 'detaylar';
     const locId = this.extractLocationId(item.route);
     if (locId !== null) this.fetchDetails(locId);
   }
@@ -928,6 +950,16 @@ export class LandingPage {
   playSheetVideo(url: string) {
     this.router.navigate(['/watch'], { queryParams: { url } });
     this.closeSheet();
+  }
+
+  /** Hero'nun ortasındaki tek oynat butonu: çoklu videoda ilk bölümü, tekli videoda kendisini oynatır. */
+  playHero(): void {
+    if (!this.sheetItem) return;
+    if (this.sheetItem.videos?.length) {
+      this.playSheetVideo(this.sheetItem.videos[0].url);
+      return;
+    }
+    this.playSheet();
   }
 
   playSheet() {
@@ -964,7 +996,12 @@ export class LandingPage {
       this.router.navigate(['/notlarim']);
       return;
     }
-    if (tab === 'downloads' || tab === 'profile') {
+    if (tab === 'profile') {
+      // Header'daki hesap simgesiyle aynı kural: misafir login'e gider.
+      this.router.navigate([this.auth.accountRoute]);
+      return;
+    }
+    if (tab === 'downloads') {
       const toast = await this.toastCtrl.create({
         message: 'Bu özellik yakında geliyor!',
         duration: 1800,

@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+# Kilitlenme raporlarında satır numarası çözümü için (mapping AAB'ye gömülür).
+-keepattributes SourceFile,LineNumberTable
+
+# @capacitor-firebase/authentication, kullanmadığımız Facebook girişine derleme
+# zamanında referans veriyor (rgcfaIncludeFacebook=false → SDK pakette yok);
+# R8'in "missing class" hatası bu yüzden bastırılır. Çalışma zamanında Facebook
+# koduna hiç girilmediğinden güvenlidir.
+-dontwarn com.facebook.CallbackManager$Factory
+-dontwarn com.facebook.CallbackManager
+-dontwarn com.facebook.FacebookCallback
+-dontwarn com.facebook.login.LoginManager
+-dontwarn com.facebook.login.widget.LoginButton

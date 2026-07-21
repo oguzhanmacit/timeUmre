@@ -1,0 +1,43 @@
+<div class="vp-backdrop" *ngIf="isOpen" (click)="close()"></div>
+<div class="vp-popup" *ngIf="isOpen">
+  <button class="vp-close" (click)="close()" aria-label="Kapat">
+    <ion-icon name="close-outline"></ion-icon>
+  </button>
+
+  <div class="vp-frame">
+    <iframe
+      #frame
+      [src]="embedUrl"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      (load)="onIframeLoad(frame)"
+    ></iframe>
+
+    <button class="vp-note-fab" [class.active]="noteOpen" (click)="toggleNote()" aria-label="Not Al">
+      <ion-icon [name]="noteOpen ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      <span>{{ noteOpen ? 'Tamam' : 'Not Al' }}</span>
+    </button>
+  </div>
+
+  <!-- Not paneli -->
+  <div class="vp-note-panel" *ngIf="noteOpen">
+    <div class="vp-prev-notes" *ngIf="existingNotes.length > 0">
+      <p class="vp-prev-label">Önceki Notlar</p>
+      <div class="vp-prev-item" *ngFor="let n of existingNotes">
+        <span class="vp-prev-time">{{ formatSecond(n.second) }}</span>
+        <span class="vp-prev-text">{{ n.note }}</span>
+      </div>
+    </div>
+    <textarea
+      class="vp-note-textarea"
+      [(ngModel)]="noteText"
+      placeholder="Yeni not ekle..."
+      rows="3">
+    </textarea>
+    <button class="vp-note-save" (click)="saveNote()">
+      <ion-icon [name]="noteSaved ? 'checkmark-outline' : 'create-outline'"></ion-icon>
+      {{ noteSaved ? 'Kaydedildi' : 'Kaydet' }}
+    </button>
+  </div>
+</div>
